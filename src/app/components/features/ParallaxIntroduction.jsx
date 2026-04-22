@@ -12,68 +12,74 @@ gsap.registerPlugin(ScrollTrigger);
 export default function ParallaxIntroduction({ intro }) {
   const sectionRef = useRef(null);
   const textRef = useRef(null);
-  const topImageWrapRef = useRef(null);
-  const bottomImageWrapRef = useRef(null);
   const topImageRef = useRef(null);
-  const bottomImageRef = useRef(null);
+  const leftBottomImageRef = useRef(null);
   const infoRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        textRef.current,
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          ease: "power3.out",
+      if (textRef.current) {
+        gsap.fromTo(
+          textRef.current,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 90%",
+              once: true,
+            },
+          },
+        );
+      }
+
+      if (infoRef.current) {
+        gsap.fromTo(
+          infoRef.current,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            delay: 0.2,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 78%",
+              once: true,
+            },
+          },
+        );
+      }
+
+      if (topImageRef.current) {
+        gsap.to(topImageRef.current, {
+          y: -90,
+          ease: "none",
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 90%",
-            once: true,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
           },
-        },
-      );
+        });
+      }
 
-      gsap.fromTo(
-        infoRef.current,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.9,
-          delay: 0.2,
-          ease: "power3.out",
+      if (leftBottomImageRef.current) {
+        gsap.to(leftBottomImageRef.current, {
+          y: -60,
+          ease: "none",
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 78%",
-            once: true,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
           },
-        },
-      );
-
-      gsap.to(topImageRef.current, {
-        y: -90,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-
-      gsap.to(bottomImageRef.current, {
-        y: -60,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
+        });
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -99,7 +105,7 @@ export default function ParallaxIntroduction({ intro }) {
             </div>
 
             <div
-              ref={bottomImageRef}
+              ref={leftBottomImageRef}
               className="relative h-80 overflow-hidden md:h-105"
             >
               <Image
@@ -108,6 +114,7 @@ export default function ParallaxIntroduction({ intro }) {
                 fill
                 sizes="(max-width: 1024px) 100vw, 45vw"
                 className="object-cover"
+                loading="eager"
               />
             </div>
           </div>
@@ -123,14 +130,15 @@ export default function ParallaxIntroduction({ intro }) {
                 fill
                 sizes="(max-width: 1024px) 100vw, 45vw"
                 className="object-cover"
+                loading="eager"
               />
             </div>
 
             <div
-              ref={bottomImageRef}
+              ref={infoRef}
               className="flex flex-col items-center justify-center gap-6 py-6 text-center"
             >
-              <p className="text-xl text-[#b58a45] uppercase">{intro.st}</p>
+              <p className="text-xl uppercase text-[#b58a45]">{intro.st}</p>
 
               <Image
                 src={stamp}
