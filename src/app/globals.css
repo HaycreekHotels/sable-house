@@ -3,8 +3,10 @@
 :root {
   --background: #ffffffed;
   --foreground: #171717;
-  --main: #636b2f;
-  --secondary: #524a44;
+  --main: #4f5532;
+  --secondary: #f3ede2;
+  --contrast: #6a4a3c;
+  --textColor: #737373;
 }
 
 @theme inline {
@@ -12,6 +14,8 @@
   --color-foreground: var(--foreground);
   --color-main: var(--main);
   --color-secondary: var(--secondary);
+  --color-contrast: var(--contrast);
+  --color-textColor: var(--textColor);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

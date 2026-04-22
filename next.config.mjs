@@ -5,7 +5,16 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "images.unsplash.com",
-        // Optional: restrict to specific paths if needed
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "unsplash.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.pixabay.com",
         pathname: "/**",
       },
     ],
