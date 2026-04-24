@@ -14,7 +14,7 @@ export const rooms = [
     size: "150-200 Sq.Ft",
     sleeps: "Sleeps 2",
     description: [
-      "The Queen room is a comfortable boutique guest room at Sable House, located in Savannah’s Historic District.",
+      "The Queen room is a comfortable boutique guest room at Sabal House, located in Savannah’s Historic District.",
       "Ideal for couples seeking a relaxing hotel experience, this room places you steps from historic charm, thoughtful design, and inviting amenities.",
     ],
     features: [
@@ -55,7 +55,7 @@ export const rooms = [
     size: "150-200 Sq.Ft",
     sleeps: "Sleeps 4",
     description: [
-      "The Double Queen room offers extra sleeping space while keeping the boutique comfort and character of Sable House.",
+      "The Double Queen room offers extra sleeping space while keeping the boutique comfort and character of Sabal House.",
       "This room is a strong option for guests traveling together who want refined design, cozy amenities, and easy access to Savannah’s historic surroundings.",
     ],
     features: [
@@ -137,7 +137,7 @@ export const rooms = [
     size: "150-200 Sq.Ft",
     sleeps: "Sleeps 2",
     description: [
-      "The King room blends preserved architecture with boutique comfort for a distinctive stay at Sable House.",
+      "The King room blends preserved architecture with boutique comfort for a distinctive stay at Sabal House.",
       "Its inviting layout creates a cozy retreat ideal for couples seeking a romantic hotel experience near Savannah’s historic landmarks.",
     ],
     features: [
@@ -221,7 +221,7 @@ export const rooms = [
     sleeps: "Sleeps 2",
     description: [
       "The Accessible Queen room combines boutique style with comfortable accessibility-focused details.",
-      "This room is ideal for guests who want a refined stay with thoughtful features and easy access to Sable House amenities.",
+      "This room is ideal for guests who want a refined stay with thoughtful features and easy access to Sabal House amenities.",
     ],
     features: [
       "Beds: 1 Queen Bed",
@@ -262,7 +262,7 @@ export const rooms = [
     size: "150-200 Sq.Ft",
     sleeps: "Sleeps 2",
     description: [
-      "The Premium Suite offers a spacious and elevated stay at Sable House with boutique design and refined comfort.",
+      "The Premium Suite offers a spacious and elevated stay at Sabal House with boutique design and refined comfort.",
       "Ideal for guests looking for a more luxurious experience, this suite provides room to relax while keeping you close to Savannah’s historic charm.",
     ],
     features: [
@@ -305,7 +305,7 @@ export const rooms = [
     sleeps: "Sleeps 2",
     description: [
       "The ADA Suite offers the comfort of a suite-style layout with accessibility-focused features and thoughtful boutique design.",
-      "This room is a flexible option for guests who want additional comfort, accessibility, and a refined stay at Sable House.",
+      "This room is a flexible option for guests who want additional comfort, accessibility, and a refined stay at Sabal House.",
     ],
     features: [
       "Beds: 1 Queen Bed",

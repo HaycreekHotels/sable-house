@@ -21,7 +21,7 @@ export default function Footer() {
             <div>
               <Image
                 src={whiteLogo}
-                alt="The Sable House Hotel Logo in White"
+                alt="The Sabal House Hotel Logo in White"
                 className="h-auto w-64 md:w-64"
               />
             </div>

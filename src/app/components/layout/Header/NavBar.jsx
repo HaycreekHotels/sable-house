@@ -105,7 +105,7 @@ export default function NavBar() {
           <Link href="/" className="flex justify-center">
             <Image
               src={whiteLogo}
-              alt="Sable House Hotel logo in offwhite color"
+              alt="Sabal House Hotel logo in offwhite color"
               className="h-auto w-28 sm:w-32"
               priority
             />
@@ -182,7 +182,7 @@ export default function NavBar() {
             <Link href="/">
               <Image
                 src={whiteLogo}
-                alt="Sable House Hotel logo in offwhite color"
+                alt="Sabal House Hotel logo in offwhite color"
                 priority
                 loading="eager"
               />

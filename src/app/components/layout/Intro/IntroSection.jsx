@@ -46,7 +46,7 @@ export default function IntroSection({
     >
       <div className="mx-auto max-w-7xl">
         <p className="intro-animate mb-6 text-center text-sm uppercase tracking-[0.45em] text-neutral-500 opacity-0 md:text-base">
-          Sable House
+          Sabal House
         </p>
 
         <h1 className="intro-animate mx-auto mb-10 max-w-5xl text-center font-serif text-2xl leading-tight text-neutral-900 opacity-0 md:text-7xl lg:text-5xl">

@@ -8,11 +8,11 @@ export const events = [
     type: "Hotel Event",
     date: "2026-05-08",
     time: "6:00 PM - 8:30 PM",
-    location: "Sable House Courtyard",
+    location: "Sabal House Courtyard",
     image:
       "https://images.unsplash.com/photo-1511192336575-5a79af67a629?q=80&w=1600&auto=format&fit=crop",
     excerpt:
-      "An intimate evening of live jazz, seasonal small bites, and curated wines at Sable House.",
+      "An intimate evening of live jazz, seasonal small bites, and curated wines at Sabal House.",
     description:
       "Join us for a relaxed evening in the courtyard featuring local jazz musicians, small plates, and a hand-selected wine list.",
   },

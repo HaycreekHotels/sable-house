@@ -6,9 +6,9 @@ export const restaurants = [
     slug: "oak-steak-house",
     image:
       "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1740&auto=format&fit=crop",
-    imageAlt: "Elegant restaurant table at Sable House",
+    imageAlt: "Elegant restaurant table at Sabal House",
     description:
-      "The Sable Room is a refined dining experience with seasonal dishes, intimate lighting, and a relaxed southern-inspired atmosphere.",
+      "The Sabal Room is a refined dining experience with seasonal dishes, intimate lighting, and a relaxed southern-inspired atmosphere.",
     hours: [
       "Daily, Breakfast & Brunch: 7AM - 2PM",
       "Daily, Dinner: 5PM - 10PM",
@@ -82,7 +82,7 @@ export const restaurants = [
     slug: "the-bar",
     image:
       "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1740&auto=format&fit=crop",
-    imageAlt: "Cocktail bar at Sable House",
+    imageAlt: "Cocktail bar at Sabal House",
     description:
       "Magnolia Bar offers handcrafted cocktails, small plates, and a cozy lounge setting made for slow evenings and easy conversation.",
     hours: [
@@ -108,7 +108,7 @@ export const restaurants = [
             price: "$15",
           },
           {
-            name: "Sable House Martini",
+            name: "Sabal House Martini",
             description:
               "Vodka or gin, dry vermouth, orange bitters, and lemon twist.",
             price: "$17",

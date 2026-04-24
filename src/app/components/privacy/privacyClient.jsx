@@ -105,7 +105,7 @@ export default function PrivacyClient() {
           <div className="mx-auto w-full max-w-6xl px-5 pb-12 md:px-8 md:pb-16 lg:pb-20">
             <div data-hero-copy className="max-w-2xl translate-y-6 opacity-0">
               <p className="mb-3 text-[11px] uppercase tracking-[0.3em] text-white/80 md:text-xs">
-                The Sable House
+                The Sabal House
               </p>
               <h1 className="text-4xl font-medium leading-tight text-white md:text-6xl">
                 Privacy,
@@ -137,7 +137,7 @@ export default function PrivacyClient() {
             className="space-y-5 text-sm leading-7 text-[#4f4d46] md:text-base"
           >
             <p>
-              The Sable House values your privacy and is committed to handling
+              The Sabal House values your privacy and is committed to handling
               personal information with care, transparency, and respect.
             </p>
             <p>
@@ -260,7 +260,7 @@ export default function PrivacyClient() {
                   Privacy contact
                 </p>
                 <address className="mt-4 space-y-3 text-base text-[#1e1e1a] not-italic">
-                  <p className="font-medium">The Sable House</p>
+                  <p className="font-medium">The Sabal House</p>
                   <p>
                     <a
                       href="tel:1234567890"
