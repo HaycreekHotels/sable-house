@@ -18,7 +18,7 @@ export async function generateMetadata({ params }) {
   }
 
   return {
-    title: `${event.title} | Sable House`,
+    title: `${event.title} | Sabal House`,
     description: event.excerpt,
   };
 }

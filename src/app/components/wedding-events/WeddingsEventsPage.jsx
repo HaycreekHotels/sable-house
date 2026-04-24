@@ -14,10 +14,10 @@ const eventTypes = [
     eyebrow: "Weddings",
     title: "Romantic Savannah Celebrations",
     description:
-      "Celebrate your wedding at Sable House, where historic charm, intimate spaces, and thoughtful hospitality create a memorable setting for your day. From quiet ceremonies to elegant receptions, our spaces offer a refined backdrop in the heart of Savannah.",
+      "Celebrate your wedding at Sabal House, where historic charm, intimate spaces, and thoughtful hospitality create a memorable setting for your day. From quiet ceremonies to elegant receptions, our spaces offer a refined backdrop in the heart of Savannah.",
     image:
       "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1740&auto=format&fit=crop",
-    imageAlt: "Wedding celebration at Sable House",
+    imageAlt: "Wedding celebration at Sabal House",
     href: "/events/weddings",
     cta: "Explore Weddings",
   },
@@ -26,7 +26,7 @@ const eventTypes = [
     eyebrow: "Corporate Events",
     title: "Gather With Purpose",
     description:
-      "Host meetings, retreats, and professional gatherings in a setting designed to feel polished, comfortable, and easy. Sable House offers a warm alternative to traditional meeting spaces with boutique hospitality and a central Savannah location.",
+      "Host meetings, retreats, and professional gatherings in a setting designed to feel polished, comfortable, and easy. Sabal House offers a warm alternative to traditional meeting spaces with boutique hospitality and a central Savannah location.",
     image:
       "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1740&auto=format&fit=crop",
     imageAlt: "Corporate event and meeting setup",
@@ -38,7 +38,7 @@ const eventTypes = [
     eyebrow: "Social Events",
     title: "Milestones, Dinners & Private Gatherings",
     description:
-      "From birthday weekends and anniversary dinners to private receptions and celebratory gatherings, Sable House offers inviting spaces for meaningful moments shared with friends, family, and guests.",
+      "From birthday weekends and anniversary dinners to private receptions and celebratory gatherings, Sabal House offers inviting spaces for meaningful moments shared with friends, family, and guests.",
     image:
       "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?q=80&w=1740&auto=format&fit=crop",
     imageAlt: "Social event dinner table",
@@ -198,7 +198,7 @@ export default function WeddingsEventsPage() {
       <section className="relative min-h-[82vh] overflow-hidden">
         <Image
           src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=1740&auto=format&fit=crop"
-          alt="Wedding and event table setting at Sable House"
+          alt="Wedding and event table setting at Sabal House"
           fill
           priority
           className="hero-image object-cover opacity-0"
@@ -210,7 +210,7 @@ export default function WeddingsEventsPage() {
         <div className="relative z-10 flex min-h-[82vh] items-end px-5 pb-14 md:px-10 lg:px-16">
           <div className="mx-auto w-full max-w-7xl">
             <p className="hero-animate mb-5 text-sm uppercase tracking-[0.4em] text-secondary opacity-0">
-              Sable House Savannah
+              Sabal House Savannah
             </p>
 
             <h1 className="hero-animate max-w-5xl font-serif text-5xl leading-tight text-secondary opacity-0 md:text-7xl lg:text-8xl">
@@ -229,7 +229,7 @@ export default function WeddingsEventsPage() {
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
           <div>
             <p className="section-animate-item mb-5 text-sm uppercase tracking-[0.35em] text-contrast opacity-0">
-              Gather at Sable House
+              Gather at Sabal House
             </p>
 
             <h2 className="section-animate-item font-serif text-5xl leading-tight text-main opacity-0 md:text-7xl">
@@ -239,7 +239,7 @@ export default function WeddingsEventsPage() {
 
           <div className="space-y-6 text-lg leading-9 text-main/75 md:text-xl md:leading-10">
             <p className="section-animate-item opacity-0">
-              Set within the charm of Savannah, Sable House offers an intimate
+              Set within the charm of Savannah, Sabal House offers an intimate
               and refined setting for weddings, corporate events, and social
               celebrations. Our spaces are designed for gatherings that feel
               personal, warm, and memorable.
@@ -324,7 +324,7 @@ export default function WeddingsEventsPage() {
 
             <p className="mt-6 text-base leading-8 text-main/75 md:text-lg">
               From candlelit dinners to celebratory weekends, every event at
-              Sable House is shaped by historic surroundings, warm hospitality,
+              Sabal House is shaped by historic surroundings, warm hospitality,
               and a sense of place.
             </p>
           </div>

@@ -22,7 +22,7 @@ export async function generateMetadata({ params }) {
   }
 
   return {
-    title: `${restaurant.title} | Sable House`,
+    title: `${restaurant.title} | Sabal House`,
     description: restaurant.description,
   };
 }

@@ -12,7 +12,7 @@ const galleryImages = [
   {
     id: 1,
     src: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=1740&auto=format&fit=crop",
-    alt: "Elegant wedding table setting at Sable House",
+    alt: "Elegant wedding table setting at Sabal House",
   },
   {
     id: 2,
@@ -165,7 +165,7 @@ export default function WeddingsPage() {
       <section className="relative min-h-[82vh] overflow-hidden">
         <Image
           src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=1740&auto=format&fit=crop"
-          alt="Wedding table setting at Sable House"
+          alt="Wedding table setting at Sabal House"
           fill
           priority
           className="wedding-hero-image object-cover opacity-0"
@@ -177,7 +177,7 @@ export default function WeddingsPage() {
         <div className="relative z-10 flex min-h-[82vh] items-end px-5 pb-14 md:px-10 lg:px-16">
           <div className="mx-auto w-full max-w-7xl">
             <p className="wedding-hero-item mb-5 text-sm uppercase tracking-[0.4em] text-secondary opacity-0">
-              Sable House Weddings
+              Sabal House Weddings
             </p>
 
             <h1 className="wedding-hero-item max-w-5xl font-serif text-5xl leading-tight text-secondary opacity-0 md:text-7xl lg:text-8xl">
@@ -206,7 +206,7 @@ export default function WeddingsPage() {
 
           <div className="space-y-6 text-lg leading-9 text-main/75 md:text-xl md:leading-10">
             <p className="wedding-animate opacity-0">
-              Sable House offers an intimate wedding experience in the heart of
+              Sabal House offers an intimate wedding experience in the heart of
               Savannah, Georgia. With historic character, refined interiors, and
               inviting gathering spaces, our hotel creates a warm backdrop for
               ceremonies, receptions, welcome parties, and wedding weekends.
@@ -226,7 +226,7 @@ export default function WeddingsPage() {
           <div className="relative min-h-[360px] overflow-hidden md:min-h-[520px]">
             <Image
               src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1740&auto=format&fit=crop"
-              alt="Wedding ceremony at Sable House"
+              alt="Wedding ceremony at Sabal House"
               fill
               className="wedding-feature-image object-cover opacity-0"
               sizes="(max-width: 1024px) 100vw, 50vw"
@@ -268,7 +268,7 @@ export default function WeddingsPage() {
           <div className="relative min-h-[360px] overflow-hidden md:min-h-[520px] lg:order-2">
             <Image
               src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?q=80&w=1740&auto=format&fit=crop"
-              alt="Wedding reception at Sable House"
+              alt="Wedding reception at Sabal House"
               fill
               className="wedding-feature-image object-cover opacity-0"
               sizes="(max-width: 1024px) 100vw, 50vw"
@@ -288,7 +288,7 @@ export default function WeddingsPage() {
               <p className="wedding-feature-text mt-7 text-base leading-8 text-main/75 opacity-0 md:text-lg md:leading-9">
                 Continue the celebration with a private dinner, cocktail hour,
                 or reception designed around the mood of your day. From relaxed
-                gatherings to polished evenings, Sable House offers a welcoming
+                gatherings to polished evenings, Sabal House offers a welcoming
                 setting for every part of the celebration.
               </p>
 
@@ -320,7 +320,7 @@ export default function WeddingsPage() {
             </h2>
 
             <p className="wedding-animate mt-7 max-w-3xl text-base leading-8 text-main/75 opacity-0 md:text-lg md:leading-9">
-              With guest rooms, dining spaces, and inviting common areas, Sable
+              With guest rooms, dining spaces, and inviting common areas, Sabal
               House is well suited for wedding weekends where your closest
               people can stay near the celebration and enjoy Savannah together.
             </p>
@@ -355,7 +355,7 @@ export default function WeddingsPage() {
 
             <p className="mt-6 text-base leading-8 text-main/75 md:text-lg">
               A small look at the atmosphere, details, and romantic textures
-              that inspire celebrations at Sable House.
+              that inspire celebrations at Sabal House.
             </p>
           </div>
 

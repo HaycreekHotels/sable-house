@@ -14,7 +14,7 @@ const defaultOffers = [
     image:
       "https://images.unsplash.com/photo-1468327768560-75b778cbb551?q=80&w=1600&auto=format&fit=crop",
     description: [
-      "Enjoy a refreshing seasonal getaway at Sable House with 15% off your stay.",
+      "Enjoy a refreshing seasonal getaway at Sabal House with 15% off your stay.",
       "Perfect for a quiet retreat filled with sunny afternoons, local charm, and relaxed evenings.",
     ],
     finePrint:
@@ -56,7 +56,7 @@ const defaultOffers = [
     image:
       "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1600&auto=format&fit=crop",
     description: [
-      "Slip away for a relaxing weekend at Sable House with exclusive weekend savings.",
+      "Slip away for a relaxing weekend at Sabal House with exclusive weekend savings.",
       "Perfect for a short, elegant escape with boutique comfort and a peaceful setting.",
     ],
     finePrint:
@@ -81,7 +81,7 @@ const defaultOffers = [
 ];
 
 export default function OffersPackagesSection({
-  eyebrow = "Sable House",
+  eyebrow = "Sabal House",
   heading = "Offers & Packages",
   intro = "Discover curated offers designed to make your stay even more memorable.",
   offers = defaultOffers,

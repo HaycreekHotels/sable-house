@@ -173,7 +173,7 @@ export default function EventsListWithCalendar({ events = [] }) {
       <div className="mx-auto max-w-7xl">
         <div className="events-header mb-12 max-w-3xl">
           <p className="events-intro-item mb-4 text-sm uppercase tracking-[0.35em] text-contrast opacity-0">
-            Sable House
+            Sabal House
           </p>
 
           <h1 className="events-intro-item font-serif text-5xl leading-tight opacity-0 md:text-7xl">
@@ -181,7 +181,7 @@ export default function EventsListWithCalendar({ events = [] }) {
           </h1>
 
           <p className="events-intro-item mt-6 text-base leading-8 text-main/75 opacity-0 md:text-lg">
-            Discover upcoming happenings at Sable House and around the city.
+            Discover upcoming happenings at Sabal House and around the city.
           </p>
         </div>
 

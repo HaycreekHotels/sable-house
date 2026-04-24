@@ -81,7 +81,7 @@ export default function CorporateTravelClient({
           <div className="mt-14 grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr]">
             <div className="space-y-8 text-lg leading-8 text-main md:text-xl md:leading-9">
               <p className="corporate-animate opacity-0">
-                At Sable House, we know that business travel should be as smooth
+                At Sabal House, we know that business travel should be as smooth
                 as your morning coffee. That’s why we offer exclusive corporate
                 rates tailored to professionals who appreciate effortless stays.
                 With elevated amenities, thoughtful hospitality, and a setting
@@ -115,7 +115,7 @@ export default function CorporateTravelClient({
             <div className="corporate-image relative min-h-[340px] overflow-hidden opacity-0 md:min-h-[500px]">
               <Image
                 src={image}
-                alt="Sable House guest room for corporate travelers"
+                alt="Sabal House guest room for corporate travelers"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"

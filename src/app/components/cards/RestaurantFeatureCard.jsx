@@ -10,11 +10,11 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function RestaurantFeatureCard({
   eyebrow = "Restaurant & Bar",
-  title = "Sable Dining Room",
-  description = "A refined restaurant experience at Sable House with seasonal dishes, thoughtful hospitality, and a relaxed atmosphere.",
+  title = "Sabal Dining Room",
+  description = "A refined restaurant experience at Sabal House with seasonal dishes, thoughtful hospitality, and a relaxed atmosphere.",
   hours = [],
   image,
-  imageAlt = "Restaurant at Sable House",
+  imageAlt = "Restaurant at Sabal House",
   slug = "/restaurants",
   reservationUrl = "https://example.com/book-table",
   imagePosition = "right",

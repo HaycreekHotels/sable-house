@@ -267,9 +267,9 @@ export default function FeatureCarousel({
             <button
               type="button"
               onClick={handleNext}
-              disabled={isAnimating}
+              diSabald={isAnimating}
               aria-label="Next slide"
-              className={`flex h-14 w-14 items-center justify-center rounded-full text-white transition-transform duration-300 hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60 ${buttonColor}`}
+              className={`flex h-14 w-14 items-center justify-center rounded-full text-white transition-transform duration-300 hover:scale-105 diSabald:cursor-not-allowed diSabald:opacity-60 ${buttonColor}`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

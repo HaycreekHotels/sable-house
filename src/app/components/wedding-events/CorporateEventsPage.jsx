@@ -12,7 +12,7 @@ const galleryImages = [
   {
     id: 1,
     src: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1740&auto=format&fit=crop",
-    alt: "Corporate meeting setup at Sable House",
+    alt: "Corporate meeting setup at Sabal House",
   },
   {
     id: 2,
@@ -165,7 +165,7 @@ export default function CorporateEventsPage() {
       <section className="relative min-h-[82vh] overflow-hidden">
         <Image
           src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1740&auto=format&fit=crop"
-          alt="Corporate event table setup at Sable House"
+          alt="Corporate event table setup at Sabal House"
           fill
           priority
           className="corporate-hero-image object-cover opacity-0"
@@ -177,7 +177,7 @@ export default function CorporateEventsPage() {
         <div className="relative z-10 flex min-h-[82vh] items-end px-5 pb-14 md:px-10 lg:px-16">
           <div className="mx-auto w-full max-w-7xl">
             <p className="corporate-hero-item mb-5 text-sm uppercase tracking-[0.4em] text-secondary opacity-0">
-              Sable House Corporate Events
+              Sabal House Corporate Events
             </p>
 
             <h1 className="corporate-hero-item max-w-5xl font-serif text-5xl leading-tight text-secondary opacity-0 md:text-7xl lg:text-8xl">
@@ -206,7 +206,7 @@ export default function CorporateEventsPage() {
 
           <div className="space-y-6 text-lg leading-9 text-main/75 md:text-xl md:leading-10">
             <p className="corporate-animate opacity-0">
-              Sable House offers a thoughtful setting for corporate events in
+              Sabal House offers a thoughtful setting for corporate events in
               Savannah, Georgia. From leadership retreats and small meetings to
               client receptions and team celebrations, our spaces provide a warm
               alternative to traditional event venues.
@@ -226,7 +226,7 @@ export default function CorporateEventsPage() {
           <div className="relative min-h-[360px] overflow-hidden md:min-h-[520px]">
             <Image
               src="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1740&auto=format&fit=crop"
-              alt="Corporate meeting at Sable House"
+              alt="Corporate meeting at Sabal House"
               fill
               className="corporate-feature-image object-cover opacity-0"
               sizes="(max-width: 1024px) 100vw, 50vw"
@@ -265,7 +265,7 @@ export default function CorporateEventsPage() {
           <div className="relative min-h-[360px] overflow-hidden md:min-h-[520px] lg:order-2">
             <Image
               src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1740&auto=format&fit=crop"
-              alt="Corporate retreat at Sable House"
+              alt="Corporate retreat at Sabal House"
               fill
               className="corporate-feature-image object-cover opacity-0"
               sizes="(max-width: 1024px) 100vw, 50vw"
@@ -284,7 +284,7 @@ export default function CorporateEventsPage() {
 
               <p className="corporate-feature-text mt-7 text-base leading-8 text-main/75 opacity-0 md:text-lg md:leading-9">
                 Step away from the everyday office setting and gather in a place
-                that encourages conversation, clarity, and collaboration. Sable
+                that encourages conversation, clarity, and collaboration. Sabal
                 House is ideal for teams looking for a more personal retreat
                 experience.
               </p>
@@ -312,7 +312,7 @@ export default function CorporateEventsPage() {
 
             <p className="corporate-animate mt-7 max-w-3xl text-base leading-8 text-main/75 opacity-0 md:text-lg md:leading-9">
               Whether you are hosting a small leadership session, a company
-              celebration, or a private client dinner, Sable House offers
+              celebration, or a private client dinner, Sabal House offers
               flexible event options supported by thoughtful service and a
               distinctive Savannah setting.
             </p>
@@ -342,7 +342,7 @@ export default function CorporateEventsPage() {
             </p>
 
             <h2 className="font-serif text-5xl leading-tight text-main md:text-7xl">
-              Gatherings at Sable House
+              Gatherings at Sabal House
             </h2>
 
             <p className="mt-6 text-base leading-8 text-main/75 md:text-lg">

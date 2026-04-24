@@ -20,7 +20,7 @@ export async function generateMetadata({ params }) {
   }
 
   return {
-    title: `${room.title} | Sable House`,
+    title: `${room.title} | Sabal House`,
     description: Array.isArray(room.description)
       ? room.description.join(" ")
       : room.description,

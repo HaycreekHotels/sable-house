@@ -2,8 +2,8 @@ import HeroImage from "../components/layout/heros/HeroImage";
 import ContactPageSection from "../components/contact/ContactPageSection";
 
 export const metadata = {
-  title: "Contact Us | Sable House",
-  description: "Contact the helpful team for the Sable House Hotel.",
+  title: "Contact Us | Sabal House",
+  description: "Contact the helpful team for the Sabal House Hotel.",
 };
 
 export default function Page() {

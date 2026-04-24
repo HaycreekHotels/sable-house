@@ -5,9 +5,9 @@ import RestaurantFeatureCard from "../components/cards/RestaurantFeatureCard";
 import { restaurants } from "../data/restaurants";
 
 export const metadata = {
-  title: "Dine | Sable House",
+  title: "Dine | Sabal House",
   description:
-    "Dine at one of the two in-house resturaunts at the Sable House ",
+    "Dine at one of the two in-house resturaunts at the Sabal House ",
 };
 
 export default function Page() {

@@ -86,7 +86,7 @@ export default function ParallaxIntroduction({ intro }) {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-[#f3f1ed] py-16 md:py-24">
+    <section ref={sectionRef} className="bg-secondary py-16 md:py-24">
       <div className="mx-auto max-w-350 px-4 md:px-8">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-12">
           <div className="flex flex-col justify-between gap-10">

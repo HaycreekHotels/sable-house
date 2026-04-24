@@ -2,8 +2,8 @@ import HeroImage from "../components/layout/heros/HeroImage";
 import MosaicGallery from "../components/galleries/MosaicGallery";
 
 export const metadata = {
-  title: "Gallery | Sable House",
-  description: "View the Newly built sable house",
+  title: "Gallery | Sabal House",
+  description: "View the Newly built Sabal house",
 };
 
 export default function Page() {

@@ -12,7 +12,7 @@ const galleryImages = [
   {
     id: 1,
     src: "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?q=80&w=1740&auto=format&fit=crop",
-    alt: "Private dinner table setting at Sable House",
+    alt: "Private dinner table setting at Sabal House",
   },
   {
     id: 2,
@@ -146,7 +146,7 @@ export default function SocialEventsPage() {
       <section className="relative min-h-[82vh] overflow-hidden">
         <Image
           src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?q=80&w=1740&auto=format&fit=crop"
-          alt="Social event table setting at Sable House"
+          alt="Social event table setting at Sabal House"
           fill
           priority
           className="social-hero-image object-cover opacity-0"
@@ -158,7 +158,7 @@ export default function SocialEventsPage() {
         <div className="relative z-10 flex min-h-[82vh] items-end px-5 pb-14 md:px-10 lg:px-16">
           <div className="mx-auto w-full max-w-7xl">
             <p className="social-hero-item mb-5 text-sm uppercase tracking-[0.4em] text-secondary opacity-0">
-              Sable House Social Events
+              Sabal House Social Events
             </p>
 
             <h1 className="social-hero-item max-w-5xl font-serif text-5xl leading-tight text-secondary opacity-0 md:text-7xl lg:text-8xl">
@@ -187,7 +187,7 @@ export default function SocialEventsPage() {
 
           <div className="space-y-6 text-lg leading-9 text-main/75 md:text-xl md:leading-10">
             <p className="social-animate opacity-0">
-              Sable House offers a refined and welcoming setting for social
+              Sabal House offers a refined and welcoming setting for social
               events in Savannah, Georgia. From milestone birthdays and
               anniversary dinners to family gatherings and private celebrations,
               our spaces are designed for memorable moments shared with the
@@ -208,7 +208,7 @@ export default function SocialEventsPage() {
           <div className="relative min-h-[360px] overflow-hidden md:min-h-[520px]">
             <Image
               src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1740&auto=format&fit=crop"
-              alt="Private gathering at Sable House"
+              alt="Private gathering at Sabal House"
               fill
               className="social-feature-image object-cover opacity-0"
               sizes="(max-width: 1024px) 100vw, 50vw"
@@ -228,7 +228,7 @@ export default function SocialEventsPage() {
               <p className="social-feature-text mt-7 text-base leading-8 text-main/75 opacity-0 md:text-lg md:leading-9">
                 Host a private dinner that feels intimate, polished, and easy.
                 Whether you are celebrating with family or bringing friends
-                together for a special night, Sable House offers a relaxed
+                together for a special night, Sabal House offers a relaxed
                 setting with elevated hospitality.
               </p>
 
@@ -247,7 +247,7 @@ export default function SocialEventsPage() {
           <div className="relative min-h-[360px] overflow-hidden md:min-h-[520px] lg:order-2">
             <Image
               src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?q=80&w=1740&auto=format&fit=crop"
-              alt="Social reception at Sable House"
+              alt="Social reception at Sabal House"
               fill
               className="social-feature-image object-cover opacity-0"
               sizes="(max-width: 1024px) 100vw, 50vw"
@@ -293,7 +293,7 @@ export default function SocialEventsPage() {
 
             <p className="social-animate mt-7 max-w-3xl text-base leading-8 text-main/75 opacity-0 md:text-lg md:leading-9">
               Whether your event is small and quiet or lively and celebratory,
-              Sable House offers a charming Savannah backdrop, inviting rooms,
+              Sabal House offers a charming Savannah backdrop, inviting rooms,
               and service that helps the day feel effortless.
             </p>
           </div>
@@ -327,7 +327,7 @@ export default function SocialEventsPage() {
 
             <p className="mt-6 text-base leading-8 text-main/75 md:text-lg">
               A glimpse at the textures, tables, and gathering spaces that help
-              make celebrations at Sable House feel personal.
+              make celebrations at Sabal House feel personal.
             </p>
           </div>
 
