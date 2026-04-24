@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -40,18 +41,33 @@ const mainLinks = [
   },
   {
     label: "Explore",
-    href: "/",
+    href: "/local-events",
     dropdown: [{ label: "Local Events", href: "/local-events" }],
   },
 ];
 
 export default function NavBar() {
+  const pathname = usePathname();
+
   const [openIndex, setOpenIndex] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showNav, setShowNav] = useState(true);
 
-  const activeItem = "Stay";
+  const isLinkActive = (item) => {
+    if (item.href === "/") {
+      return (
+        pathname === "/" ||
+        item.dropdown?.some((subItem) => pathname === subItem.href)
+      );
+    }
+
+    return (
+      pathname === item.href ||
+      pathname.startsWith(`${item.href}/`) ||
+      item.dropdown?.some((subItem) => pathname === subItem.href)
+    );
+  };
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -144,32 +160,46 @@ export default function NavBar() {
 
               <div className="mt-2 border-t border-white/20 pt-4">
                 <div className="flex flex-col gap-4">
-                  {mainLinks.map((item) => (
-                    <div key={item.label} className="flex flex-col gap-2">
-                      <Link
-                        href={item.href}
-                        className="text-sm uppercase tracking-[0.16em] text-white"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        {item.label}
-                      </Link>
+                  {mainLinks.map((item) => {
+                    const isActive = isLinkActive(item);
 
-                      {item.dropdown?.length > 0 && (
-                        <div className="ml-4 flex flex-col gap-2">
-                          {item.dropdown.map((subItem) => (
-                            <Link
-                              key={subItem.label}
-                              href={subItem.href}
-                              className="text-xs uppercase tracking-[0.12em] text-white/80"
-                              onClick={() => setMobileMenuOpen(false)}
-                            >
-                              {subItem.label}
-                            </Link>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
+                    return (
+                      <div key={item.label} className="flex flex-col gap-2">
+                        <Link
+                          href={item.href}
+                          className={`w-fit border-b-2 pb-1 text-sm uppercase tracking-[0.16em] text-white ${
+                            isActive ? "border-white" : "border-transparent"
+                          }`}
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          {item.label}
+                        </Link>
+
+                        {item.dropdown?.length > 0 && (
+                          <div className="ml-4 flex flex-col gap-2">
+                            {item.dropdown.map((subItem) => {
+                              const isSubActive = pathname === subItem.href;
+
+                              return (
+                                <Link
+                                  key={subItem.label}
+                                  href={subItem.href}
+                                  className={`w-fit border-b pb-1 text-xs uppercase tracking-[0.12em] ${
+                                    isSubActive
+                                      ? "border-white text-white"
+                                      : "border-transparent text-white/80"
+                                  }`}
+                                  onClick={() => setMobileMenuOpen(false)}
+                                >
+                                  {subItem.label}
+                                </Link>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -230,7 +260,7 @@ export default function NavBar() {
 
             <nav className="flex items-center gap-10 border-b border-white/30 pb-4">
               {mainLinks.map((item, index) => {
-                const isActive = activeItem === item.label;
+                const isActive = isLinkActive(item);
                 const isOpen = openIndex === index;
                 const isLastItem = index === mainLinks.length - 1;
 
@@ -264,15 +294,23 @@ export default function NavBar() {
                           }`}
                         >
                           <div className="flex flex-col gap-4">
-                            {item.dropdown.map((subItem) => (
-                              <Link
-                                key={subItem.label}
-                                href={subItem.href}
-                                className="text-[13px] uppercase tracking-[0.12em] text-white/90 transition-colors duration-300 hover:text-white"
-                              >
-                                {subItem.label}
-                              </Link>
-                            ))}
+                            {item.dropdown.map((subItem) => {
+                              const isSubActive = pathname === subItem.href;
+
+                              return (
+                                <Link
+                                  key={subItem.label}
+                                  href={subItem.href}
+                                  className={`text-[13px] uppercase tracking-[0.12em] transition-colors duration-300 ${
+                                    isSubActive
+                                      ? "text-white underline underline-offset-4"
+                                      : "text-white/90 hover:text-white"
+                                  }`}
+                                >
+                                  {subItem.label}
+                                </Link>
+                              );
+                            })}
                           </div>
                         </div>
                       </div>
