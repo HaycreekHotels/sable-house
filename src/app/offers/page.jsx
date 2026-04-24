@@ -1,4 +1,4 @@
-import HeroImage from "../components/layout/Heros/HeroImage";
+import HeroImage from "../components/layout/heros/HeroImage";
 import IntroSection from "../components/layout/Intro/IntroSection";
 import OffersPackagesSection from "../components/cards/OffersPackagesSection";
 

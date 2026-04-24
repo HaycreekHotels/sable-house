@@ -1,4 +1,4 @@
-import HeroImage from "../components/layout/Heros/HeroImage";
+import HeroImage from "../components/layout/heros/HeroImage";
 import ContactPageSection from "../components/contact/ContactPageSection";
 
 export const metadata = {

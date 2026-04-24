@@ -1,4 +1,4 @@
-import HeroVideo from "./components/layout/Heros/HeroVideo";
+import HeroVideo from "./components/layout/heros/HeroVideo";
 import ParallaxIntroduction from "./components/features/ParallaxIntroduction";
 import OverlapCarouselSection from "./components/features/OverlapCarouselSection";
 import FeatureCarousel from "./components/features/FeatureCarousel";

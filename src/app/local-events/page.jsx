@@ -1,4 +1,4 @@
-import HeroImage from "../components/layout/Heros/HeroImage";
+import HeroImage from "../components/layout/heros/HeroImage";
 import EventsListWithCalendar from "../components/events/EventsListWithCalendar";
 
 import { events } from "../data/events";
