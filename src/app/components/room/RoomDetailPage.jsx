@@ -72,7 +72,7 @@ export default function RoomDetailPage({ room }) {
   }, []);
 
   return (
-    <main ref={pageRef} className="bg-white text-[#062b3a]">
+    <main ref={pageRef} className="bg-secondary text-textColor">
       <section className="relative h-[60vh] min-h-[420px] w-full overflow-hidden md:h-[75vh]">
         <Image
           src={room.mainImage}
