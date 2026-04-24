@@ -26,7 +26,7 @@ const mainLinks = [
     href: "/dine",
     dropdown: [
       { label: "Oak Steak House", href: "/dine/oak-steak-house" },
-      { label: "The Bar", href: "/dine/bar" },
+      { label: "The Bar", href: "/dine/the-bar" },
     ],
   },
   {
