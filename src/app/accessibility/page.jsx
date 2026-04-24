@@ -1,4 +1,4 @@
-import AccessibilityClient from "../components/accessibility/accessibilityClient";
+import AccessibilityClient from "../components/accessibility/AccessibilityClient";
 
 export const metadata = {
   title: "Accessibility | Sable House",

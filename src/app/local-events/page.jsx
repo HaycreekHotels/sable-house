@@ -1,9 +1,12 @@
-"use client";
-
 import HeroImage from "../components/layout/Heros/HeroImage";
 import EventsListWithCalendar from "../components/events/EventsListWithCalendar";
 
 import { events } from "../data/events";
+
+export const metadata = {
+  title: "Local Events | Sable House",
+  description: "The local events around sable house in savannah geoirgia",
+};
 
 export default function EventsPage() {
   return (

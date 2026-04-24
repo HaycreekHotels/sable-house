@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 import HeroImage from "../layout/Heros/HeroImage";
 
 gsap.registerPlugin(ScrollTrigger);
