@@ -109,7 +109,7 @@ export default function ContactPageSection() {
       <section className="mx-auto max-w-6xl">
         <div className="contact-intro-wrapper mb-16 max-w-3xl">
           <p className="contact-intro mb-4 text-sm uppercase tracking-[0.35em] text-contrast opacity-0">
-            Sable House
+            Sabal House
           </p>
 
           <h1 className="contact-intro font-serif text-5xl leading-tight text-main opacity-0 md:text-7xl">
@@ -141,7 +141,7 @@ export default function ContactPageSection() {
                 Address
               </p>
               <address className="not-italic text-xl leading-8 text-main">
-                123 Sable House Lane
+                123 Sabal House Lane
                 <br />
                 Savannah, GA 31401
               </address>
@@ -152,10 +152,10 @@ export default function ContactPageSection() {
                 Email
               </p>
               <a
-                href="mailto:hello@sablehouse.com"
+                href="mailto:hello@sabalhouse.com"
                 className="text-xl text-main transition-opacity hover:opacity-70"
               >
-                hello@sablehouse.com
+                hello@sabalhouse.com
               </a>
             </div>
           </aside>

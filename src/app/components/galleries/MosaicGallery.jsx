@@ -11,7 +11,7 @@ const galleryImages = [
   {
     id: 1,
     src: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1740&auto=format&fit=crop",
-    alt: "Elegant guest room at Sable House",
+    alt: "Elegant guest room at sabal House",
     size: "small",
   },
   {
@@ -29,7 +29,7 @@ const galleryImages = [
   {
     id: 4,
     src: "https://images.unsplash.com/photo-1600210491369-e753d80a41f3?q=80&w=1740&auto=format&fit=crop",
-    alt: "Sable House bedroom design",
+    alt: "sabal House bedroom design",
     size: "largeWide",
   },
   {
@@ -47,7 +47,7 @@ const galleryImages = [
   {
     id: 7,
     src: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1740&auto=format&fit=crop",
-    alt: "Sable House bathroom interior",
+    alt: "sabal House bathroom interior",
     size: "medium",
   },
   {
@@ -67,9 +67,9 @@ const sizeClasses = {
 };
 
 export default function MosaicGallery({
-  eyebrow = "Sable House",
+  eyebrow = "sabal House",
   heading = "Gallery",
-  intro = "Explore the spaces, textures, and quiet details that shape the Sable House experience.",
+  intro = "Explore the spaces, textures, and quiet details that shape the Sabal House experience.",
   images = galleryImages,
 }) {
   const sectionRef = useRef(null);

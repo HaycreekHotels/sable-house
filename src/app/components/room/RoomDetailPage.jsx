@@ -76,7 +76,7 @@ export default function RoomDetailPage({ room }) {
       <section className="relative h-[60vh] min-h-[420px] w-full overflow-hidden md:h-[75vh]">
         <Image
           src={room.mainImage}
-          alt={`${room.title} at Sable House`}
+          alt={`${room.title} at sabal House`}
           fill
           priority
           className="room-hero-image object-cover opacity-0"
@@ -88,7 +88,7 @@ export default function RoomDetailPage({ room }) {
         <div className="absolute inset-x-0 bottom-0 px-5 pb-10 md:px-10 lg:px-16">
           <div className="mx-auto max-w-7xl">
             <p className="mb-3 text-sm uppercase tracking-[0.4em] text-white">
-              Sable House
+              Sabal House
             </p>
 
             <h1 className="font-serif text-5xl uppercase leading-none text-white md:text-7xl lg:text-8xl">

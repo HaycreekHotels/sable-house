@@ -111,7 +111,7 @@ export default function Footer() {
               ))}
             </div>
             <p className="text-md text-white/70 md:text-lg">
-              &#9400; 2026 THE SABLE HOUSE
+              &#9400; 2026 THE SABAL HOUSE
             </p>
           </div>
         </div>
