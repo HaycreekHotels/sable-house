@@ -7,7 +7,6 @@ import Image from "next/image";
 import whiteLogo from "../../../../../public/images/logos/SH_Primary Logo Offwhite.png";
 
 const utilityLinks = [
-  { label: "About Us", href: "/about" },
   { label: "Contact Us", href: "/contact" },
   { label: "Gallery", href: "/gallery" },
 ];
@@ -15,11 +14,11 @@ const utilityLinks = [
 const mainLinks = [
   {
     label: "Stay",
-    href: "/stay",
+    href: "/rooms",
     dropdown: [
-      { label: "Rooms & Suites", href: "/stay/guest-rooms" },
-      { label: "Packages & Offers", href: "/stay/offers" },
-      { label: "Corporate Travel", href: "/stay/corporate-travel" },
+      { label: "Rooms & Suites", href: "/rooms" },
+      { label: "Packages & Offers", href: "/offers" },
+      { label: "Corporate Travel", href: "/corporate-travel" },
     ],
   },
   {
@@ -185,6 +184,7 @@ export default function NavBar() {
                 src={whiteLogo}
                 alt="Sable House Hotel logo in offwhite color"
                 priority
+                loading="eager"
               />
             </Link>
           </div>
