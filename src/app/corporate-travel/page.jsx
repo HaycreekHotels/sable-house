@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,6 +7,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 import HeroImage from "../components/layout/Heros/HeroImage";
+
+export const metadata = {
+  title: "Corporate Travel | Sable House",
+  description: "Corporate Travel for setting up events at Sable House",
+};
 
 export default function CorporateTravel({
   image = "https://images.unsplash.com/photo-1618220179428-22790b461013?q=80&w=1740&auto=format&fit=crop",

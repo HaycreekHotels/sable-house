@@ -1,8 +1,11 @@
-"use client";
-
 import HeroImage from "../components/layout/Heros/HeroImage";
 import IntroSection from "../components/layout/Intro/IntroSection";
 import RoomsSuitesGrid from "../components/cards/RoomSuitesGrid";
+
+export const metadata = {
+  title: "Rooms | Sable House",
+  description: "The room types at the sable house hotel",
+};
 
 export default function rooms() {
   return (

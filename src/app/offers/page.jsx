@@ -1,8 +1,11 @@
-"use client";
-
 import HeroImage from "../components/layout/Heros/HeroImage";
 import IntroSection from "../components/layout/Intro/IntroSection";
 import OffersPackagesSection from "../components/cards/OffersPackagesSection";
+
+export const metadata = {
+  title: "Offers & Pacakages | Sable House",
+  description: "The current Offers and Packages for guest bookings",
+};
 
 export default function Offer() {
   return (

@@ -1,9 +1,12 @@
-"use clinet";
-
 import HeroImage from "../components/layout/Heros/HeroImage";
 import ContactPageSection from "../components/contact/ContactPageSection";
 
-export default function contact() {
+export const metadata = {
+  title: "Contact Us | Sable House",
+  description: "Contact the helpful team for the Sable House Hotel.",
+};
+
+export default function Page() {
   return (
     <>
       <HeroImage

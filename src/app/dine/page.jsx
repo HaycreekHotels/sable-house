@@ -1,12 +1,16 @@
-"use client";
-
 import HeroImage from "../components/layout/Heros/HeroImage";
 import IntroSection from "../components/layout/Intro/IntroSection";
 import RestaurantFeatureCard from "../components/cards/RestaurantFeatureCard";
 
 import { restaurants } from "../data/restaurants";
 
-export default function Dine() {
+export const metadata = {
+  title: "Dine | Sable House",
+  description:
+    "Dine at one of the two in-house resturaunts at the Sable House ",
+};
+
+export default function Page() {
   return (
     <section>
       <HeroImage

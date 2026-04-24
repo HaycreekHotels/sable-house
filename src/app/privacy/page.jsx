@@ -1,9 +1,12 @@
-"use client";
-
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HeroImage from "../components/layout/Heros/HeroImage";
+
+export const metadata = {
+  title: "Privacy Policy | Sable House",
+  description: "Privacy Policy at the Sable House",
+};
 
 gsap.registerPlugin(ScrollTrigger);
 

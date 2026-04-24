@@ -59,7 +59,7 @@ export default function OverlapCarouselSection({
             ref={imageBlockRef}
             className={`relative -mt-20 md:-mt-28 lg:-mt-36 ${imageOrderClass}`}
           >
-            <div className="relative aspect-[4/5] w-full overflow-hidden shadow-xl">
+            <div className="relative aspect-4/5 w-full overflow-hidden shadow-xl">
               {slides.map((slide, index) => (
                 <div
                   key={slide.id}

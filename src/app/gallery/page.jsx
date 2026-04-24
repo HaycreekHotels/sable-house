@@ -1,9 +1,12 @@
-"use client";
-
 import HeroImage from "../components/layout/Heros/HeroImage";
 import MosaicGallery from "../components/galleries/MosaicGallery";
 
-export default function GalleryPage() {
+export const metadata = {
+  title: "Gallery | Sable House",
+  description: "View the Newly built sable house",
+};
+
+export default function Page() {
   return (
     <>
       <HeroImage

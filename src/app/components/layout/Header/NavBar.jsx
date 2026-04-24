@@ -34,14 +34,14 @@ const mainLinks = [
     href: "/events",
     dropdown: [
       { label: "Weddings", href: "/events/weddings" },
-      { label: "Corporate Events", href: "/events/corporate" },
-      { label: "Social Events", href: "/events/social" },
+      { label: "Corporate Events", href: "/events/corporate-events" },
+      { label: "Social Events", href: "/events/social-events" },
     ],
   },
   {
     label: "Explore",
-    href: "/explore",
-    dropdown: [{ label: "Local Events", href: "/explore/local-events" }],
+    href: "/",
+    dropdown: [{ label: "Local Events", href: "/local-events" }],
   },
 ];
 

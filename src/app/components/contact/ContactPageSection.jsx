@@ -222,7 +222,7 @@ export default function ContactPageSection() {
 
             <button
               type="submit"
-              className="mt-8 inline-flex min-h-[56px] items-center justify-center border border-main px-8 text-xs uppercase tracking-[0.25em] text-main transition-colors duration-300 hover:bg-main hover:text-secondary"
+              className="mt-8 inline-flex min-h-14 items-center justify-center border border-main px-8 text-xs uppercase tracking-[0.25em] text-main transition-colors duration-300 hover:bg-main hover:text-secondary"
             >
               Send Message
             </button>
