@@ -8,16 +8,95 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const imageSrc =
-  "https://images.unsplash.com/photo-1782064230154-ba47c8714d9e?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
-
-const videoSrc =
+const VIDEO_SRC =
   "https://cdn.pixabay.com/video/2021/09/22/89352-613200582_large.mp4";
 
-const heroTile = "hero-tile w-72 h-72 overflow-hidden ";
-const heroMedia = "w-full h-full object-cover";
-const videoPlaceholder =
-  "video-placeholder col-start-2 row-start-2 w-72 h-72 overflow-hidden ";
+const VIDEO_POSTER =
+  "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1200&auto=format&fit=crop";
+
+const GRID_ITEMS = [
+  {
+    id: "interior-01",
+    type: "image",
+    src: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1740&auto=format&fit=crop",
+    alt: "",
+  },
+  {
+    id: "interior-02",
+    type: "image",
+    src: "https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=1740&auto=format&fit=crop",
+    alt: "",
+  },
+  {
+    id: "interior-03",
+    type: "image",
+    src: "https://images.unsplash.com/photo-1618220179428-22790b461013?q=80&w=1740&auto=format&fit=crop",
+    alt: "",
+  },
+  {
+    id: "interior-04",
+    type: "image",
+    src: "https://images.unsplash.com/photo-1600210491369-e753d80a41f3?q=80&w=1740&auto=format&fit=crop",
+    alt: "",
+  },
+  {
+    id: "interior-05",
+    type: "image",
+    src: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=1740&auto=format&fit=crop",
+    alt: "",
+  },
+  {
+    id: "hero-video-placeholder",
+    type: "video-placeholder",
+  },
+  {
+    id: "interior-06",
+    type: "image",
+    src: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1740&auto=format&fit=crop",
+    alt: "",
+  },
+  {
+    id: "interior-07",
+    type: "image",
+    src: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1200&auto=format&fit=crop",
+    alt: "",
+  },
+  {
+    id: "interior-08",
+    type: "image",
+    src: "https://images.unsplash.com/photo-1500534623283-312aade485b7?q=80&w=1200&auto=format&fit=crop",
+    alt: "",
+  },
+  {
+    id: "interior-09",
+    type: "image",
+    src: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=1200&auto=format&fit=crop",
+    alt: "",
+  },
+  {
+    id: "interior-10",
+    type: "image",
+    src: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1740&auto=format&fit=crop",
+    alt: "",
+  },
+  {
+    id: "interior-11",
+    type: "image",
+    src: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1740&auto=format&fit=crop",
+    alt: "",
+  },
+];
+
+const tileClass =
+  "hero-tile aspect-square w-[28vw] overflow-hidden  bg-neutral-900 sm:w-32 md:w-40 lg:w-52 xl:w-64 2xl:w-72";
+
+const placeholderClass =
+  "video-placeholder col-start-2 row-start-2 aspect-square w-[28vw] overflow-hidden  bg-neutral-900 sm:w-32 md:w-40 lg:w-52 xl:w-64 2xl:w-72";
+
+const mediaClass = "h-full w-full object-cover";
+
+const imageSizes =
+  "(max-width: 639px) 28vw, (max-width: 767px) 8rem, (max-width: 1023px) 10rem, (max-width: 1279px) 13rem, (max-width: 1535px) 16rem, 18rem";
 
 export default function HeroGrid() {
   const sectionRef = useRef(null);
@@ -31,69 +110,117 @@ export default function HeroGrid() {
       const placeholder = placeholderRef.current;
       const videoLayer = videoLayerRef.current;
       const heroCopy = heroCopyRef.current;
+      const video = videoLayer?.querySelector("video");
 
       if (!section || !placeholder || !videoLayer || !heroCopy) return;
 
-      const setVideoStartPosition = () => {
+      const getStartBounds = () => {
         const sectionBox = section.getBoundingClientRect();
         const placeholderBox = placeholder.getBoundingClientRect();
 
-        gsap.set(videoLayer, {
-          position: "absolute",
+        return {
           top: placeholderBox.top - sectionBox.top,
           left: placeholderBox.left - sectionBox.left,
           width: placeholderBox.width,
           height: placeholderBox.height,
+        };
+      };
+
+      const getScrollDistance = () => {
+        const width = window.innerWidth;
+
+        if (width < 640) return "+=950";
+        if (width < 1024) return "+=1250";
+
+        return "+=1600";
+      };
+
+      const mm = gsap.matchMedia();
+
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        video?.pause();
+
+        gsap.set(videoLayer, {
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
           zIndex: 20,
           opacity: 1,
-
           overflow: "hidden",
+        });
+
+        gsap.set(".hero-tile", {
+          opacity: 0,
+        });
+
+        gsap.set(heroCopy, {
+          opacity: 1,
+          y: 0,
+        });
+      });
+
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.set(videoLayer, {
+          position: "absolute",
+          zIndex: 20,
+          overflow: "hidden",
+          opacity: 1,
+          willChange: "top, left, width, height",
         });
 
         gsap.set(heroCopy, {
           opacity: 0,
           y: 40,
         });
-      };
 
-      setVideoStartPosition();
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: getScrollDistance,
+            scrub: true,
+            pin: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        });
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: "+=1600",
-          scrub: true,
-          pin: true,
-          invalidateOnRefresh: true,
-          onRefresh: setVideoStartPosition,
-        },
+        tl.fromTo(
+          videoLayer,
+          {
+            top: () => getStartBounds().top,
+            left: () => getStartBounds().left,
+            width: () => getStartBounds().width,
+            height: () => getStartBounds().height,
+          },
+          {
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            ease: "none",
+          },
+        );
+
+        tl.to(
+          ".hero-tile",
+          {
+            opacity: 0,
+            scale: 0.92,
+            ease: "none",
+          },
+          "<",
+        );
+
+        tl.to(heroCopy, {
+          opacity: 1,
+          y: 0,
+          duration: 0.25,
+        });
       });
 
-      tl.to(videoLayer, {
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-
-        ease: "none",
-      });
-
-      tl.to(
-        ".hero-tile",
-        {
-          opacity: 0,
-          scale: 0.9,
-          ease: "none",
-        },
-        "<",
-      );
-
-      tl.to(heroCopy, {
-        opacity: 1,
-        y: 0,
-        duration: 0.25,
-      });
+      return () => mm.revert();
     },
     { scope: sectionRef },
   );
@@ -101,54 +228,78 @@ export default function HeroGrid() {
   return (
     <section
       ref={sectionRef}
-      className="relative grid h-screen w-full place-items-center overflow-hidden"
+      aria-labelledby="hero-title"
+      className="relative grid h-svh w-full place-items-center overflow-hidden "
     >
-      <div className="grid w-full grid-cols-4 grid-rows-3 gap-4 px-4 justify-items-center">
-        {Array.from({ length: 12 }).map((_, index) => {
-          const isVideoSpot = index === 5;
-
-          if (isVideoSpot) {
+      <div
+        aria-hidden="true"
+        className="grid w-full  grid-cols-3 grid-rows-4 justify-items-center gap-3 px-4 sm:gap-4 md:grid-cols-4 md:grid-rows-3"
+      >
+        {GRID_ITEMS.map((item) => {
+          if (item.type === "video-placeholder") {
             return (
               <div
-                key={index}
+                key={item.id}
                 ref={placeholderRef}
-                className={videoPlaceholder}
+                className={placeholderClass}
               />
             );
           }
 
           return (
-            <div key={index} className={heroTile}>
+            <div key={item.id} className={tileClass}>
               <Image
+                src={item.src}
+                alt={item.alt}
                 width={288}
                 height={288}
-                className={heroMedia}
-                src={imageSrc}
-                alt=""
+                sizes={imageSizes}
+                className={mediaClass}
+                draggable={false}
               />
             </div>
           );
         })}
       </div>
 
-      <div ref={videoLayerRef} className="pointer-events-none opacity-0">
+      <div
+        ref={videoLayerRef}
+        className="pointer-events-none opacity-0"
+        aria-hidden="true"
+      >
         <video
-          className={heroMedia}
-          src={videoSrc}
+          className={mediaClass}
+          src={VIDEO_SRC}
+          poster={VIDEO_POSTER}
           autoPlay
           muted
           loop
           playsInline
+          preload="metadata"
         />
       </div>
 
       <div
         ref={heroCopyRef}
-        className="pointer-events-none absolute inset-0 z-30 grid place-items-center px-6 text-center"
+        className="pointer-events-none absolute inset-0 z-30 grid translate-y-10 place-items-center px-5 text-center opacity-0 sm:px-6"
       >
-        <h1 className="max-w-4xl text-5xl font-bold text-white md:text-7xl">
-          Step Into the Story
-        </h1>
+        <div className="max-w-[90vw] sm:max-w-2xl lg:max-w-4xl">
+          <p className="mb-3 text-xs font-medium uppercase tracking-[0.25em] text-white/75 sm:mb-4 sm:text-sm">
+            Interior Design Studio
+          </p>
+
+          <h1
+            id="hero-title"
+            className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
+          >
+            Step Into the Story
+          </h1>
+
+          <p className="mt-4 text-base leading-7 text-white/80 sm:mt-6 sm:text-lg md:text-xl md:leading-8">
+            Thoughtfully designed spaces that feel cinematic, personal, and
+            deeply lived in.
+          </p>
+        </div>
       </div>
     </section>
   );
