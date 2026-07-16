@@ -5,7 +5,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
+import logo from "../../../../../public/images/logos/SH_Primary Logo Black.png";
 gsap.registerPlugin(ScrollTrigger);
 
 const VIDEO_SRC =
@@ -67,36 +67,17 @@ const GRID_ITEMS = [
     src: "https://images.unsplash.com/photo-1500534623283-312aade485b7?q=80&w=1200&auto=format&fit=crop",
     alt: "",
   },
-  {
-    id: "interior-09",
-    type: "image",
-    src: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=1200&auto=format&fit=crop",
-    alt: "",
-  },
-  {
-    id: "interior-10",
-    type: "image",
-    src: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1740&auto=format&fit=crop",
-    alt: "",
-  },
-  {
-    id: "interior-11",
-    type: "image",
-    src: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1740&auto=format&fit=crop",
-    alt: "",
-  },
 ];
 
 const tileClass =
-  "hero-tile aspect-square w-[28vw] overflow-hidden  bg-neutral-900 sm:w-32 md:w-40 lg:w-52 xl:w-64 2xl:w-72";
+  "hero-tile relative min-h-0 min-w-0 overflow-hidden border border-black/40 bg-neutral-900";
 
 const placeholderClass =
-  "video-placeholder col-start-2 row-start-2 aspect-square w-[28vw] overflow-hidden  bg-neutral-900 sm:w-32 md:w-40 lg:w-52 xl:w-64 2xl:w-72";
+  "video-placeholder relative col-start-1 row-start-2 min-h-0 min-w-0 overflow-hidden border border-black/40 bg-neutral-900";
 
 const mediaClass = "h-full w-full object-cover";
 
-const imageSizes =
-  "(max-width: 639px) 28vw, (max-width: 767px) 8rem, (max-width: 1023px) 10rem, (max-width: 1279px) 13rem, (max-width: 1535px) 16rem, 18rem";
+const imageSizes = "33vw";
 
 export default function HeroGrid() {
   const sectionRef = useRef(null);
@@ -229,37 +210,61 @@ export default function HeroGrid() {
     <section
       ref={sectionRef}
       aria-labelledby="hero-title"
-      className="relative grid h-svh w-full place-items-center overflow-hidden "
+      className="relative h-svh w-full overflow-hidden bg-[#f5f1ea]"
     >
-      <div
-        aria-hidden="true"
-        className="grid w-full  grid-cols-3 grid-rows-4 justify-items-center gap-3 px-4 sm:gap-4 md:grid-cols-4 md:grid-rows-3"
-      >
-        {GRID_ITEMS.map((item) => {
-          if (item.type === "video-placeholder") {
-            return (
-              <div
-                key={item.id}
-                ref={placeholderRef}
-                className={placeholderClass}
-              />
-            );
-          }
+      <div className="flex h-full min-h-0 flex-col px-3 pb-3 pt-6 sm:px-6 sm:pb-6 sm:pt-8 lg:px-10 lg:pb-8 lg:pt-10">
+        {/* Top branding row */}
+        <header className="grid shrink-0 grid-cols-[1fr_auto_1fr] items-start pb-6 sm:pb-8">
+          <p className="pt-3 text-[10px] font-semibold uppercase tracking-tight text-black sm:pt-4 sm:text-lg">
+            Coming Soon
+          </p>
 
-          return (
-            <div key={item.id} className={tileClass}>
-              <Image
-                src={item.src}
-                alt={item.alt}
-                width={288}
-                height={288}
-                sizes={imageSizes}
-                className={mediaClass}
-                draggable={false}
-              />
-            </div>
-          );
-        })}
+          <div className="justify-self-center">
+            <Image
+              src={logo}
+              alt="Sabal House logo"
+              priority
+              className="h-auto w-36 sm:w-44 lg:w-52"
+            />
+          </div>
+
+          <p className="justify-self-end pt-3 text-[10px] font-semibold uppercase tracking-tight text-black sm:pt-4 sm:text-lg">
+            Winter 2026
+          </p>
+        </header>
+
+        {/* The grid consumes all remaining viewport height */}
+        <div className="flex min-h-0 flex-1 justify-center">
+          <div
+            aria-hidden="true"
+            className=" grid h-full w-full grid-cols-3 grid-rows-3 gap-2 sm:gap-3 lg:max-w-[calc((100svh-10rem)*1.25)] lg:gap-4"
+          >
+            {GRID_ITEMS.map((item) => {
+              if (item.type === "video-placeholder") {
+                return (
+                  <div
+                    key={item.id}
+                    ref={placeholderRef}
+                    className={placeholderClass}
+                  />
+                );
+              }
+
+              return (
+                <div key={item.id} className={tileClass}>
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    fill
+                    sizes={imageSizes}
+                    className={mediaClass}
+                    draggable={false}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
       <div
