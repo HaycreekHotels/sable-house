@@ -253,7 +253,7 @@ export default function HeroGrid() {
           src={logo}
           alt="Sabal House logo"
           priority
-          className="h-auto w-36 sm:w-44 lg:w-52"
+          className="h-auto w-28 sm:w-34 lg:w-44"
         />
       </header>
       <section
