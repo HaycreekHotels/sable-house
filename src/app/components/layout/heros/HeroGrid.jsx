@@ -13,8 +13,7 @@ gsap.registerPlugin(ScrollTrigger);
 const VIDEO_SRC =
   "https://res.cloudinary.com/dnhvjwqak/video/upload/v1784433896/Sabal_House_-_Draft_2_p29tun.mp4";
 
-const VIDEO_POSTER =
-  "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1200&auto=format&fit=crop";
+const VIDEO_POSTER = "../../../../../public/images/logos/video poster.png";
 
 const GRID_ITEMS = [
   // Row 1
@@ -284,13 +283,13 @@ export default function HeroGrid() {
         tl.to(heroCopy, {
           opacity: 1,
           y: 0,
-          duration: 0.25,
+          duration: 0.75,
         });
 
         tl.to(heroCopy, {
           opacity: 0,
           y: 0,
-          duration: 0.5,
+          duration: 0.75,
         });
       });
 
