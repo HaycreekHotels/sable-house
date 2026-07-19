@@ -107,6 +107,7 @@ const mediaClass = "h-full w-full object-cover";
 
 export default function HeroGrid() {
   const sectionRef = useRef(null);
+  const gridRef = useRef(null);
   const placeholderRef = useRef(null);
   const videoLayerRef = useRef(null);
   const videoRef = useRef(null);
