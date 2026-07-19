@@ -1,4 +1,3 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -6,15 +5,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import NavBar from "./components/layout/Header/NavBar";
 import Footer from "./components/layout/Footer/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { bentonLight, bentonReg, centralNoLight, centralNoReg } from "./fonts";
 
 export const metadata = {
   title: "Sabal House",
@@ -25,7 +16,10 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={` ${bentonLight.variable}
+        ${bentonReg.variable}
+        ${centralNoLight.variable}
+        ${centralNoReg.variable}h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         {children}

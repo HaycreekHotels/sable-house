@@ -11,7 +11,7 @@ import logo from "../../../../../public/images/logos/SH_Primary Logo Offwhite.pn
 gsap.registerPlugin(ScrollTrigger);
 
 const VIDEO_SRC =
-  "https://cdn.pixabay.com/video/2021/09/22/89352-613200582_large.mp4";
+  "https://res.cloudinary.com/dnhvjwqak/video/upload/v1784433896/Sabal_House_-_Draft_2_p29tun.mp4";
 
 const VIDEO_POSTER =
   "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1200&auto=format&fit=crop";
@@ -21,39 +21,34 @@ const GRID_ITEMS = [
   {
     id: "interior-01",
     type: "image",
-    src: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1740&auto=format&fit=crop",
+    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784431948/1st_m3hsdp.jpg",
   },
   {
     id: "interior-02",
     type: "image",
-    src: "https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=1740&auto=format&fit=crop",
+    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784431945/2nd_zuqgao.jpg",
   },
   {
     id: "interior-03",
     type: "image",
-    src: "https://images.unsplash.com/photo-1618220179428-22790b461013?q=80&w=1740&auto=format&fit=crop",
+    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784431946/3rd_kq3a7y.jpg",
   },
   {
     id: "interior-04",
     type: "image",
-    src: "https://images.unsplash.com/photo-1600210491369-e753d80a41f3?q=80&w=1740&auto=format&fit=crop",
+    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784431945/4th_igbefl.jpg",
   },
   {
     id: "interior-05",
     type: "image",
-    src: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=1740&auto=format&fit=crop",
+    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784431947/5th_xbmlxk.jpg",
   },
 
   // Row 2
   {
     id: "interior-06",
     type: "image",
-    src: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1740&auto=format&fit=crop",
-  },
-  {
-    id: "interior-07",
-    type: "image",
-    src: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1200&auto=format&fit=crop",
+    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784431948/6th_oa4pdx.jpg",
   },
   {
     id: "hero-video-placeholder",
@@ -62,39 +57,44 @@ const GRID_ITEMS = [
   {
     id: "interior-08",
     type: "image",
-    src: "https://images.unsplash.com/photo-1500534623283-312aade485b7?q=80&w=1200&auto=format&fit=crop",
+    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784431948/8th_sfhuul.jpg",
   },
   {
     id: "interior-09",
     type: "image",
-    src: "https://images.unsplash.com/photo-1618220179428-22790b461013?q=80&w=1740&auto=format&fit=crop",
+    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784431947/9th_rnp2ly.jpg",
+  },
+  {
+    id: "interior-10",
+    type: "image",
+    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784431946/10th_r15mxi.jpg",
   },
 
   // Row 3
   {
-    id: "interior-10",
-    type: "image",
-    src: "https://images.unsplash.com/photo-1600210491369-e753d80a41f3?q=80&w=1740&auto=format&fit=crop",
-  },
-  {
     id: "interior-11",
     type: "image",
-    src: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=1740&auto=format&fit=crop",
+    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784431946/11th_wxezve.jpg",
   },
   {
     id: "interior-12",
     type: "image",
-    src: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1740&auto=format&fit=crop",
+    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784431949/12th_ug70iw.jpg",
   },
   {
     id: "interior-13",
     type: "image",
-    src: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1200&auto=format&fit=crop",
+    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784431949/13th_glnahg.jpg",
   },
   {
     id: "interior-14",
     type: "image",
-    src: "https://images.unsplash.com/photo-1500534623283-312aade485b7?q=80&w=1200&auto=format&fit=crop",
+    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784431950/14th_y4gvfh.jpg",
+  },
+  {
+    id: "interior-15",
+    type: "image",
+    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784431950/15th_emwqep.jpg",
   },
 ];
 
@@ -102,7 +102,7 @@ const tileClass =
   "hero-tile relative min-h-0 min-w-0 overflow-hidden bg-neutral-900";
 
 const placeholderClass =
-  "video-placeholder relative col-start-1 row-start-2 min-h-0 min-w-0 overflow-hidden bg-neutral-900";
+  "video-placeholder relative col-start-2 row-start-2 min-h-0 min-w-0 overflow-hidden bg-neutral-900";
 
 const mediaClass = "h-full w-full object-cover";
 
@@ -247,6 +247,12 @@ export default function HeroGrid() {
           y: 0,
           duration: 0.25,
         });
+
+        tl.to(heroCopy, {
+          opacity: 0,
+          y: 0,
+          duration: 0.5,
+        });
       });
 
       return () => mm.revert();
@@ -372,42 +378,37 @@ export default function HeroGrid() {
         <div
           className="
             max-w-[calc(100vw-2rem)]
-            bg-black/60
             px-5
             py-6
             text-white
-            shadow-2xl
             backdrop-blur-[2px]
             sm:max-w-2xl
             sm:px-8
             sm:py-8
-            lg:max-w-4xl
+            lg:max-w-full
             lg:px-12
             lg:py-10
           "
         >
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] sm:mb-4 sm:text-sm">
-            Interior Design Studio
-          </p>
-
           <h1
             id="hero-title"
             className="
+            font-benton-regular
               text-3xl
               font-bold
               leading-tight
               tracking-tight
               sm:text-5xl
               md:text-6xl
-              lg:text-7xl
+              lg:text-8xl
+              text-shadow-lg
             "
           >
-            Step Into the Story
+            Savannah Beyond The Square
           </h1>
 
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 sm:mt-6 sm:text-lg sm:leading-8 md:text-xl">
-            Thoughtfully designed spaces that feel cinematic, personal, and
-            deeply lived in.
+          <p className="mx-auto mt-4 max-w-2xl font-central-regular text-sm uppercase leading-6 sm:mt-6 sm:text-xl sm:leading-8 md:text-2xl">
+            Unveiling Sabal House | December 2026
           </p>
         </div>
       </div>

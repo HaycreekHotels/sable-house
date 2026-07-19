@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffffed;
+  --background: #f3ede2;
   --foreground: #171717;
   --main: #4f5532;
   --secondary: #f3ede2;
   --contrast: #6a4a3c;
-  --textColor: #737373;
+  --textColor: #6a4a3c;
 }
 
 @theme inline {
@@ -32,7 +32,22 @@
 body {
   background: var(--secondary);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
+}
+
+.font-benton-light {
+  font-family: var(--font-benton-light), sans-serif;
+}
+
+.font-benton-regular {
+  font-family: var(--font-benton-regular), sans-serif;
+}
+
+.font-central-light {
+  font-family: var(--font-central-light), serif;
+}
+
+.font-central-regular {
+  font-family: var(--font-central-regular), serif;
 }
