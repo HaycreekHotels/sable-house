@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -114,6 +114,45 @@ export default function HeroGrid() {
   const heroCopyRef = useRef(null);
 
   const [isVideoPaused, setIsVideoPaused] = useState(true);
+  const [showScrollIndicator, setShowScrollIndicator] = useState(false);
+
+  useEffect(() => {
+    let hasScrolled = window.scrollY > 10;
+
+    const revealTimer = window.setTimeout(() => {
+      if (!hasScrolled) {
+        setShowScrollIndicator(true);
+      }
+    }, 1800);
+
+    function handleFirstScroll() {
+      hasScrolled = true;
+      setShowScrollIndicator(false);
+      window.clearTimeout(revealTimer);
+    }
+
+    window.addEventListener("scroll", handleFirstScroll, {
+      passive: true,
+    });
+
+    return () => {
+      window.clearTimeout(revealTimer);
+      window.removeEventListener("scroll", handleFirstScroll);
+    };
+  }, []);
+
+  function handleScrollIndicatorClick() {
+    setShowScrollIndicator(false);
+
+    const prefersReduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    window.scrollBy({
+      top: Math.max(window.innerHeight * 0.35, 240),
+      behavior: prefersReduceMotion ? "auto" : "smooth",
+    });
+  }
 
   async function handleVideoToggle() {
     const video = videoRef.current;
@@ -412,6 +451,70 @@ export default function HeroGrid() {
           </p>
         </div>
       </div>
+
+      {/* Scroll prompt */}
+      {showScrollIndicator && (
+        <button
+          type="button"
+          onClick={handleScrollIndicatorClick}
+          className="
+      absolute
+      bottom-4
+      left-1/2
+      z-40
+      flex
+      min-h-11
+      -translate-x-1/2
+      flex-col
+      items-center
+      justify-center
+      gap-2
+      border
+      border-white/80
+      bg-black/70
+      px-5
+      py-3
+      text-xs
+      font-semibold
+      uppercase
+      tracking-[0.16em]
+      text-white
+      shadow-lg
+      backdrop-blur-sm
+      transition-colors
+      duration-300
+      hover:bg-black
+      focus-visible:outline
+      focus-visible:outline-2
+      focus-visible:outline-offset-4
+      focus-visible:outline-white
+      motion-reduce:transition-none
+      sm:bottom-6
+    "
+        >
+          <span>Scroll to explore</span>
+
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            fill="none"
+            className="
+        h-5
+        w-5
+        animate-bounce
+        motion-reduce:animate-none
+      "
+          >
+            <path
+              d="M6 9L12 15L18 9"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
+      )}
 
       {/* Accessible video playback control */}
       <button
