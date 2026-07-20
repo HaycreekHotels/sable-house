@@ -12,6 +12,7 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export default function MakingOfSabalHouse() {
   const sectionRef = useRef(null);
+  const headerRef = useRef(null);
   const gridRef = useRef(null);
 
   const videoRefs = useRef([]);
@@ -21,17 +22,15 @@ export default function MakingOfSabalHouse() {
 
   useGSAP(
     () => {
+      const section = sectionRef.current;
+      const header = headerRef.current;
       const grid = gridRef.current;
 
-      if (!grid) {
+      if (!section || !header || !grid) {
         return;
       }
 
-      const cards = gsap.utils.toArray("[data-video-card]", sectionRef.current);
-
-      if (!cards.length) {
-        return;
-      }
+      const cards = gsap.utils.toArray("[data-video-card]", section);
 
       const media = gsap.matchMedia();
 
@@ -41,9 +40,15 @@ export default function MakingOfSabalHouse() {
           reducedMotion: "(prefers-reduced-motion: reduce)",
         },
         (context) => {
-          const { reducedMotion } = context.conditions;
+          const reducedMotion = context.conditions?.reducedMotion;
 
           if (reducedMotion) {
+            gsap.set(header, {
+              autoAlpha: 1,
+              y: 0,
+              clearProps: "transform,opacity,visibility",
+            });
+
             gsap.set(cards, {
               autoAlpha: 1,
               y: 0,
@@ -54,6 +59,11 @@ export default function MakingOfSabalHouse() {
             return;
           }
 
+          gsap.set(header, {
+            autoAlpha: 0,
+            y: 30,
+          });
+
           gsap.set(cards, {
             autoAlpha: 0,
             y: 80,
@@ -63,24 +73,34 @@ export default function MakingOfSabalHouse() {
 
           const revealTimeline = gsap.timeline({
             scrollTrigger: {
-              trigger: grid,
-              start: "top 65%",
+              trigger: section,
+              start: "top 70%",
               once: true,
               invalidateOnRefresh: true,
-              toggleActions: "play none none none",
             },
           });
 
-          revealTimeline.to(cards, {
+          revealTimeline.to(header, {
             autoAlpha: 1,
             y: 0,
-            scale: 1,
-            duration: 1.6,
-            stagger: 0.28,
-            delay: 0.15,
+            duration: 0.7,
             ease: "power2.out",
             clearProps: "transform,opacity,visibility",
           });
+
+          revealTimeline.to(
+            cards,
+            {
+              autoAlpha: 1,
+              y: 0,
+              scale: 1,
+              duration: 1.6,
+              stagger: 0.28,
+              ease: "power2.out",
+              clearProps: "transform,opacity,visibility",
+            },
+            "-=0.2",
+          );
         },
       );
 
@@ -144,6 +164,11 @@ export default function MakingOfSabalHouse() {
 
   function handleVideoEnded(index) {
     const video = videoRefs.current[index];
+
+    if (!video) {
+      return;
+    }
+
     const shouldRestoreFocus = document.activeElement === video;
 
     resetVideo(video);
@@ -163,25 +188,24 @@ export default function MakingOfSabalHouse() {
 
     video.pause();
     video.currentTime = 0;
-    video.load();
   }
 
   return (
     <section
       ref={sectionRef}
       aria-labelledby="making-of-sabal-house-title"
-      className=" px-5 py-24 sm:px-8 sm:py-28 lg:px-10 lg:py-36"
+      className="px-5 py-24 sm:px-8 sm:py-28 lg:px-10 lg:pb-12 lg:pt-0"
     >
-      <div className="mx-auto max-w-7xl">
-        <header className="mx-auto max-w-6xl text-center">
+      <div className="mx-auto max-w-6xl">
+        <header ref={headerRef} className="mx-auto max-w-6xl text-center">
           <h2
             id="making-of-sabal-house-title"
-            className="text-balance font-serif text-4xl leading-tight text-stone-950 italic sm:text-5xl"
+            className="text-balance font-benton-regular text-4xl leading-tight text-stone-950 sm:text-[56px]"
           >
             The Making of Sabal House
           </h2>
 
-          <p className="mx-auto mt-6 max-w-6xl text-pretty text-base leading-7 text-stone-900 sm:text-lg sm:leading-8">
+          <p className="mx-auto mt-6 max-w-2xl text-pretty font-central-regular text-base leading-7 text-stone-900 sm:text-[16px] sm:leading-[1.5]">
             Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
             nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
             volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
@@ -205,8 +229,13 @@ export default function MakingOfSabalHouse() {
                 id={story.id}
                 data-video-card
                 aria-labelledby={titleId}
+                aria-describedby={descriptionId}
                 className="mx-auto w-full max-w-sm"
               >
+                <h3 id={titleId} className="sr-only">
+                  {story.name}, {story.role}
+                </h3>
+
                 <div className="group relative isolate aspect-[9/16] overflow-hidden bg-stone-950">
                   <video
                     ref={(node) => {
@@ -234,12 +263,9 @@ export default function MakingOfSabalHouse() {
                   {!isActive ? (
                     <>
                       <div
-                        ref={(node) => {
-                          playButtonRefs.current[index] = node;
-                        }}
-                        onClick={() => handlePlayVideo(index)}
-                        className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-5 text-center transition-colors duration-500 group-hover:bg-black/35 group-focus-within:bg-black/35 motion-reduce:transition-none"
-                      ></div>
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-0 z-10 bg-transparent transition-colors duration-500 group-hover:bg-black/35 group-focus-within:bg-black/35 motion-reduce:transition-none"
+                      />
 
                       <button
                         ref={(node) => {

@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 export const bentonLight = localFont({
   src: "./fonts/Benton-Modern-Light.otf",
   weight: "300",
-  style: "normal",
+  style: "light",
   display: "swap",
   variable: "--font-benton-light",
 });

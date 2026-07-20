@@ -35,12 +35,12 @@ const GRID_ITEMS = [
   {
     id: "interior-04",
     type: "image",
-    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784431945/4th_igbefl.jpg",
+    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784563887/5th_1_f7vso4.jpg",
   },
   {
     id: "interior-05",
     type: "image",
-    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784431947/5th_xbmlxk.jpg",
+    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784563883/3rd_1_1_iyegwg.jpg",
   },
 
   // Row 2
@@ -285,12 +285,12 @@ export default function HeroFlatGrid() {
       "
     >
       {/* Brand header */}
-      <header className="relative z-10 flex w-full shrink-0 items-center justify-center bg-main px-4 py-3 sm:py-4 lg:py-5">
+      <header className="relative z-10 flex w-full shrink-0 items-center justify-center bg-main px-4 py-3 sm:py-4 lg:py-4">
         <Image
           src={logo}
           alt="Sabal House"
           loading="eager"
-          className="h-auto w-28 sm:w-36 lg:w-44"
+          className="h-auto w-24 sm:w-24 lg:w-28"
         />
       </header>
 
@@ -388,7 +388,7 @@ export default function HeroFlatGrid() {
             px-5
             py-6
             text-white
-            backdrop-blur-[2px]
+           
             sm:max-w-2xl
             sm:px-8
             sm:py-8
@@ -400,22 +400,24 @@ export default function HeroFlatGrid() {
           <h1
             id="hero-title"
             className="
-            font-benton-regular
-              text-3xl
-              font-bold
-              leading-tight
-              tracking-tight
-              sm:text-5xl
-              md:text-6xl
-              lg:text-8xl
-              text-shadow-lg
+            font-benton-light
+            text-2xl
+            font-bold
+            leading-tight
+            sm:text-5xl
+            md:text-6xl
+            lg:text-[68px]
+            text-shadow-lg
             "
           >
+            <span className="font-mono">Introducing</span>
+            <br />
             Savannah Beyond The Square
           </h1>
 
-          <p className="mx-auto mt-4 max-w-2xl font-central-regular text-sm uppercase leading-6 sm:mt-6 sm:text-xl sm:leading-8 md:text-2xl">
-            Unveiling Sabal House | December 2026
+          <p className="absolute bottom-9 left-146 mx-auto mt-4 max-w-2xl font-central-regular text-sm uppercase leading-6 sm:mt-9 sm:text-xl sm:leading-8 md:text-2xl">
+            Unveiling Sabal House <br />
+            December 2026
           </p>
         </div>
       </div>
