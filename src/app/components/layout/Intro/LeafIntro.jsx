@@ -64,7 +64,7 @@ function LeafDecoration({ side }) {
 }
 
 export default function LeafIntro({
-  title = "A Quiet Place to Come Alive:",
+  title = "A Quiet Place to Come Alive",
   intro = "Beyond Savannah's storied squares, a new hotel is taking shape. Sabal House draws the city's natural beauty, creative spirit, and a quieter way to experience Savannah that feels intimately its own.",
   ctaLabel = "Stay Informed",
   closeLabel = "Close Form",
