@@ -146,11 +146,13 @@ export default function HeroFlatGrid() {
       const placeholder = placeholderRef.current;
       const videoLayer = videoLayerRef.current;
       const heroCopy = heroCopyRef.current;
-      const video = videoLayer?.querySelector("video");
+      const video = videoRef.current;
 
-      if (!section || !placeholder || !videoLayer || !heroCopy) return;
+      if (!section || !placeholder || !videoLayer || !heroCopy) {
+        return;
+      }
 
-      const getStartBounds = () => {
+      function getStartBounds() {
         const sectionBox = section.getBoundingClientRect();
         const placeholderBox = placeholder.getBoundingClientRect();
 
@@ -160,20 +162,25 @@ export default function HeroFlatGrid() {
           width: placeholderBox.width,
           height: placeholderBox.height,
         };
-      };
+      }
 
-      const getScrollDistance = () => {
+      function getScrollDistance() {
         const width = window.innerWidth;
 
-        if (width < 640) return "+=950";
-        if (width < 1024) return "+=1250";
+        if (width < 640) {
+          return "+=950";
+        }
+
+        if (width < 1024) {
+          return "+=1250";
+        }
 
         return "+=1600";
-      };
+      }
 
-      const mm = gsap.matchMedia();
+      const media = gsap.matchMedia();
 
-      mm.add("(prefers-reduced-motion: reduce)", () => {
+      media.add("(prefers-reduced-motion: reduce)", () => {
         video?.pause();
 
         gsap.set(videoLayer, {
@@ -182,47 +189,53 @@ export default function HeroFlatGrid() {
           width: "100%",
           height: "100%",
           zIndex: 20,
-          opacity: 1,
+          autoAlpha: 1,
           overflow: "hidden",
         });
 
         gsap.set(".hero-tile", {
-          opacity: 0,
+          autoAlpha: 0,
         });
 
         gsap.set(heroCopy, {
-          opacity: 1,
+          autoAlpha: 1,
           y: 0,
+          scale: 1,
         });
       });
 
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
+      media.add("(prefers-reduced-motion: no-preference)", () => {
         gsap.set(videoLayer, {
           position: "absolute",
           zIndex: 20,
           overflow: "hidden",
-          opacity: 1,
+          autoAlpha: 1,
           willChange: "top, left, width, height",
         });
 
         gsap.set(heroCopy, {
-          opacity: 0,
-          y: 40,
+          autoAlpha: 0,
+          y: 30,
+          scale: 0.7,
+          transformOrigin: "center center",
         });
 
-        const tl = gsap.timeline({
+        const timeline = gsap.timeline({
           scrollTrigger: {
             trigger: section,
             start: "top top",
             end: getScrollDistance,
-            scrub: true,
+            scrub: 0.7,
             pin: true,
             anticipatePin: 1,
             invalidateOnRefresh: true,
           },
         });
 
-        tl.fromTo(
+        timeline.addLabel("expansionStart", 0);
+
+        // Grow the video from its grid tile to full screen.
+        timeline.fromTo(
           videoLayer,
           {
             top: () => getStartBounds().top,
@@ -235,36 +248,66 @@ export default function HeroFlatGrid() {
             left: 0,
             width: "100%",
             height: "100%",
+            duration: 2,
             ease: "none",
           },
+          "expansionStart",
         );
 
-        tl.to(
+        // Fade the surrounding collage while the video expands.
+        timeline.to(
           ".hero-tile",
           {
-            opacity: 0,
+            autoAlpha: 0,
             scale: 0.92,
+            duration: 2,
             ease: "none",
           },
-          "<",
+          "expansionStart",
         );
 
-        tl.to(heroCopy, {
-          opacity: 1,
-          y: 0,
-          duration: 0.75,
-        });
+        // Reveal and grow the overlay shortly after expansion begins.
+        timeline.fromTo(
+          heroCopy,
+          {
+            autoAlpha: 0,
+            y: 30,
+            scale: 0.7,
+          },
+          {
+            autoAlpha: 1,
+            y: 0,
+            scale: 1,
+            duration: 1.15,
+            ease: "power2.out",
+          },
+          "expansionStart+=0.35",
+        );
 
-        tl.to(heroCopy, {
-          opacity: 0,
-          y: 0,
-          duration: 0.75,
-        });
+        // The video reaches full screen here.
+        timeline.addLabel("fullScreen", "expansionStart+=2");
+
+        // Fade the overlay only after full-screen expansion.
+        timeline.to(
+          heroCopy,
+          {
+            autoAlpha: 0,
+            y: -20,
+            scale: 1.02,
+            duration: 0.65,
+            ease: "power1.in",
+          },
+          "fullScreen+=0.1",
+        );
       });
 
-      return () => mm.revert();
+      return () => {
+        media.revert();
+      };
     },
-    { scope: sectionRef },
+    {
+      scope: sectionRef,
+    },
   );
 
   return (
@@ -341,15 +384,12 @@ export default function HeroFlatGrid() {
         </div>
       </div>
 
-      {/* Decorative animated video */}
-      <div
-        ref={videoLayerRef}
-        className="pointer-events-none opacity-0"
-        aria-hidden="true"
-      >
+      {/* Animated video and overlay */}
+      <div ref={videoLayerRef} className="pointer-events-none opacity-0">
         <video
           id="hero-background-video"
           ref={videoRef}
+          aria-hidden="true"
           className={mediaClass}
           poster={VIDEO_POSTER}
           autoPlay
@@ -363,62 +403,84 @@ export default function HeroFlatGrid() {
           <source src={VIDEO_SRC} type="video/mp4" />
           Your browser does not support background video playback.
         </video>
-      </div>
 
-      {/* Hero content */}
-      <div
-        ref={heroCopyRef}
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          z-30
-          grid
-          translate-y-10
-          place-items-center
-          px-4
-          text-center
-          opacity-0
-          sm:px-6
-        "
-      >
         <div
+          ref={heroCopyRef}
           className="
-            max-w-[calc(100vw-2rem)]
-            px-5
-            py-6
-            text-white
-           
-            sm:max-w-2xl
-            sm:px-8
-            sm:py-8
-            lg:max-w-full
-            lg:px-12
-            lg:py-10
-          "
+      absolute
+      inset-0
+      z-10
+      grid
+      place-items-center
+      overflow-hidden
+      px-4
+      text-center
+      opacity-0
+      sm:px-6
+    "
         >
-          <h1
-            id="hero-title"
+          <div
             className="
-            font-benton-light
-            text-2xl
-            font-bold
-            leading-tight
-            sm:text-5xl
-            md:text-6xl
-            lg:text-[68px]
-            text-shadow-lg
-            "
+        max-w-[calc(100vw-2rem)]
+        px-5
+        py-6
+        text-white
+        sm:max-w-2xl
+        sm:px-8
+        sm:py-8
+        lg:max-w-full
+        lg:px-12
+        lg:py-10
+      "
           >
-            <span className="font-mono">Introducing</span>
-            <br />
-            Savannah Beyond The Square
-          </h1>
+            <h1
+              id="hero-title"
+              className="
+          font-benton-light
+          text-2xl
+          font-bold
+          leading-tight
+          text-shadow-lg
+          sm:text-5xl
+          md:text-6xl
+          lg:text-[68px]
+        "
+            >
+              <span className="font-central-regular font-normal">
+                Introducing
+              </span>
+              <br />
+              Savannah Beyond The Square
+            </h1>
 
-          <p className="absolute bottom-9 left-146 mx-auto mt-4 max-w-2xl font-central-regular text-sm uppercase leading-6 sm:mt-9 sm:text-xl sm:leading-8 md:text-2xl">
-            Unveiling Sabal House <br />
-            December 2026
-          </p>
+            <p
+              className="
+          absolute
+          bottom-20
+          left-1/2
+          w-[calc(100%-2rem)]
+          max-w-2xl
+          -translate-x-1/2
+          text-center
+          font-central-regular
+          text-xs
+          uppercase
+          leading-relaxed
+          tracking-[0.12em]
+          text-white
+          sm:bottom-16
+          sm:text-base
+          md:bottom-12
+          md:text-xl
+          lg:bottom-10
+          lg:text-2xl
+        "
+            >
+              Unveiling Sabal House
+              <br />
+              December 2026
+            </p>
+          </div>
         </div>
       </div>
 
