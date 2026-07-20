@@ -215,14 +215,13 @@ export default function MakingOfSabalHouse() {
             id="making-of-sabal-house-title"
             className="text-balance font-benton-regular text-4xl leading-tight text-stone-950 sm:text-[56px]"
           >
-            The Making of Sabal House
+            Crafting Sabal House
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl text-pretty font-central-regular text-base leading-7 text-stone-900 sm:text-[16px] sm:leading-[1.5]">
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-            nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
-            volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
-            ullamcorper suscipit lobortis nisl ut aliquip ex.
+            Sabal House is being shaped by many hands, each bringing a distinct
+            understanding of Savannah, hospitality, home. Meet the people
+            intentionally and thoughtfully bringing this story to life.
           </p>
         </header>
 
