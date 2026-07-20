@@ -446,10 +446,6 @@ export default function HeroFlatGrid() {
           lg:text-[68px]
         "
             >
-              <span className="font-central-regular font-normal">
-                Introducing
-              </span>
-              <br />
               Savannah Beyond The Square
             </h1>
 

@@ -180,7 +180,6 @@ export default function MakingOfSabalHouse() {
       });
     }
   }
-
   function resetVideo(video) {
     if (!video) {
       return;
@@ -188,8 +187,8 @@ export default function MakingOfSabalHouse() {
 
     video.pause();
     video.currentTime = 0;
+    video.load();
   }
-
   return (
     <section
       ref={sectionRef}

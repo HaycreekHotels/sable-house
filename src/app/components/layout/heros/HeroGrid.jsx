@@ -473,15 +473,11 @@ export default function HeroGrid() {
           font-bold
           leading-tight
           text-shadow-lg
-          sm:text-5xl
-          md:text-6xl
-          lg:text-[68px]
+          sm:text-4xl
+          md:text-5xl
+          lg:text-[65px]
         "
             >
-              <span className="font-central-regular font-normal">
-                Introducing
-              </span>
-              <br />
               Savannah Beyond The Square
             </h1>
 
@@ -498,7 +494,7 @@ export default function HeroGrid() {
           text-xs
           uppercase
           leading-relaxed
-          tracking-[0.12em]
+          tracking-tight
           text-white
           sm:bottom-16
           sm:text-base
