@@ -6,7 +6,7 @@ export default function ComingSoon() {
   return (
     <main>
       <HeroGrid />
-      <LeafIntro />
+      <LeafIntro sectionId="leaf-intro" />
       <MakingOfSabalHouse />
     </main>
   );

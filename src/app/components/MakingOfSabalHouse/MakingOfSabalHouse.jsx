@@ -154,7 +154,7 @@ export default function MakingOfSabalHouse() {
       className=" px-5 py-24 sm:px-8 sm:py-28 lg:px-10 lg:py-36"
     >
       <div className="mx-auto max-w-7xl">
-        <header className="mx-auto max-w-4xl text-center">
+        <header className="mx-auto max-w-6xl text-center">
           <h2
             id="making-of-sabal-house-title"
             className="text-balance font-serif text-4xl leading-tight text-stone-950 italic sm:text-5xl"
@@ -162,7 +162,7 @@ export default function MakingOfSabalHouse() {
             The Making of Sabal House
           </h2>
 
-          <p className="mx-auto mt-6 max-w-3xl text-pretty text-base leading-7 text-stone-900 sm:text-lg sm:leading-8">
+          <p className="mx-auto mt-6 max-w-6xl text-pretty text-base leading-7 text-stone-900 sm:text-lg sm:leading-8">
             Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
             nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
             volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation

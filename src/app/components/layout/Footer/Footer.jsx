@@ -1,120 +1,67 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 
 import whiteLogo from "../../../../../public/images/logos/SH_Primary Logo Offwhite.png";
 
-const footerLinks = [
-  { label: "Contact", href: "/contact" },
-  { label: "Accessibility", href: "/accessibility" },
-  { label: "Privacy", href: "/privacy" },
-  { label: "Policies", href: "/polices" },
-];
+const LEAF_INTRO_ID = "leaf-intro";
+const LEAF_INTRO_HEADING_ID = `${LEAF_INTRO_ID}-heading`;
 
 export default function Footer() {
+  function handleBackToIntro() {
+    const introSection = document.getElementById(LEAF_INTRO_ID);
+    const introHeading = document.getElementById(LEAF_INTRO_HEADING_ID);
+
+    if (!introSection) {
+      return;
+    }
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    introSection.scrollIntoView({
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+      block: "start",
+    });
+
+    introHeading?.focus({
+      preventScroll: true,
+    });
+  }
+
   return (
-    <footer className="bg-main text-white">
-      <div className="mx-auto max-w-400 px-6 py-16 md:mx-10 md:my-20 lg:px-16">
-        <div className="grid grid-cols-1 gap-14 lg:grid-cols-2 lg:gap-20">
-          <div className="flex flex-col gap-12">
-            <div>
-              <Image
-                src={whiteLogo}
-                alt="The Sabal House Hotel Logo in White"
-                className="h-auto w-64 md:w-64"
-              />
-            </div>
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
-              <div>
-                <h4 className="text-sm uppercase tracking-[0.18em] text-white/85">
-                  Contact Us
-                </h4>
-                <a
-                  href="tel:1234567890"
-                  className="mt-5 text-2xl text-white/90 md:text-2xl"
-                >
-                  123.456.7890
-                </a>
-              </div>
-              <div>
-                <h4 className="text-sm uppercase tracking-[0.18em] text-white/85">
-                  Find Us
-                </h4>
-                <p className="mt-5 text-2xl text-white/90 md:text-2xl">
-                  124 Abercorn St, Savannah, GA 31401
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-col gap-10 lg:pl-10">
-            <h4 className="text-lg text-center text-white uppercase md:text-xl">
-              Sign Up For Our Newsletter
-            </h4>
-            <form className="flex flex-col gap-10">
-              <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-                <label className="flex flex-col">
-                  <span className="text-2xl text-white/90 md:text-3xl">
-                    First Name
-                  </span>
-                  <input
-                    type="text"
-                    className="mt-4 border-b border-white/40 bg-transparent pb-3 text-lg text-white outline-none placeholder:text-white/50"
-                  />
-                </label>
-                <label className="flex flex-col">
-                  <span className="text-2xl text-white/90 md:text-3xl">
-                    Last Name
-                  </span>
-                  <input
-                    type="text"
-                    className="mt-4 border-b border-white/40 bg-transparent pb-3 text-lg text-white outline-none placeholder:text-white/50"
-                  />
-                </label>
-              </div>
-              <label className="flex flex-col">
-                <span className="text-2xl text-white/90 md:text-3xl">
-                  Email
-                </span>
-                <input
-                  type="email"
-                  className="mt-4 border-b border-white/40 bg-transparent pb-3 text-lg text-white outline-none placeholder:text-white/50"
-                />
-              </label>
-              <p className="text-center text-lg text-white/80 md:text-xl">
-                Keep up to date with news, specials, and events!
-              </p>
-            </form>
-          </div>
-        </div>
+    <footer className="bg-main px-5 py-4 text-white sm:px-8">
+      <div className="mx-auto grid max-w-7xl items-center gap-4 md:grid-cols-[1fr_auto_1fr]">
+        <address className="text-center text-xs leading-5 font-normal tracking-[0.08em] uppercase not-italic md:text-left">
+          225 E President&apos;s Street
+          <span className="hidden lg:inline">, </span>
+          <span className="block lg:inline">Savannah, GA 31401</span>
+        </address>
 
-        <div className="my-14 h-px w-full bg-white/50" />
+        <Image
+          src={whiteLogo}
+          alt="Sabal House"
+          className="mx-auto h-auto w-32"
+          sizes="8rem"
+        />
 
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-end">
-          <div className="flex flex-col gap-10">
-            <div className="flex flex-wrap items-center gap-6 md:gap-8"></div>
-            <div className="space-y-2 text-sm uppercase tracking-[0.08em] text-white/75 md:text-base">
-              <p>Managed by Hay Creek Hotels</p>
-              <p>Designed bt 10and5Creative</p>
-            </div>
-          </div>
-          <div className="flex flex-col gap-10 lg:items-end">
-            <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm uppercase tracking-[0.14em] text-white/85 md:text-base">
-              {footerLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className="transition-opacity duration-300 hover:opacity-70"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-            <p className="text-md text-white/70 md:text-lg">
-              &#9400; 2026 THE SABAL HOUSE
-            </p>
-          </div>
-        </div>
+        <button
+          type="button"
+          onClick={handleBackToIntro}
+          className="mx-auto inline-flex min-h-11 cursor-pointer items-center gap-2 border-b border-white px-2 py-2 text-xs font-medium tracking-[0.1em] uppercase transition-colors duration-200 hover:border-white/65 hover:text-white/65 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--color-main)] motion-reduce:transition-none md:mx-0 md:justify-self-end"
+        >
+          Contact Us
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            fill="none"
+            className="size-4 stroke-current"
+            strokeWidth="2"
+          >
+            <path d="M12 19V5M6 11l6-6 6 6" />
+          </svg>
+        </button>
       </div>
     </footer>
   );
