@@ -45,29 +45,48 @@ export default function MakingOfSabalHouse() {
 
           if (reducedMotion) {
             gsap.set(cards, {
-              clearProps: "all",
+              autoAlpha: 1,
+              y: 0,
+              scale: 1,
+              clearProps: "transform,opacity,visibility",
             });
 
             return;
           }
 
-          gsap.from(cards, {
-            opacity: 0,
-            y: 64,
-            scale: 0.985,
-            duration: 1.15,
-            stagger: 0.18,
-            ease: "power3.out",
+          gsap.set(cards, {
+            autoAlpha: 0,
+            y: 80,
+            scale: 0.98,
+            transformOrigin: "center bottom",
+          });
+
+          const revealTimeline = gsap.timeline({
             scrollTrigger: {
               trigger: grid,
-              start: "top 82%",
+              start: "top 65%",
               once: true,
+              invalidateOnRefresh: true,
+              toggleActions: "play none none none",
             },
+          });
+
+          revealTimeline.to(cards, {
+            autoAlpha: 1,
+            y: 0,
+            scale: 1,
+            duration: 1.6,
+            stagger: 0.28,
+            delay: 0.15,
+            ease: "power2.out",
+            clearProps: "transform,opacity,visibility",
           });
         },
       );
 
-      return () => media.revert();
+      return () => {
+        media.revert();
+      };
     },
     {
       scope: sectionRef,
