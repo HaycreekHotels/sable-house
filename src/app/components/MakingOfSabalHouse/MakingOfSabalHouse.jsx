@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRef, useState } from "react";
 
 import { gsap } from "gsap";
@@ -19,6 +20,7 @@ export default function MakingOfSabalHouse() {
   const playButtonRefs = useRef([]);
 
   const [activeVideoIndex, setActiveVideoIndex] = useState(null);
+  const [startedVideoIndex, setStartedVideoIndex] = useState(null);
 
   useGSAP(
     () => {
@@ -128,6 +130,8 @@ export default function MakingOfSabalHouse() {
       resetVideo(video);
     });
 
+    // Keep the new poster visible until Safari renders the video.
+    setStartedVideoIndex(null);
     setActiveVideoIndex(index);
 
     try {
@@ -139,6 +143,8 @@ export default function MakingOfSabalHouse() {
     } catch (error) {
       console.error("The video could not begin playback.", error);
 
+      resetVideo(selectedVideo);
+      setStartedVideoIndex(null);
       setActiveVideoIndex(null);
 
       requestAnimationFrame(() => {
@@ -155,6 +161,7 @@ export default function MakingOfSabalHouse() {
     }
 
     resetVideo(video);
+    setStartedVideoIndex(null);
     setActiveVideoIndex(null);
 
     requestAnimationFrame(() => {
@@ -172,6 +179,7 @@ export default function MakingOfSabalHouse() {
     const shouldRestoreFocus = document.activeElement === video;
 
     resetVideo(video);
+    setStartedVideoIndex(null);
     setActiveVideoIndex(null);
 
     if (shouldRestoreFocus) {
@@ -186,7 +194,13 @@ export default function MakingOfSabalHouse() {
     }
 
     video.pause();
-    video.currentTime = 0;
+
+    try {
+      video.currentTime = 0;
+    } catch (error) {
+      console.warn("The video could not be rewound.", error);
+    }
+
     video.load();
   }
   return (
@@ -247,6 +261,9 @@ export default function MakingOfSabalHouse() {
                     tabIndex={isActive ? 0 : -1}
                     aria-label={`Video interview with ${story.name}, ${story.role}`}
                     aria-describedby={descriptionId}
+                    onPlaying={() => {
+                      setStartedVideoIndex(index);
+                    }}
                     onEnded={() => handleVideoEnded(index)}
                     onKeyDown={(event) => {
                       if (event.key === "Escape") {
@@ -259,11 +276,28 @@ export default function MakingOfSabalHouse() {
                     Your browser does not support HTML video.
                   </video>
 
+                  <Image
+                    src={story.posterUrl}
+                    alt=""
+                    fill
+                    aria-hidden="true"
+                    sizes="(min-width: 1280px) 384px, (min-width: 768px) 50vw, 100vw"
+                    className={`
+    pointer-events-none
+    z-10
+    object-cover
+    transition-opacity
+    duration-300
+    motion-reduce:transition-none
+    ${isActive && startedVideoIndex === index ? "opacity-0" : "opacity-100"}
+  `}
+                  />
+
                   {!isActive ? (
                     <>
                       <div
                         aria-hidden="true"
-                        className="pointer-events-none absolute inset-0 z-10 bg-transparent transition-colors duration-500 group-hover:bg-black/35 group-focus-within:bg-black/35 motion-reduce:transition-none"
+                        className="pointer-events-none absolute inset-0 z-[15] bg-transparent transition-colors duration-500 group-hover:bg-black/35 group-focus-within:bg-black/35 motion-reduce:transition-none"
                       />
 
                       <button
