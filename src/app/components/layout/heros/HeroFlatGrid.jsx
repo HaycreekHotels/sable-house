@@ -20,34 +20,34 @@ const GRID_ITEMS = [
   {
     id: "interior-01",
     type: "image",
-    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784516660/1st_1_bngnyk.jpg",
+    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784739974/1st_ttrgvo.jpg",
   },
   {
     id: "interior-02",
     type: "image",
-    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784516661/2nd_1_fdsk8x.jpg",
+    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784739973/2nd_sxc7br.jpg",
   },
   {
     id: "interior-03",
     type: "image",
-    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784516660/6th_1_xcwern.jpg",
+    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784739974/3rd_zvfv13.jpg",
   },
   {
     id: "interior-04",
     type: "image",
-    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784563887/5th_1_f7vso4.jpg",
+    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784739975/5th_m9dkji.jpg",
   },
   {
     id: "interior-05",
     type: "image",
-    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784563883/3rd_1_1_iyegwg.jpg",
+    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784739973/6th_tcaqqx.jpg",
   },
 
   // Row 2
   {
     id: "interior-06",
     type: "image",
-    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784516660/7th_khgxp8.jpg",
+    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784739973/7th_lg3k0a.jpg",
   },
   {
     id: "hero-video-placeholder",
@@ -56,12 +56,12 @@ const GRID_ITEMS = [
   {
     id: "interior-08",
     type: "image",
-    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784516661/8th_1_inhxmt.jpg",
+    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784739975/8th_i2hmsl.jpg",
   },
   {
     id: "interior-09",
     type: "image",
-    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784516660/9th_1_wy6oup.jpg",
+    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784739974/9th_vqj4ag.jpg",
   },
 ];
 
