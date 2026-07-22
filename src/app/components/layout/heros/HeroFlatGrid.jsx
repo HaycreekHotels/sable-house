@@ -82,6 +82,7 @@ export default function HeroFlatGrid() {
   const heroCopyRef = useRef(null);
 
   const [isVideoPaused, setIsVideoPaused] = useState(true);
+  const [isVideoMuted, setIsVideoMuted] = useState(true);
   const [showScrollIndicator, setShowScrollIndicator] = useState(false);
 
   useEffect(() => {
@@ -138,6 +139,10 @@ export default function HeroFlatGrid() {
     }
 
     video.pause();
+  }
+
+  function handleVideoMute() {
+    setIsVideoMuted((currentMutedState) => !currentMutedState);
   }
 
   useGSAP(
@@ -393,7 +398,7 @@ export default function HeroFlatGrid() {
           className={mediaClass}
           poster={VIDEO_POSTER}
           autoPlay
-          muted
+          muted={isVideoMuted}
           loop
           playsInline
           preload="metadata"
@@ -544,7 +549,42 @@ export default function HeroFlatGrid() {
         </button>
       )}
 
-      {/* Accessible video playback control */}
+      {/* Accessible video control */}
+      <button
+        type="button"
+        aria-controls="hero-background-video"
+        onClick={handleVideoMute}
+        className="
+          absolute
+          bottom-3
+          right-3
+          z-40
+          min-h-11
+          min-w-11
+          border
+          border-white/80
+          bg-black/75
+          px-4
+          py-2
+          text-xs
+          font-semibold
+          uppercase
+          tracking-[0.12em]
+          text-white
+          shadow-lg
+          transition-colors
+          hover:bg-black
+          focus-visible:outline
+          focus-visible:outline-2
+          focus-visible:outline-offset-4
+          focus-visible:outline-white
+          motion-reduce:transition-none
+          sm:bottom-4
+          sm:right-35
+        "
+      >
+        {isVideoMuted ? "Unmute Video" : "Mute video"}
+      </button>
       <button
         type="button"
         aria-controls="hero-background-video"
