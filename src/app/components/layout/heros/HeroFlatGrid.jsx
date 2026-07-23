@@ -353,10 +353,10 @@ export default function HeroFlatGrid() {
             w-full
             grid-cols-3
             grid-rows-3
-            gap-1.5
+            gap-1.25
 
-            sm:gap-2
-            lg:gap-6
+            sm:gap-1.75
+            lg:gap-3
 
             landscape:grid-cols-3
             landscape:grid-rows-3
