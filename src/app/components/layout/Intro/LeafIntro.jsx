@@ -78,6 +78,8 @@ export default function LeafIntro({
   const headingId = sectionId ? `${sectionId}-heading` : undefined;
 
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [submissionStatus, setSubmissionStatus] = useState("idle");
+  const [submissionMessage, setSubmissionMessage] = useState("");
 
   const generatedId = useId();
 
@@ -203,6 +205,54 @@ export default function LeafIntro({
       drawerTimeline.current?.reverse();
     }
   }
+
+  async function handleSignupSubmit(event) {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+
+    setSubmissionStatus("submitting");
+    setSubmissionMessage("");
+
+    try {
+      const formData = new FormData(form);
+
+      const singupData = {
+        firstName: formData.get("firstName"),
+        lastName: formData.get("lastName"),
+        email: formData.get("email"),
+      };
+
+      const response = await fetch("/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(singupData),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          result.error || "We could not submit your information.",
+        );
+      }
+
+      setSubmissionStatus("success");
+      setSubmissionMessage(result.message);
+      form.result();
+    } catch (error) {
+      console.error("Singup submission failed:", error);
+
+      setSubmissionStatus("error");
+      setSubmissionMessage(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please Try again.",
+      );
+    }
+  }
   return (
     <section
       ref={sectionRef}
@@ -246,7 +296,7 @@ export default function LeafIntro({
 
         <form
           className="grid gap-x-8 gap-y-8 pt-10 md:grid-cols-3"
-          onSubmit={(event) => event.preventDefault()}
+          onSubmit={handleSignupSubmit}
         >
           <div data-signup-field className="min-w-0">
             <label
@@ -308,11 +358,28 @@ export default function LeafIntro({
           <div data-signup-submit className="flex justify-center md:col-span-3">
             <button
               type="submit"
-              disabled={!isFormOpen}
+              disabled={!isFormOpen || submissionStatus === "submitting"}
               className="min-h-11 border border-stone-900 px-8 py-3 text-sm font-medium uppercase tracking-[0.08em] text-stone-900 transition-colors hover:bg-stone-900 hover:text-[#f7f3ec] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-4 focus-visible:ring-offset-[#f7f3ec] disabled:cursor-not-allowed disabled:opacity-50"
             >
               Join the List
             </button>
+            <div
+              className="min-h-6 text-center text-sm md:col-span-3"
+              aria-live="polite"
+              role="status"
+            >
+              {submissionMessage && (
+                <p
+                  className={
+                    submissionStatus === "error"
+                      ? "text-red-800"
+                      : "text-stone-800"
+                  }
+                >
+                  {submissionMessage}
+                </p>
+              )}
+            </div>
           </div>
         </form>
       </div>
