@@ -442,7 +442,7 @@ export default function HeroFlatGrid() {
               id="hero-title"
               className="
           font-benton-light
-          text-2xl
+          text-4xl
           font-bold
           leading-tight
           text-shadow-lg
@@ -566,7 +566,8 @@ export default function HeroFlatGrid() {
           bg-black/75
           px-4
           py-2
-          text-xs
+          text-[8px]
+          sm:text-xs
           font-semibold
           uppercase
           tracking-[0.12em]
@@ -583,7 +584,7 @@ export default function HeroFlatGrid() {
           sm:right-35
         "
       >
-        {isVideoMuted ? "Unmute Video" : "Mute video"}
+        {isVideoMuted ? "Unmute" : "Mute"}
       </button>
       <button
         type="button"
@@ -591,7 +592,7 @@ export default function HeroFlatGrid() {
         onClick={handleVideoToggle}
         className="
           absolute
-          bottom-3
+          bottom-15
           right-3
           z-40
           min-h-11
@@ -601,7 +602,8 @@ export default function HeroFlatGrid() {
           bg-black/75
           px-4
           py-2
-          text-xs
+          text-[8px]
+          sm:text-xs
           font-semibold
           uppercase
           tracking-[0.12em]
@@ -618,7 +620,7 @@ export default function HeroFlatGrid() {
           sm:right-4
         "
       >
-        {isVideoPaused ? "Play video" : "Pause video"}
+        {isVideoPaused ? "Play" : "Pause"}
       </button>
     </section>
   );
