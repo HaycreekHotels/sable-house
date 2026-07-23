@@ -35,7 +35,7 @@ const GRID_ITEMS = [
   {
     id: "interior-04",
     type: "image",
-    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784739975/5th_m9dkji.jpg",
+    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784831991/Artboard_11_1_1_g0m1mg.jpg",
   },
   {
     id: "interior-05",
@@ -69,7 +69,7 @@ const tileClass =
   "hero-tile relative min-h-0 min-w-0 overflow-hidden bg-neutral-900";
 
 const placeholderClass =
-  "video-placeholder relative col-start- row-start-2 min-h-0 min-w-0 overflow-hidden bg-neutral-900";
+  "video-placeholder relative col-start-2 row-start-2 min-h-0 min-w-0 overflow-hidden bg-neutral-900";
 
 const mediaClass = "h-full w-full object-cover";
 
