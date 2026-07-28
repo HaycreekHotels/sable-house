@@ -19,10 +19,10 @@ const CONTENT_CLASSES =
   "relative z-10 mx-auto flex min-h-[24rem] max-w-3xl flex-col items-center justify-center text-center sm:min-h-[28rem] md:min-h-188";
 
 const HEADING_CLASSES =
-  "max-w-xl md:max-w-3xl text-balance font-benton-regular text-4xl leading-[1.05] tracking-tight text-stone-900 sm:text-5xl lg:text-[56px]";
+  "max-w-xl text-balance font-benton-regular text-4xl leading-[1.05] tracking-tight text-stone-900 sm:text-5xl md:max-w-3xl lg:text-[56px]";
 
 const INTRO_CLASSES =
-  "mt-6 max-w-sm text-pretty font-central-regular leading-7 text-stone-800 sm:mt-8 sm:text-xl md:text-[16px] sm:leading-[1.50]";
+  "mt-6 max-w-sm text-pretty font-central-regular leading-7 text-stone-800 sm:mt-8 sm:text-xl sm:leading-[1.5] md:text-[16px]";
 
 const CTA_CLASSES =
   "mt-10 inline-flex min-h-11 cursor-pointer items-center border-b border-stone-900 bg-transparent px-2 pb-2 text-sm font-medium uppercase tracking-[0.08em] text-stone-900 transition-colors duration-200 hover:border-stone-600 hover:text-stone-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-4 focus-visible:ring-offset-[#f7f3ec] motion-reduce:transition-none sm:mt-12";
@@ -31,17 +31,15 @@ const LEAF_CONFIG = {
   left: {
     wrapper:
       "pointer-events-none absolute -left-28 top-6 z-0 size-72 sm:-left-24 sm:size-[22rem] md:-left-56 md:top-3/6 md:size-[50rem] md:-translate-y-1/2 lg:-left-110 lg:size-[58rem]",
-    image:
-      " object-contain opacity-[0.045] sm:opacity-[0.05] md:opacity-[0.06]",
+    image: "object-contain opacity-[0.045] sm:opacity-[0.05] md:opacity-[0.06]",
     sizes:
       "(max-width: 639px) 18rem, (max-width: 767px) 22rem, (max-width: 1023px) 50rem, 58rem",
   },
-
   right: {
     wrapper:
       "pointer-events-none absolute -right-32 bottom-0 z-0 size-80 sm:-right-28 sm:size-[24rem] md:-right-56 md:top-3/6 md:bottom-auto md:size-[50rem] md:-translate-y-1/2 lg:-right-110 lg:size-[58rem]",
     image:
-      "-scale-x-100 object-contain opacity-[0.045] sm:opacity-[0.05]  md:opacity-[0.06]",
+      "-scale-x-100 object-contain opacity-[0.045] sm:opacity-[0.05] md:opacity-[0.06]",
     sizes:
       "(max-width: 639px) 20rem, (max-width: 767px) 24rem, (max-width: 1023px) 50rem, 58rem",
   },
@@ -86,6 +84,8 @@ export default function LeafIntro({
   const sectionRef = useRef(null);
   const drawerRef = useRef(null);
   const triggerRef = useRef(null);
+  const formRef = useRef(null);
+  const successMessageRef = useRef(null);
   const drawerTimeline = useRef(null);
 
   const drawerId = `${generatedId}-signup-drawer`;
@@ -102,9 +102,7 @@ export default function LeafIntro({
       }
 
       const fields = gsap.utils.toArray("[data-signup-field]", drawer);
-
       const drawerLine = drawer.querySelector("[data-drawer-line]");
-
       const submitButton = drawer.querySelector("[data-signup-submit]");
 
       if (!drawerLine || !submitButton) {
@@ -184,12 +182,71 @@ export default function LeafIntro({
         },
       );
 
-      return () => media.revert();
+      return () => {
+        drawerTimeline.current?.kill();
+        drawerTimeline.current = null;
+        media.revert();
+      };
     },
     {
       scope: sectionRef,
     },
   );
+
+  useGSAP(
+    () => {
+      if (submissionStatus !== "success") {
+        return;
+      }
+
+      const form = formRef.current;
+      const successMessage = successMessageRef.current;
+
+      if (!form || !successMessage) {
+        return;
+      }
+
+      const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      gsap.set(successMessage, {
+        display: "flex",
+        autoAlpha: 0,
+        y: reducedMotion ? 0 : 18,
+      });
+
+      const successTimeline = gsap
+        .timeline({
+          defaults: {
+            ease: "power3.out",
+          },
+        })
+        .to(form, {
+          autoAlpha: 0,
+          y: reducedMotion ? 0 : -14,
+          duration: reducedMotion ? 0 : 0.35,
+          ease: "power2.in",
+        })
+        .set(form, {
+          display: "none",
+        })
+        .to(successMessage, {
+          autoAlpha: 1,
+          y: 0,
+          duration: reducedMotion ? 0 : 0.5,
+        });
+
+      return () => {
+        successTimeline.kill();
+      };
+    },
+    {
+      scope: sectionRef,
+      dependencies: [submissionStatus],
+    },
+  );
+
   function handleFormToggle() {
     const nextOpenState = !isFormOpen;
 
@@ -217,7 +274,7 @@ export default function LeafIntro({
     try {
       const formData = new FormData(form);
 
-      const singupData = {
+      const signupData = {
         firstName: formData.get("firstName"),
         lastName: formData.get("lastName"),
         email: formData.get("email"),
@@ -228,10 +285,16 @@ export default function LeafIntro({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(singupData),
+        body: JSON.stringify(signupData),
       });
 
-      const result = await response.json();
+      let result = {};
+
+      try {
+        result = await response.json();
+      } catch {
+        result = {};
+      }
 
       if (!response.ok) {
         throw new Error(
@@ -239,20 +302,21 @@ export default function LeafIntro({
         );
       }
 
+      form.reset();
+      setSubmissionMessage("");
       setSubmissionStatus("success");
-      setSubmissionMessage(result.message);
-      form.result();
     } catch (error) {
-      console.error("Singup submission failed:", error);
+      console.error("Signup submission failed:", error);
 
       setSubmissionStatus("error");
       setSubmissionMessage(
         error instanceof Error
           ? error.message
-          : "Something went wrong. Please Try again.",
+          : "Something went wrong. Please try again.",
       );
     }
   }
+
   return (
     <section
       ref={sectionRef}
@@ -281,6 +345,7 @@ export default function LeafIntro({
           {isFormOpen ? closeLabel : ctaLabel}
         </button>
       </div>
+
       <div
         ref={drawerRef}
         id={drawerId}
@@ -295,6 +360,7 @@ export default function LeafIntro({
         </div>
 
         <form
+          ref={formRef}
           className="grid gap-x-8 gap-y-8 pt-10 md:grid-cols-3"
           onSubmit={handleSignupSubmit}
         >
@@ -312,8 +378,8 @@ export default function LeafIntro({
               type="text"
               autoComplete="given-name"
               required
-              disabled={!isFormOpen}
-              className="mt-3 w-full border-0 border-b border-stone-500 bg-transparent px-0 py-3 text-base text-stone-900 outline-none transition-colors focus:border-stone-950 focus:ring-0 disabled:cursor-not-allowed"
+              disabled={!isFormOpen || submissionStatus === "submitting"}
+              className="mt-3 w-full border-0 border-b border-stone-500 bg-transparent px-0 py-3 text-base text-stone-900 outline-none transition-colors focus:border-stone-950 focus:ring-0 disabled:cursor-not-allowed disabled:opacity-60"
             />
           </div>
 
@@ -331,8 +397,8 @@ export default function LeafIntro({
               type="text"
               autoComplete="family-name"
               required
-              disabled={!isFormOpen}
-              className="mt-3 w-full border-0 border-b border-stone-500 bg-transparent px-0 py-3 text-base text-stone-900 outline-none transition-colors focus:border-stone-950 focus:ring-0 disabled:cursor-not-allowed"
+              disabled={!isFormOpen || submissionStatus === "submitting"}
+              className="mt-3 w-full border-0 border-b border-stone-500 bg-transparent px-0 py-3 text-base text-stone-900 outline-none transition-colors focus:border-stone-950 focus:ring-0 disabled:cursor-not-allowed disabled:opacity-60"
             />
           </div>
 
@@ -350,38 +416,52 @@ export default function LeafIntro({
               type="email"
               autoComplete="email"
               required
-              disabled={!isFormOpen}
-              className="mt-3 w-full border-0 border-b border-stone-500 bg-transparent px-0 py-3 text-base text-stone-900 outline-none transition-colors focus:border-stone-950 focus:ring-0 disabled:cursor-not-allowed"
+              disabled={!isFormOpen || submissionStatus === "submitting"}
+              className="mt-3 w-full border-0 border-b border-stone-500 bg-transparent px-0 py-3 text-base text-stone-900 outline-none transition-colors focus:border-stone-950 focus:ring-0 disabled:cursor-not-allowed disabled:opacity-60"
             />
           </div>
 
-          <div data-signup-submit className="flex justify-center md:col-span-3">
+          <div
+            data-signup-submit
+            className="flex flex-col items-center justify-center gap-4 md:col-span-3"
+          >
             <button
               type="submit"
               disabled={!isFormOpen || submissionStatus === "submitting"}
-              className="min-h-11 border border-stone-900 px-8 py-3 text-sm font-medium uppercase tracking-[0.08em] text-stone-900 transition-colors hover:bg-stone-900 hover:text-[#f7f3ec] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-4 focus-visible:ring-offset-[#f7f3ec] disabled:cursor-not-allowed disabled:opacity-50"
+              className="min-h-11 min-w-44 border border-stone-900 px-8 py-3 text-sm font-medium uppercase tracking-[0.08em] text-stone-900 transition-colors hover:bg-stone-900 hover:text-[#f7f3ec] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-4 focus-visible:ring-offset-[#f7f3ec] disabled:cursor-not-allowed disabled:opacity-50"
             >
-              Join the List
+              {submissionStatus === "submitting"
+                ? "Joining..."
+                : "Join the List"}
             </button>
+
             <div
-              className="min-h-6 text-center text-sm md:col-span-3"
+              className="min-h-6 text-center text-sm"
               aria-live="polite"
               role="status"
             >
-              {submissionMessage && (
-                <p
-                  className={
-                    submissionStatus === "error"
-                      ? "text-red-800"
-                      : "text-stone-800"
-                  }
-                >
-                  {submissionMessage}
-                </p>
+              {submissionStatus === "error" && submissionMessage && (
+                <p className="text-red-800">{submissionMessage}</p>
               )}
             </div>
           </div>
         </form>
+
+        <div
+          ref={successMessageRef}
+          className="hidden min-h-56 flex-col items-center justify-center py-12 text-center"
+          aria-hidden={submissionStatus !== "success"}
+          aria-live="polite"
+          role="status"
+        >
+          <p className="font-benton-regular text-3xl tracking-tight text-stone-900 sm:text-4xl">
+            Thank you for signing up!
+          </p>
+
+          <p className="mt-4 max-w-md font-central-regular text-base leading-7 text-stone-700">
+            We look forward to sharing more about Sabal House with you.
+          </p>
+        </div>
       </div>
     </section>
   );
