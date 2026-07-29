@@ -24,12 +24,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "console.cloudinary.com",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "res.cloudinary.com",
+        hostname: "sabal-house.b-cdn.net",
         pathname: "/**",
       },
     ],

@@ -11,7 +11,7 @@ import logo from "../../../../../public/images/logos/SH_Primary Logo Offwhite.pn
 gsap.registerPlugin(ScrollTrigger);
 
 const VIDEO_SRC =
-  "https://res.cloudinary.com/dnhvjwqak/video/upload/v1784433896/Sabal_House_-_Draft_2_p29tun.mp4";
+  "https://sabal-house.b-cdn.net/flat%20hero/Sabal%20House%20-%20Promo.mp4";
 
 const VIDEO_POSTER = "../../../../../public/images/logos/video poster.png";
 
@@ -20,34 +20,34 @@ const GRID_ITEMS = [
   {
     id: "interior-01",
     type: "image",
-    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784739974/1st_ttrgvo.jpg",
+    src: "https://sabal-house.b-cdn.net/flat%20hero/1st.jpg",
   },
   {
     id: "interior-02",
     type: "image",
-    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784739973/2nd_sxc7br.jpg",
+    src: "https://sabal-house.b-cdn.net/flat%20hero/2nd.jpg",
   },
   {
     id: "interior-03",
     type: "image",
-    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784739974/3rd_zvfv13.jpg",
+    src: "https://sabal-house.b-cdn.net/flat%20hero/3rd.jpg",
   },
   {
     id: "interior-04",
     type: "image",
-    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784831991/Artboard_11_1_1_g0m1mg.jpg",
+    src: "https://sabal-house.b-cdn.net/flat%20hero/10th.jpg",
   },
   {
     id: "interior-05",
     type: "image",
-    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784739973/6th_tcaqqx.jpg",
+    src: "https://sabal-house.b-cdn.net/flat%20hero/6th.jpg",
   },
 
   // Row 2
   {
     id: "interior-06",
     type: "image",
-    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784739973/7th_lg3k0a.jpg",
+    src: "https://sabal-house.b-cdn.net/flat%20hero/7th.jpg",
   },
   {
     id: "hero-video-placeholder",
@@ -56,12 +56,12 @@ const GRID_ITEMS = [
   {
     id: "interior-08",
     type: "image",
-    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784739975/8th_i2hmsl.jpg",
+    src: "https://sabal-house.b-cdn.net/flat%20hero/8th.jpg",
   },
   {
     id: "interior-09",
     type: "image",
-    src: "https://res.cloudinary.com/dnhvjwqak/image/upload/v1784739974/9th_vqj4ag.jpg",
+    src: "https://sabal-house.b-cdn.net/flat%20hero/9th.jpg",
   },
 ];
 
