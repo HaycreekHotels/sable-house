@@ -10,8 +10,6 @@ export async function POST(request) {
     const lastName = body.lastName?.trim();
     const email = body.email?.trim().toLowerCase();
 
-    // The browser's "required" attributes help users,
-    // but we must also validate everything on the server.
     if (!firstName || !lastName || !email) {
       return Response.json(
         {
