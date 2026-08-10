@@ -67,7 +67,7 @@ export default function LeafIntro({
   ctaLabel = "Stay Informed",
   closeLabel = "Close Form",
   headingLevel = "h2",
-  sectionId,
+  sectionId = "leaf-intro",
 }) {
   const Heading = ALLOWED_HEADING_LEVELS.has(headingLevel)
     ? headingLevel
