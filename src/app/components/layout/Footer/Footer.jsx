@@ -34,9 +34,9 @@ export default function Footer() {
     <footer className="bg-main px-5 py-4 text-white sm:px-8">
       <div className="mx-auto grid max-w-7xl items-center gap-4 md:grid-cols-[1fr_auto_1fr]">
         <address className="text-center text-xs leading-5 font-normal tracking-[0.08em] uppercase not-italic md:text-left">
-          225 E President&apos;s Street
+          225 E. President St
           <span className="hidden lg:inline">, </span>
-          <span className="block lg:inline">Savannah, GA 31401</span>
+          <span className="block lg:inline">Savannah GA 31401</span>
         </address>
 
         <Image
