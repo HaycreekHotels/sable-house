@@ -46,7 +46,7 @@ const menuFooterSections = [
     href: "/faq",
   },
   {
-    label: "Countact Us",
+    label: "Contact Us",
     href: "/contact-us",
   },
   {
@@ -61,46 +61,48 @@ const menuFooterSections = [
 
 export default function MenuDrawer() {
   return (
-    <>
-      <button
-        className="bg-transparent cursor-pointer flex flex-col justify-between h-6 w-10 p-0"
-        aria-label="Menu"
-        aria-expanded="false"
-      >
-        <span className="bg-white rounded-lg h-px w-full transition-all delay-150 ease-in-out"></span>
-        <span className="bg-white rounded-lg h-px w-full transition-all delay-150 ease-in-out"></span>
-        <span className="bg-white rounded-lg h-px w-full transition-all delay-150 ease-in-out"></span>
-      </button>
-      <nav className="h-screen max-w-1/2">
-        <div className="drawer-container">
-          <div className="menu-header">X CLOSE</div>
-          <div className="main-section">
-            {menuSections.map((section) => {
-              return (
-                <section key={section.title}>
-                  <h2>{section.title} &#x2304;</h2>
-                  {section.links.map((link) => {
-                    <Link key={link.label} href={link.href}>
+    <nav className="fixed top-0 left-0 z-50 h-dvh w-full max-w-132.5 bg-main p-8">
+      <div className="drawer-container flex flex-col items-start gap-5">
+        <button className="menu-header" type="button">
+          X CLOSE
+        </button>
+        <div className="main-section">
+          {menuSections.map((section) => {
+            return (
+              <section
+                key={section.title}
+                className="flex flex-col text-secondary"
+              >
+                <h2 className="text-3xl">{section.title} &#x2304;</h2>
+                {section.links.map((link) => {
+                  return (
+                    <Link className="text-xl" key={link.label} href={link.href}>
                       {link.label}
-                    </Link>;
-                  })}
-                </section>
-              );
-            })}
-          </div>
-          <div className="footer-section ">
-            <span className="bg-white rounded-lg h-px w-full transition-all delay-150 ease-in-out"></span>
-            {menuFooterSections.map((link) => {
-              <Link key={link.label} href={link.href}>
-                {link.label}
-              </Link>;
-            })}
-          </div>
-          <div className="decorative-leaf absolute rotate-[-30deg]">
-            <Image src={Leaf} alt="" width={250} height={250} />
-          </div>
+                    </Link>
+                  );
+                })}
+              </section>
+            );
+          })}
         </div>
-      </nav>
-    </>
+        <div className="footer-section flex flex-col ">
+          <span className="bg-white rounded-lg h-px opacity-20 w-full  transition-all delay-150 ease-in-out"></span>
+          {menuFooterSections.map((link) => {
+            return (
+              <Link
+                className="text-white text-lg uppercase"
+                key={link.label}
+                href={link.href}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
+        </div>
+        <div className="decorative-leaf absolute rotate-[-30deg] bottom-0 right-0">
+          <Image src={Leaf} alt="" width={250} height={250} />
+        </div>
+      </div>
+    </nav>
   );
 }

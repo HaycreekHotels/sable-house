@@ -7,6 +7,15 @@ import Logo from "../../../../../public/images/logos/SH_Primary Logo Offwhite.pn
 export default function NavBar() {
   return (
     <nav className="bg-transparent flex justify-between items-center h-20 p-6">
+      <button
+        className="relative bg-transparent cursor-pointer flex flex-col justify-between h-6 w-10 p-0"
+        aria-label="Menu"
+        aria-expanded="false"
+      >
+        <span className="bg-white rounded-lg h-px w-full transition-all delay-150 ease-in-out"></span>
+        <span className="bg-white rounded-lg h-px w-full transition-all delay-150 ease-in-out"></span>
+        <span className="bg-white rounded-lg h-px w-full transition-all delay-150 ease-in-out"></span>
+      </button>
       <Image
         src={Logo}
         width={100}
