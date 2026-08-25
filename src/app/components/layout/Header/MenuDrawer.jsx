@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import Leaf from "../../../../../public/images/decorative/SH_Leaf_Brown.png";
+import CloseSvg from "../../../../../public/images/decorative/x.svg";
 
 const menuSections = [
   {
@@ -61,22 +62,37 @@ const menuFooterSections = [
 
 export default function MenuDrawer() {
   return (
-    <nav className="fixed top-0 left-0 z-50 h-dvh w-full max-w-132.5 bg-main p-8">
-      <div className="drawer-container flex flex-col items-start gap-5">
-        <button className="menu-header" type="button">
-          X CLOSE
+    <nav className="fixed top-0 left-0 z-50 h-dvh w-full max-w-132.5 bg-main p-8 font-central-regular text-secondary overflow-hidden">
+      {/* Close Header */}
+      <div className="drawer-container flex flex-col items-start gap-14 ">
+        <button
+          aria-label="Close Menu"
+          className="menu-header flex items-center gap-2 font-light"
+          type="button"
+        >
+          <span>
+            <Image src={CloseSvg} alt="" width={30} height={30} />
+          </span>
+          <span className="uppercase font-bold text-sm">Close</span>
         </button>
-        <div className="main-section">
+
+        {/* Main Links */}
+        <div className="main-section flex flex-col gap-8">
           {menuSections.map((section) => {
             return (
               <section
                 key={section.title}
-                className="flex flex-col text-secondary"
+                className="flex flex-col text-secondary gap-2"
               >
-                <h2 className="text-3xl">{section.title} &#x2304;</h2>
+                <h2 className="flex items-baseline gap-3 text-3xl font-benton-regular">
+                  <span>{section.title}</span>
+                  <span aria-hidden="true" className="text-2xl font-light">
+                    &#x2304;
+                  </span>
+                </h2>
                 {section.links.map((link) => {
                   return (
-                    <Link className="text-xl" key={link.label} href={link.href}>
+                    <Link className="text-sm" key={link.label} href={link.href}>
                       {link.label}
                     </Link>
                   );
@@ -85,22 +101,28 @@ export default function MenuDrawer() {
             );
           })}
         </div>
-        <div className="footer-section flex flex-col ">
-          <span className="bg-white rounded-lg h-px opacity-20 w-full  transition-all delay-150 ease-in-out"></span>
-          {menuFooterSections.map((link) => {
-            return (
-              <Link
-                className="text-white text-lg uppercase"
-                key={link.label}
-                href={link.href}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
+        {/* Footer Menu */}
+        <div className="footer-section flex flex-col gap-6">
+          <span className="bg-white rounded-lg h-px opacity-20 w-35 "></span>
+          <div className="flex flex-col gap-2">
+            {menuFooterSections.map((link) => {
+              return (
+                <Link
+                  className="text-white text-xs uppercase"
+                  key={link.label}
+                  href={link.href}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </div>
         </div>
-        <div className="decorative-leaf absolute rotate-[-30deg] bottom-0 right-0">
-          <Image src={Leaf} alt="" width={250} height={250} />
+        <div
+          aria-hidden="true"
+          className="decorative-leaf absolute -rotate-45 -bottom-35 -right-40 "
+        >
+          <Image src={Leaf} alt="" width={500} height={500} />
         </div>
       </div>
     </nav>
