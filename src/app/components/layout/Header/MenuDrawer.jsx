@@ -1,5 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+
+import { useRef } from "react";
+
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+gsap.registerPlugin(useGSAP);
 
 import Leaf from "../../../../../public/images/decorative/SH_Leaf_Brown.png";
 import CloseSvg from "../../../../../public/images/decorative/x.svg";
@@ -59,15 +67,37 @@ const menuFooterSections = [
 ];
 
 export default function MenuDrawer({ onClose }) {
+  const drawerRef = useRef(null);
+
+  useGSAP(() => {
+    gsap.from(drawerRef.current, {
+      xPercent: -100,
+      duration: 1,
+      ease: "power2.out",
+    });
+  });
+
+  function handleCloseDrawer() {
+    gsap.to(drawerRef.current, {
+      xPercent: -100,
+      duration: 1,
+
+      onComplete: onClose,
+    });
+  }
   return (
-    <nav className="fixed top-0 left-0 z-50 h-dvh w-full max-w-132.5 bg-main p-8 font-central-regular text-secondary overflow-hidden">
+    <nav
+      id="site-menu"
+      ref={drawerRef}
+      className="fixed top-0 left-0 z-50 h-dvh w-full max-w-132.5 bg-main p-8 font-central-regular text-secondary overflow-hidden"
+    >
       {/* Close Header */}
       <div className="drawer-container flex flex-col items-start gap-14 ">
         <button
           aria-label="Close Menu"
           className="menu-header flex items-center gap-2 font-light"
           type="button"
-          onClick={onClose}
+          onClick={handleCloseDrawer}
         >
           <span>
             <Image src={CloseSvg} alt="" width={30} height={30} />

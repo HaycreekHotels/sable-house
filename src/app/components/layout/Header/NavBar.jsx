@@ -24,7 +24,8 @@ export default function NavBar() {
         <button
           className="relative bg-transparent cursor-pointer flex flex-col justify-between h-6 w-10 p-0"
           aria-label="Menu"
-          aria-expanded="false"
+          aria-controls="site-menu"
+          aria-expanded={isOpen}
           onClick={handleOpenMenu}
         >
           <span className="bg-white rounded-lg h-px w-full transition-all delay-150 ease-in-out"></span>
