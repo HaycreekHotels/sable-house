@@ -2,15 +2,15 @@
 
 import Link from "next/link";
 import Image from "next/image";
-
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-gsap.registerPlugin(useGSAP);
 
 import Leaf from "../../../../../public/images/decorative/SH_Leaf_Brown.png";
 import CloseSvg from "../../../../../public/images/decorative/x.svg";
+
+gsap.registerPlugin(useGSAP);
 
 const menuSections = [
   {
@@ -20,21 +20,36 @@ const menuSections = [
         label: "The Making of Sabal House",
         href: "/our-story/making-of-sabal-house",
       },
-      { label: "Artist Journal", href: "/our-story/artist-journal" },
+      {
+        label: "Artist Journal",
+        href: "/our-story/artist-journal",
+      },
     ],
   },
   {
     title: "Stay",
     links: [
-      { label: "Accommodations", href: "/stay/accommodations" },
-      { label: "Offers", href: "/stay/offers" },
+      {
+        label: "Accommodations",
+        href: "/stay/accommodations",
+      },
+      {
+        label: "Offers",
+        href: "/stay/offers",
+      },
     ],
   },
   {
     title: "Beyond The Square",
     links: [
-      { label: "Curated Guide", href: "/beyond-the-square/curated-guide" },
-      { label: "Savannah Events", href: "/beyond-the-square/savannah-events" },
+      {
+        label: "Curated Guide",
+        href: "/beyond-the-square/curated-guide",
+      },
+      {
+        label: "Savannah Events",
+        href: "/beyond-the-square/savannah-events",
+      },
     ],
   },
 ];
@@ -67,16 +82,21 @@ const menuFooterSections = [
 ];
 
 function animateDrawerClose(drawer, backdrop, onComplete) {
-  if (!drawer) return;
+  if (!drawer || !backdrop) return;
 
-  const tl = gsap.timeline();
-
-  tl.to(drawer, {
-    xPercent: -100,
-    duration: 1,
-    ease: "power2.in",
+  const tl = gsap.timeline({
     onComplete,
   });
+
+  tl.to(
+    drawer,
+    {
+      xPercent: -100,
+      duration: 1,
+      ease: "power2.in",
+    },
+    0,
+  );
 
   tl.to(
     backdrop,
@@ -88,10 +108,12 @@ function animateDrawerClose(drawer, backdrop, onComplete) {
   );
 }
 
-export default function MenuDrawer({ onClose }) {
+export default function MenuDrawer({ onClose, returnFocusRef }) {
   const drawerRef = useRef(null);
   const backdropRef = useRef(null);
+  const closeButtonRef = useRef(null);
 
+  // Lock scrolling while the drawer exists.
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
 
@@ -102,10 +124,31 @@ export default function MenuDrawer({ onClose }) {
     };
   }, []);
 
+  // Move keyboard focus into the drawer when it opens.
+  useEffect(() => {
+    closeButtonRef.current?.focus({
+      preventScroll: true,
+    });
+  }, []);
+
+  // Shared "the drawer has finished closing" behavior.
+  function finishDrawerClose() {
+    returnFocusRef.current?.focus({
+      preventScroll: true,
+    });
+
+    onClose();
+  }
+
+  // Escape should use the same animated close behavior.
   useEffect(() => {
     function handleKeyDown(event) {
       if (event.key === "Escape") {
-        animateDrawerClose(drawerRef.current, onClose);
+        animateDrawerClose(
+          drawerRef.current,
+          backdropRef.current,
+          finishDrawerClose,
+        );
       }
     }
 
@@ -114,8 +157,9 @@ export default function MenuDrawer({ onClose }) {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [onClose]);
+  }, [onClose, returnFocusRef]);
 
+  // Opening animation.
   useGSAP(
     () => {
       const tl = gsap.timeline();
@@ -147,33 +191,43 @@ export default function MenuDrawer({ onClose }) {
         "-=0.6",
       );
     },
-    { scope: drawerRef },
+    {
+      scope: drawerRef,
+    },
   );
 
   function handleCloseDrawer() {
-    animateDrawerClose(drawerRef.current, backdropRef.current, onClose);
+    animateDrawerClose(
+      drawerRef.current,
+      backdropRef.current,
+      finishDrawerClose,
+    );
   }
 
   return (
     <>
+      {/* Backdrop */}
       <button
+        ref={backdropRef}
         type="button"
         aria-label="Close menu"
         tabIndex={-1}
         className="fixed inset-0 z-40 bg-black/40"
         onClick={handleCloseDrawer}
-        ref={backdropRef}
       />
 
+      {/* Drawer */}
       <nav
         id="site-menu"
         ref={drawerRef}
+        aria-label="Site menu"
         className="fixed top-0 left-0 z-50 h-dvh w-full max-w-132.5 bg-main p-8 font-central-regular text-secondary overflow-hidden"
       >
-        {/* Close Header */}
-        <div className="drawer-container flex flex-col items-start gap-14 ">
+        <div className="drawer-container flex flex-col items-start gap-14">
+          {/* Close button */}
           <button
-            aria-label="Close Menu"
+            ref={closeButtonRef}
+            aria-label="Close menu"
             className="menu-reveal flex items-center gap-2 font-light"
             type="button"
             onClick={handleCloseDrawer}
@@ -181,6 +235,7 @@ export default function MenuDrawer({ onClose }) {
             <span>
               <Image src={CloseSvg} alt="" width={30} height={30} />
             </span>
+
             <span className="uppercase font-bold text-sm">Close</span>
           </button>
 
@@ -194,10 +249,12 @@ export default function MenuDrawer({ onClose }) {
                 >
                   <h2 className="flex items-baseline gap-3 text-3xl font-benton-regular">
                     <span>{section.title}</span>
+
                     <span aria-hidden="true" className="text-2xl font-light">
                       &#x2304;
                     </span>
                   </h2>
+
                   {section.links.map((link) => {
                     return (
                       <Link
@@ -213,14 +270,16 @@ export default function MenuDrawer({ onClose }) {
               );
             })}
           </div>
+
           {/* Footer Menu */}
           <div className="menu-reveal footer-section flex flex-col gap-6">
-            <span className="  bg-white rounded-lg h-px opacity-20 w-35 "></span>
+            <span className="bg-white rounded-lg h-px opacity-20 w-35" />
+
             <div className="flex flex-col gap-2">
               {menuFooterSections.map((link) => {
                 return (
                   <Link
-                    className=" text-white text-xs uppercase"
+                    className="text-white text-xs uppercase"
                     key={link.label}
                     href={link.href}
                   >
@@ -230,9 +289,11 @@ export default function MenuDrawer({ onClose }) {
               })}
             </div>
           </div>
+
+          {/* Decorative Leaf */}
           <div
             aria-hidden="true"
-            className="decorative-leaf absolute -rotate-45 -bottom-35 -right-40 "
+            className="decorative-leaf absolute -rotate-45 -bottom-35 -right-40"
           >
             <Image src={Leaf} alt="" width={500} height={500} />
           </div>
