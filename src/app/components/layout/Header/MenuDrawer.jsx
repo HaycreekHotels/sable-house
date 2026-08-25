@@ -66,19 +66,31 @@ const menuFooterSections = [
   },
 ];
 
-function animateDrawerClose(drawer, onComplete) {
+function animateDrawerClose(drawer, backdrop, onComplete) {
   if (!drawer) return;
 
-  gsap.to(drawer, {
+  const tl = gsap.timeline();
+
+  tl.to(drawer, {
     xPercent: -100,
     duration: 1,
     ease: "power2.in",
     onComplete,
   });
+
+  tl.to(
+    backdrop,
+    {
+      opacity: 0,
+      duration: 0.5,
+    },
+    0,
+  );
 }
 
 export default function MenuDrawer({ onClose }) {
   const drawerRef = useRef(null);
+  const backdropRef = useRef(null);
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
@@ -115,6 +127,16 @@ export default function MenuDrawer({ onClose }) {
       });
 
       tl.from(
+        backdropRef.current,
+        {
+          opacity: 0,
+          ease: "power2.out",
+          duration: 0.5,
+        },
+        "-=0.9",
+      );
+
+      tl.from(
         ".menu-reveal",
         {
           opacity: 0,
@@ -129,78 +151,93 @@ export default function MenuDrawer({ onClose }) {
   );
 
   function handleCloseDrawer() {
-    animateDrawerClose(drawerRef.current, onClose);
+    animateDrawerClose(drawerRef.current, backdropRef.current, onClose);
   }
 
   return (
-    <nav
-      id="site-menu"
-      ref={drawerRef}
-      className="fixed top-0 left-0 z-50 h-dvh w-full max-w-132.5 bg-main p-8 font-central-regular text-secondary overflow-hidden"
-    >
-      {/* Close Header */}
-      <div className="drawer-container flex flex-col items-start gap-14 ">
-        <button
-          aria-label="Close Menu"
-          className="menu-reveal flex items-center gap-2 font-light"
-          type="button"
-          onClick={handleCloseDrawer}
-        >
-          <span>
-            <Image src={CloseSvg} alt="" width={30} height={30} />
-          </span>
-          <span className="uppercase font-bold text-sm">Close</span>
-        </button>
+    <>
+      <button
+        type="button"
+        aria-label="Close menu"
+        tabIndex={-1}
+        className="fixed inset-0 z-40 bg-black/40"
+        onClick={handleCloseDrawer}
+        ref={backdropRef}
+      />
 
-        {/* Main Links */}
-        <div className="main-section flex flex-col gap-8">
-          {menuSections.map((section) => {
-            return (
-              <section
-                key={section.title}
-                className="menu-reveal flex flex-col text-secondary gap-2"
-              >
-                <h2 className="flex items-baseline gap-3 text-3xl font-benton-regular">
-                  <span>{section.title}</span>
-                  <span aria-hidden="true" className="text-2xl font-light">
-                    &#x2304;
-                  </span>
-                </h2>
-                {section.links.map((link) => {
-                  return (
-                    <Link className="text-sm" key={link.label} href={link.href}>
-                      {link.label}
-                    </Link>
-                  );
-                })}
-              </section>
-            );
-          })}
-        </div>
-        {/* Footer Menu */}
-        <div className="menu-reveal footer-section flex flex-col gap-6">
-          <span className="  bg-white rounded-lg h-px opacity-20 w-35 "></span>
-          <div className="flex flex-col gap-2">
-            {menuFooterSections.map((link) => {
+      <nav
+        id="site-menu"
+        ref={drawerRef}
+        className="fixed top-0 left-0 z-50 h-dvh w-full max-w-132.5 bg-main p-8 font-central-regular text-secondary overflow-hidden"
+      >
+        {/* Close Header */}
+        <div className="drawer-container flex flex-col items-start gap-14 ">
+          <button
+            aria-label="Close Menu"
+            className="menu-reveal flex items-center gap-2 font-light"
+            type="button"
+            onClick={handleCloseDrawer}
+          >
+            <span>
+              <Image src={CloseSvg} alt="" width={30} height={30} />
+            </span>
+            <span className="uppercase font-bold text-sm">Close</span>
+          </button>
+
+          {/* Main Links */}
+          <div className="main-section flex flex-col gap-8">
+            {menuSections.map((section) => {
               return (
-                <Link
-                  className=" text-white text-xs uppercase"
-                  key={link.label}
-                  href={link.href}
+                <section
+                  key={section.title}
+                  className="menu-reveal flex flex-col text-secondary gap-2"
                 >
-                  {link.label}
-                </Link>
+                  <h2 className="flex items-baseline gap-3 text-3xl font-benton-regular">
+                    <span>{section.title}</span>
+                    <span aria-hidden="true" className="text-2xl font-light">
+                      &#x2304;
+                    </span>
+                  </h2>
+                  {section.links.map((link) => {
+                    return (
+                      <Link
+                        className="text-sm"
+                        key={link.label}
+                        href={link.href}
+                      >
+                        {link.label}
+                      </Link>
+                    );
+                  })}
+                </section>
               );
             })}
           </div>
+          {/* Footer Menu */}
+          <div className="menu-reveal footer-section flex flex-col gap-6">
+            <span className="  bg-white rounded-lg h-px opacity-20 w-35 "></span>
+            <div className="flex flex-col gap-2">
+              {menuFooterSections.map((link) => {
+                return (
+                  <Link
+                    className=" text-white text-xs uppercase"
+                    key={link.label}
+                    href={link.href}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            className="decorative-leaf absolute -rotate-45 -bottom-35 -right-40 "
+          >
+            <Image src={Leaf} alt="" width={500} height={500} />
+          </div>
         </div>
-        <div
-          aria-hidden="true"
-          className="decorative-leaf absolute -rotate-45 -bottom-35 -right-40 "
-        >
-          <Image src={Leaf} alt="" width={500} height={500} />
-        </div>
-      </div>
-    </nav>
+      </nav>
+    </>
   );
 }
