@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
 
@@ -60,7 +58,7 @@ const menuFooterSections = [
   },
 ];
 
-export default function MenuDrawer() {
+export default function MenuDrawer({ onClose }) {
   return (
     <nav className="fixed top-0 left-0 z-50 h-dvh w-full max-w-132.5 bg-main p-8 font-central-regular text-secondary overflow-hidden">
       {/* Close Header */}
@@ -69,6 +67,7 @@ export default function MenuDrawer() {
           aria-label="Close Menu"
           className="menu-header flex items-center gap-2 font-light"
           type="button"
+          onClick={onClose}
         >
           <span>
             <Image src={CloseSvg} alt="" width={30} height={30} />
