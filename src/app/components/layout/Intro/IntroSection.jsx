@@ -1,40 +1,67 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function IntroSection({
-  heading = "16 Exclusive Luxury Rooms",
-  intro = [],
+  label = "Begin",
+  heading,
+  children,
   className = "",
 }) {
   const sectionRef = useRef(null);
+  const labelRef = useRef(null);
+  const contentRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    const section = sectionRef.current;
+
+    if (!section) return;
+
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".intro-animate",
-        {
-          autoAlpha: 0,
-          y: 35,
+      ScrollTrigger.matchMedia({
+        // Normal animation
+        "(prefers-reduced-motion: no-preference)": () => {
+          const timeline = gsap.timeline({
+            scrollTrigger: {
+              trigger: section,
+              start: "top 80%",
+              toggleActions: "play none none none",
+            },
+
+            defaults: {
+              duration: 0.8,
+              ease: "power2.out",
+            },
+          });
+
+          timeline
+            .from(labelRef.current, {
+              autoAlpha: 0,
+              y: 12,
+            })
+            .from(
+              contentRef.current.children,
+              {
+                autoAlpha: 0,
+                y: 12,
+                stagger: 0.1,
+              },
+              "-=0.55",
+            );
         },
-        {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.9,
-          ease: "power3.out",
-          stagger: 0.18,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
-            once: true,
-          },
+
+        // Accessibility: don't animate for reduced motion users
+        "(prefers-reduced-motion: reduce)": () => {
+          gsap.set([labelRef.current, ...contentRef.current.children], {
+            clearProps: "all",
+          });
         },
-      );
-    }, sectionRef);
+      });
+    }, section);
 
     return () => ctx.revert();
   }, []);
@@ -42,23 +69,80 @@ export default function IntroSection({
   return (
     <section
       ref={sectionRef}
-      className={`w-full bg-secondary px-5 py-16 md:px-44 md:py-20 lg:px-72 ${className}`}
+      aria-labelledby="intro-section-heading"
+      className={`w-full bg-white text-black ${className}`}
     >
-      <div className="mx-auto max-w-7xl">
-        <p className="intro-animate mb-6 text-center text-sm uppercase tracking-[0.45em] text-neutral-500 opacity-0 md:text-base">
-          Sabal House
-        </p>
+      <div
+        className="
+          mx-auto
+          grid
+          min-h-80
+          max-w-360
+          grid-cols-1
+          gap-12
+          px-6
+          py-16
 
-        <h1 className="intro-animate mx-auto mb-10 max-w-5xl text-center font-serif text-2xl leading-tight text-neutral-900 opacity-0 md:text-7xl lg:text-5xl">
-          {heading}
-        </h1>
+          md:grid-cols-2
+          md:gap-16
+          md:px-12
+          md:py-20
 
-        <div className="intro-animate mx-auto max-w-7xl space-y-8 text-left text-md leading-[1.9] text-neutral-700 opacity-0 md:text-lg md:leading-loose">
-          {Array.isArray(intro) ? (
-            intro.map((paragraph, index) => <p key={index}>{paragraph}</p>)
-          ) : (
-            <p>{intro}</p>
-          )}
+          lg:min-h-87.5
+          lg:px-20
+        "
+      >
+        {/* Left */}
+        <div className="flex md:justify-center">
+          <p
+            ref={labelRef}
+            className="
+              font-benton-regular
+              text-[2rem]
+              leading-none
+
+              md:text-[2.25rem]
+            "
+          >
+            {label}
+          </p>
+        </div>
+
+        {/* Right */}
+        <div
+          ref={contentRef}
+          className="
+            flex
+            max-w-105
+            flex-col
+            items-start
+            gap-5
+          "
+        >
+          <h2
+            id="intro-section-heading"
+            className="
+              font-benton-regular
+              text-[2rem]
+              leading-[1.05]
+
+              md:text-[2.25rem]
+            "
+          >
+            {heading}
+          </h2>
+
+          <div
+            className="
+              text-sm
+              leading-[1.65]
+              text-neutral-900
+
+              md:text-[0.95rem]
+            "
+          >
+            {children}
+          </div>
         </div>
       </div>
     </section>
