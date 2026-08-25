@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -69,22 +69,53 @@ const menuFooterSections = [
 export default function MenuDrawer({ onClose }) {
   const drawerRef = useRef(null);
 
-  useGSAP(() => {
-    gsap.from(drawerRef.current, {
-      xPercent: -100,
-      duration: 1,
-      ease: "power2.out",
-    });
-  });
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, []);
+
+  useGSAP(
+    () => {
+      const tl = gsap.timeline();
+
+      tl.from(drawerRef.current, {
+        xPercent: -100,
+        duration: 1,
+        ease: "power2.out",
+      });
+
+      tl.from(
+        ".menu-reveal",
+        {
+          opacity: 0,
+          y: 10,
+          duration: 0.5,
+          stagger: 0.1,
+        },
+        "-=0.6",
+      );
+    },
+    { scope: drawerRef },
+  );
 
   function handleCloseDrawer() {
-    gsap.to(drawerRef.current, {
+    const drawer = drawerRef.current;
+
+    if (!drawer) return;
+
+    gsap.to(drawer, {
       xPercent: -100,
       duration: 1,
-
+      ease: "power2.in",
       onComplete: onClose,
     });
   }
+
   return (
     <nav
       id="site-menu"
@@ -95,7 +126,7 @@ export default function MenuDrawer({ onClose }) {
       <div className="drawer-container flex flex-col items-start gap-14 ">
         <button
           aria-label="Close Menu"
-          className="menu-header flex items-center gap-2 font-light"
+          className="menu-reveal flex items-center gap-2 font-light"
           type="button"
           onClick={handleCloseDrawer}
         >
@@ -111,7 +142,7 @@ export default function MenuDrawer({ onClose }) {
             return (
               <section
                 key={section.title}
-                className="flex flex-col text-secondary gap-2"
+                className="menu-reveal flex flex-col text-secondary gap-2"
               >
                 <h2 className="flex items-baseline gap-3 text-3xl font-benton-regular">
                   <span>{section.title}</span>
@@ -131,13 +162,13 @@ export default function MenuDrawer({ onClose }) {
           })}
         </div>
         {/* Footer Menu */}
-        <div className="footer-section flex flex-col gap-6">
-          <span className="bg-white rounded-lg h-px opacity-20 w-35 "></span>
+        <div className="menu-reveal footer-section flex flex-col gap-6">
+          <span className="  bg-white rounded-lg h-px opacity-20 w-35 "></span>
           <div className="flex flex-col gap-2">
             {menuFooterSections.map((link) => {
               return (
                 <Link
-                  className="text-white text-xs uppercase"
+                  className=" text-white text-xs uppercase"
                   key={link.label}
                   href={link.href}
                 >
