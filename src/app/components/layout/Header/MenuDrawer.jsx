@@ -66,6 +66,17 @@ const menuFooterSections = [
   },
 ];
 
+function animateDrawerClose(drawer, onComplete) {
+  if (!drawer) return;
+
+  gsap.to(drawer, {
+    xPercent: -100,
+    duration: 1,
+    ease: "power2.in",
+    onComplete,
+  });
+}
+
 export default function MenuDrawer({ onClose }) {
   const drawerRef = useRef(null);
 
@@ -78,6 +89,20 @@ export default function MenuDrawer({ onClose }) {
       document.body.style.overflow = previousOverflow;
     };
   }, []);
+
+  useEffect(() => {
+    function handleKeyDown(event) {
+      if (event.key === "Escape") {
+        animateDrawerClose(drawerRef.current, onClose);
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onClose]);
 
   useGSAP(
     () => {
@@ -104,16 +129,7 @@ export default function MenuDrawer({ onClose }) {
   );
 
   function handleCloseDrawer() {
-    const drawer = drawerRef.current;
-
-    if (!drawer) return;
-
-    gsap.to(drawer, {
-      xPercent: -100,
-      duration: 1,
-      ease: "power2.in",
-      onComplete: onClose,
-    });
+    animateDrawerClose(drawerRef.current, onClose);
   }
 
   return (
