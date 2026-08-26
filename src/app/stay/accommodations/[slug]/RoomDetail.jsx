@@ -78,8 +78,6 @@ export default function RoomDetail({ room }) {
 
   return (
     <main ref={pageRef} className="min-h-screen bg-[#fdfdfc] text-black">
-      <Header />
-
       {/* ================================================================ */}
       {/* HERO                                                             */}
       {/* ================================================================ */}
@@ -416,7 +414,7 @@ export default function RoomDetail({ room }) {
         <div className="mt-28 lg:mt-36">
           <Link
             data-amenity-item
-            href="/accommodations"
+            href="/stay/accommodations"
             className="
               group
               inline-block
@@ -449,175 +447,5 @@ export default function RoomDetail({ room }) {
         </div>
       </section>
     </main>
-  );
-}
-
-/* ========================================================================== */
-/* HEADER                                                                     */
-/* ========================================================================== */
-
-function Header() {
-  return (
-    <header className="absolute left-0 top-0 z-40 w-full">
-      <div
-        className="
-          mx-auto
-          grid
-          h-20
-          max-w-[1600px]
-          grid-cols-3
-          items-center
-          px-5
-          sm:px-8
-          lg:px-12
-        "
-      >
-        {/* Menu */}
-
-        <div className="flex items-center">
-          <button
-            type="button"
-            aria-label="Open navigation menu"
-            className="
-              group
-              flex
-              min-h-11
-              min-w-11
-              items-center
-              gap-3
-              focus-visible:outline
-              focus-visible:outline-2
-              focus-visible:outline-offset-4
-              focus-visible:outline-black
-            "
-          >
-            <span aria-hidden="true" className="relative block h-3 w-4">
-              <span
-                className="
-                  absolute
-                  left-0
-                  top-0
-                  h-px
-                  w-full
-                  bg-black
-                  transition-transform
-                  duration-300
-                  group-hover:translate-x-1
-                "
-              />
-
-              <span
-                className="
-                  absolute
-                  left-0
-                  top-[6px]
-                  h-px
-                  w-full
-                  bg-black
-                "
-              />
-
-              <span
-                className="
-                  absolute
-                  bottom-0
-                  left-0
-                  h-px
-                  w-full
-                  bg-black
-                  transition-transform
-                  duration-300
-                  group-hover:-translate-x-1
-                "
-              />
-            </span>
-
-            <span
-              className="
-                hidden
-                text-[10px]
-                font-medium
-                uppercase
-                tracking-[0.05em]
-                sm:block
-              "
-            >
-              Menu
-            </span>
-          </button>
-        </div>
-
-        {/* Logo */}
-
-        <Link
-          href="/"
-          aria-label="Sabal House home"
-          className="
-            justify-self-center
-            text-center
-            focus-visible:outline
-            focus-visible:outline-2
-            focus-visible:outline-offset-4
-            focus-visible:outline-black
-          "
-        >
-          <span
-            className="
-              block
-              font-serif
-              text-2xl
-              leading-none
-              tracking-[-0.04em]
-            "
-          >
-            SABAL
-          </span>
-
-          <span
-            className="
-              mt-1
-              block
-              text-[6px]
-              font-semibold
-              uppercase
-              tracking-[0.55em]
-            "
-          >
-            House
-          </span>
-        </Link>
-
-        {/* Booking */}
-
-        <div className="justify-self-end">
-          <Link
-            href="/book"
-            className="
-              inline-flex
-              min-h-10
-              items-center
-              justify-center
-              bg-black
-              px-3
-              text-[9px]
-              font-medium
-              uppercase
-              tracking-[0.03em]
-              text-white
-              transition-colors
-              hover:bg-black/75
-              focus-visible:outline
-              focus-visible:outline-2
-              focus-visible:outline-offset-4
-              focus-visible:outline-black
-              sm:px-5
-              sm:text-[10px]
-            "
-          >
-            Book Your Stay
-          </Link>
-        </div>
-      </div>
-    </header>
   );
 }

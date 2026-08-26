@@ -6,7 +6,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import { rooms } from "../data/accommodations";
+import { rooms } from "@/app/data/accommodations";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -379,7 +379,7 @@ function RoomCard({ room }) {
   return (
     <article data-room-card className="min-w-0">
       <Link
-        href={`/accommodations/${room.slug}`}
+        href={`/stay/accommodations/${room.slug}`}
         aria-label={`View ${room.name}`}
         className="
           group
