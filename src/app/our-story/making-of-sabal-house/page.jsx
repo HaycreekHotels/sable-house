@@ -1,5 +1,6 @@
 import EditorialHero from "@/app/components/layout/heros/EditorialHero";
 import FullWidthSimple from "@/app/components/layout/ScrollAnimation/FullWidthSimple";
+import StoryGallery from "@/app/components/layout/ScrollAnimation/StoryGallery";
 
 export default function StoryPage() {
   return (
@@ -13,6 +14,7 @@ export default function StoryPage() {
         priority
       />
       <FullWidthSimple />
+      <StoryGallery />
     </main>
   );
 }
