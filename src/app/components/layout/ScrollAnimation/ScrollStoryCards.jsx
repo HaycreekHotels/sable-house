@@ -18,9 +18,17 @@ export default function ScrollStoryCards({
   const secondImageRefs = useRef([]);
   const textRefs = useRef([]);
 
-  // Each card creates two visual states:
-  // state A -> images 1 + 2
-  // state B -> images 3 + 4
+  /*
+    Each card creates two visual states.
+
+    Card 1:
+      state 0 -> images 1 + 2
+      state 1 -> images 3 + 4
+
+    Card 2:
+      state 2 -> images 5 + 6
+      state 3 -> images 7 + 8
+  */
   const imageStates = useMemo(() => {
     return cards.flatMap((card, cardIndex) => {
       if (!Array.isArray(card.images) || card.images.length < 4) {
@@ -51,169 +59,196 @@ export default function ScrollStoryCards({
       return undefined;
     }
 
-    let context;
-    let cancelled = false;
+    const context = gsap.context(() => {
+      const firstImages = firstImageRefs.current.filter(Boolean);
+      const secondImages = secondImageRefs.current.filter(Boolean);
+      const textPanels = textRefs.current.filter(Boolean);
 
-    const firstImages = firstImageRefs.current.filter(Boolean);
-    const secondImages = secondImageRefs.current.filter(Boolean);
-    const textPanels = textRefs.current.filter(Boolean);
-    const allImages = [...firstImages, ...secondImages];
-
-    if (
-      firstImages.length !== imageStates.length ||
-      secondImages.length !== imageStates.length ||
-      textPanels.length !== cards.length
-    ) {
-      return undefined;
-    }
-
-    // Wait for every image layer to finish decoding before ScrollTrigger starts.
-    // This is especially important with remote image CDNs + a pinned section.
-    const waitForImages = allImages.map((img) => {
-      if (img.complete && img.naturalWidth > 0) {
-        return Promise.resolve();
+      if (
+        firstImages.length !== imageStates.length ||
+        secondImages.length !== imageStates.length ||
+        textPanels.length !== cards.length
+      ) {
+        return;
       }
 
-      if (typeof img.decode === "function") {
-        return img.decode().catch(() => undefined);
-      }
+      const numberOfTransitions = imageStates.length - 1;
 
-      return new Promise((resolve) => {
-        img.addEventListener("load", resolve, { once: true });
-        img.addEventListener("error", resolve, { once: true });
+      /*
+        GSAP is now the ONLY thing that owns image transforms.
+
+        There are deliberately no inline transform styles on the <img>
+        elements. The previous version had an inline translate3d(0, 100%, 0)
+        AND GSAP yPercent: 100, which could effectively place an image two
+        frame-heights below the viewport.
+
+        State 0 starts visible.
+        Every later state starts exactly one frame below.
+      */
+      firstImages.forEach((image, index) => {
+        gsap.set(image, {
+          yPercent: index === 0 ? 0 : 100,
+          zIndex: index + 1,
+          force3D: true,
+        });
       });
-    });
 
-    Promise.allSettled(waitForImages).then(() => {
-      if (cancelled) return;
+      secondImages.forEach((image, index) => {
+        gsap.set(image, {
+          yPercent: index === 0 ? 0 : 100,
+          zIndex: index + 1,
+          force3D: true,
+        });
+      });
 
-      context = gsap.context(() => {
+      /*
+        Text panels are stacked in the same position.
+      */
+      gsap.set(textPanels, {
+        autoAlpha: 0,
+        yPercent: 14,
+        force3D: true,
+      });
+
+      gsap.set(textPanels[0], {
+        autoAlpha: 1,
+        yPercent: 0,
+      });
+
+      const setAccessibleCard = (cardIndex) => {
+        textPanels.forEach((panel, index) => {
+          const isActive = index === cardIndex;
+
+          panel.setAttribute("aria-hidden", isActive ? "false" : "true");
+
+          /*
+            `inert` is a boolean DOM property.
+
+            Do not use setAttribute("inert", "") with React 19 / Next 16.
+          */
+          panel.inert = !isActive;
+        });
+      };
+
+      setAccessibleCard(0);
+
+      /*
+        One GSAP timeline unit = one visual scroll step.
+
+        With two cards the sequence is:
+
+        time 0:
+          Card 1 text
+          images 1 + 2
+
+        time 1:
+          Card 1 text
+          images 3 + 4
+
+        time 2:
+          Card 2 text
+          images 5 + 6
+
+        time 3:
+          Card 2 text
+          images 7 + 8
+      */
+      const timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: () =>
+            `+=${window.innerHeight * scrollPerStep * numberOfTransitions}`,
+          pin: true,
+          pinSpacing: true,
+          scrub: 0.5,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+
+          snap: {
+            snapTo: 1 / numberOfTransitions,
+            duration: { min: 0.12, max: 0.3 },
+            delay: 0.04,
+            ease: "power1.inOut",
+          },
+
+          onUpdate: (self) => {
+            const stateIndex = Math.min(
+              imageStates.length - 1,
+              Math.max(0, Math.round(self.progress * numberOfTransitions)),
+            );
+
+            setAccessibleCard(imageStates[stateIndex].cardIndex);
+          },
+        },
+      });
+
+      timeline.addLabel("state-0", 0);
+
+      for (let index = 0; index < numberOfTransitions; index += 1) {
+        const nextIndex = index + 1;
+        const currentState = imageStates[index];
+        const nextState = imageStates[nextIndex];
+        const stepStart = index;
+
         /*
-          IMAGE ANIMATION IMPORTANT:
+          Only the incoming image pair moves.
 
-          There is intentionally NO opacity / visibility animation on the images.
-          Every non-active image begins one full image-height below its frame.
-
-          During a transition:
-          - current image moves from 0% -> -100%
-          - next image moves from 100% -> 0%
-
-          Because both move together, the frame is always covered by an image.
-          This removes the gray-box gap that can happen when opacity/autoAlpha,
-          Tailwind opacity utilities, visibility, and async image loading overlap.
+          The previous image remains underneath, so when scrolling forward
+          the new pair rises over it. When scrolling backward, the new pair
+          moves back down and reveals the previous pair again.
         */
-        gsap.set(firstImages, {
-          yPercent: 100,
-          force3D: true,
-        });
-
-        gsap.set(secondImages, {
-          yPercent: 100,
-          force3D: true,
-        });
-
-        gsap.set([firstImages[0], secondImages[0]], {
-          yPercent: 0,
-        });
-
-        // Text can fade because it does not expose the image background.
-        gsap.set(textPanels, {
-          autoAlpha: 0,
-          yPercent: 16,
-          force3D: true,
-        });
-
-        gsap.set(textPanels[0], {
-          autoAlpha: 1,
-          yPercent: 0,
-        });
-
-        const numberOfTransitions = imageStates.length - 1;
-
-        const timeline = gsap.timeline({
-          defaults: {
+        timeline.to(
+          [firstImages[nextIndex], secondImages[nextIndex]],
+          {
+            yPercent: 0,
             duration: 1,
             ease: "power2.inOut",
           },
-          scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: () =>
-              `+=${window.innerHeight * scrollPerStep * numberOfTransitions}`,
-            pin: true,
-            pinSpacing: true,
-            scrub: 0.55,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-            snap: {
-              snapTo: 1 / numberOfTransitions,
-              duration: { min: 0.12, max: 0.3 },
-              delay: 0.05,
-              ease: "power1.inOut",
-            },
-          },
-        });
+          stepStart,
+        );
 
-        for (let index = 0; index < numberOfTransitions; index += 1) {
-          const currentState = imageStates[index];
-          const nextState = imageStates[index + 1];
-          const label = `state-${index}`;
-
-          timeline.addLabel(label);
-
-          // The outgoing and incoming images move at exactly the same time.
-          // No fade = no moment where the gray frame can show through.
+        /*
+          Change text only when crossing from one card to another.
+        */
+        if (currentState.cardIndex !== nextState.cardIndex) {
           timeline.to(
-            [firstImages[index], secondImages[index]],
+            textPanels[currentState.cardIndex],
             {
-              yPercent: -100,
+              yPercent: -14,
+              autoAlpha: 0,
+              duration: 0.42,
+              ease: "power2.in",
             },
-            label,
+            stepStart,
           );
 
-          timeline.to(
-            [firstImages[index + 1], secondImages[index + 1]],
+          timeline.fromTo(
+            textPanels[nextState.cardIndex],
+            {
+              yPercent: 14,
+              autoAlpha: 0,
+            },
             {
               yPercent: 0,
+              autoAlpha: 1,
+              duration: 0.52,
+              ease: "power2.out",
             },
-            label,
+            stepStart + 0.42,
           );
-
-          // Only swap text when crossing into a new card.
-          if (currentState.cardIndex !== nextState.cardIndex) {
-            timeline.to(
-              textPanels[currentState.cardIndex],
-              {
-                yPercent: -16,
-                autoAlpha: 0,
-                duration: 0.65,
-              },
-              label,
-            );
-
-            timeline.fromTo(
-              textPanels[nextState.cardIndex],
-              {
-                yPercent: 16,
-                autoAlpha: 0,
-              },
-              {
-                yPercent: 0,
-                autoAlpha: 1,
-                duration: 0.65,
-              },
-              `${label}+=0.18`,
-            );
-          }
         }
 
-        requestAnimationFrame(() => ScrollTrigger.refresh());
-      }, section);
-    });
+        timeline.addLabel(`state-${nextIndex}`, nextIndex);
+      }
+
+      requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
+      });
+    }, section);
 
     return () => {
-      cancelled = true;
-      context?.revert();
+      context.revert();
     };
   }, [cards, imageStates, scrollPerStep]);
 
@@ -223,6 +258,7 @@ export default function ScrollStoryCards({
 
   return (
     <>
+      {/* Animated version */}
       <section
         ref={sectionRef}
         aria-label="Featured stories"
@@ -246,7 +282,6 @@ export default function ScrollStoryCards({
                       src={image.src}
                       alt={image.alt}
                       loading="eager"
-                      decoding="async"
                       fetchPriority={stateIndex < 2 ? "high" : "auto"}
                       draggable="false"
                       onError={() => {
@@ -254,15 +289,7 @@ export default function ScrollStoryCards({
                           `ScrollStoryCards: failed to load image: ${image.src}`,
                         );
                       }}
-                      // Keep transform/opacity utilities off this element.
-                      // GSAP owns transform completely.
                       className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover will-change-transform"
-                      style={{
-                        transform:
-                          stateIndex === 0
-                            ? "translate3d(0, 0%, 0)"
-                            : "translate3d(0, 100%, 0)",
-                      }}
                     />
                   );
                 })}
@@ -282,7 +309,6 @@ export default function ScrollStoryCards({
                       src={image.src}
                       alt={image.alt}
                       loading="eager"
-                      decoding="async"
                       fetchPriority={stateIndex < 2 ? "high" : "auto"}
                       draggable="false"
                       onError={() => {
@@ -291,12 +317,6 @@ export default function ScrollStoryCards({
                         );
                       }}
                       className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover will-change-transform"
-                      style={{
-                        transform:
-                          stateIndex === 0
-                            ? "translate3d(0, 0%, 0)"
-                            : "translate3d(0, 100%, 0)",
-                      }}
                     />
                   );
                 })}
@@ -311,21 +331,9 @@ export default function ScrollStoryCards({
                   ref={(element) => {
                     textRefs.current[cardIndex] = element;
                   }}
-                  aria-hidden={cardIndex === 0 ? "false" : "true"}
+                  aria-hidden={cardIndex !== 0}
+                  inert={cardIndex !== 0}
                   className="absolute inset-0 flex max-w-[390px] flex-col justify-start pt-5 will-change-[transform,opacity] lg:pt-[22svh]"
-                  style={
-                    cardIndex === 0
-                      ? {
-                          opacity: 1,
-                          visibility: "visible",
-                          transform: "translate3d(0, 0, 0)",
-                        }
-                      : {
-                          opacity: 0,
-                          visibility: "hidden",
-                          transform: "translate3d(0, 2rem, 0)",
-                        }
-                  }
                 >
                   {card.eyebrow && (
                     <p className="mb-2 text-[10px] font-medium uppercase leading-none tracking-[0.02em] text-neutral-900 lg:text-[11px]">
