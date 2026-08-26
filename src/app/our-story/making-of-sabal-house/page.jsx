@@ -1,4 +1,5 @@
 import EditorialHero from "@/app/components/layout/heros/EditorialHero";
+import FullWidthSimple from "@/app/components/layout/ScrollAnimation/FullWidthSimple";
 
 export default function StoryPage() {
   return (
@@ -11,6 +12,7 @@ export default function StoryPage() {
         footer="Told by the people shaping it."
         priority
       />
+      <FullWidthSimple />
     </main>
   );
 }
