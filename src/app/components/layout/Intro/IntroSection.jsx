@@ -70,7 +70,7 @@ export default function IntroSection({
     <section
       ref={sectionRef}
       aria-labelledby="intro-section-heading"
-      className={`w-full bg-white text-black ${className}`}
+      className={`w-full -mb-44 text-black ${className}`}
     >
       <div
         className="

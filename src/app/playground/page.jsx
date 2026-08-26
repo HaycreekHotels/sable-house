@@ -8,7 +8,7 @@ const VIDEO_SRC =
 
 export default function PlaygroundPage() {
   return (
-    <main className="min-h-screen bg-main">
+    <main className="min-h-screen">
       <NavBar />
       <HeroVideo videoSrc={VIDEO_SRC} />
       <IntroSection label="Begin" heading="At Sabal House">
