@@ -1,6 +1,7 @@
 import NavBar from "../components/layout/Header/NavBar";
 import HeroVideo from "../components/layout/heros/HeroVideo";
 import IntroSection from "../components/layout/Intro/IntroSection";
+import FullWidth from "../components/layout/ScrollAnimation/FullWidth";
 
 const VIDEO_SRC =
   "https://sabal-house.b-cdn.net/flat%20hero/Sabal%20House%20-%20Promo.mp4";
@@ -17,6 +18,7 @@ export default function PlaygroundPage() {
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
       </IntroSection>
+      <FullWidth />
     </main>
   );
 }
