@@ -4,6 +4,7 @@ import IntroSection from "../components/layout/Intro/IntroSection";
 import FullWidth from "../components/layout/ScrollAnimation/FullWidth";
 import TextBreak from "../components/layout/Intro/TextBreak";
 import ScrollStoryCards from "../components/layout/ScrollAnimation/ScrollStoryCards";
+import OpenLetterForm from "../components/layout/forms/OpenLetterForm";
 
 const VIDEO_SRC =
   "https://sabal-house.b-cdn.net/flat%20hero/Sabal%20House%20-%20Promo.mp4";
@@ -102,6 +103,14 @@ export default function PlaygroundPage() {
         <em>Its how it makes someone feel.</em>
       </TextBreak>
       <ScrollStoryCards cards={storyCards} />
+      <OpenLetterForm
+        backgroundImage="https://sabal-house.b-cdn.net/flat%20hero/10th.jpg"
+        stampImage="/images/decorative/SH Wax Seal.png"
+        eyebrow="LETTERS FROM SABAL HOUSE"
+        description="Stay informed as we continue to build Sabal House. Sign up to receive occasional updates from us."
+        buttonLabel="STAY CLOSE"
+        signature="Until Then."
+      />
     </main>
   );
 }

@@ -262,7 +262,7 @@ export default function ScrollStoryCards({
       <section
         ref={sectionRef}
         aria-label="Featured stories"
-        className={`relative bg-white motion-reduce:hidden ${className}`}
+        className={`relative  motion-reduce:hidden ${className}`}
       >
         <div className="mx-auto flex min-h-[100svh] max-w-[1600px] items-center px-4 py-4 sm:px-6 lg:px-3 lg:py-2 xl:px-5">
           <div className="grid w-full gap-7 lg:grid-cols-[minmax(0,1.6fr)_minmax(300px,0.84fr)] lg:gap-10 xl:gap-14">
@@ -373,7 +373,7 @@ export default function ScrollStoryCards({
       {/* Reduced-motion fallback */}
       <section
         aria-label="Featured stories"
-        className="hidden bg-white motion-reduce:block"
+        className="hidden motion-reduce:block"
       >
         <div className="mx-auto max-w-7xl space-y-20 px-4 py-14 sm:px-6 lg:px-8">
           {cards.map((card) => (
