@@ -22,98 +22,7 @@ export default function MakingOfSabalHouse() {
   const [activeVideoIndex, setActiveVideoIndex] = useState(null);
   const [startedVideoIndex, setStartedVideoIndex] = useState(null);
 
-  useGSAP(
-    () => {
-      const section = sectionRef.current;
-      const header = headerRef.current;
-      const grid = gridRef.current;
-
-      if (!section || !header || !grid) {
-        return;
-      }
-
-      const cards = gsap.utils.toArray("[data-video-card]", section);
-
-      const media = gsap.matchMedia();
-
-      media.add(
-        {
-          motionAllowed: "(prefers-reduced-motion: no-preference)",
-          reducedMotion: "(prefers-reduced-motion: reduce)",
-        },
-        (context) => {
-          const reducedMotion = context.conditions?.reducedMotion;
-
-          if (reducedMotion) {
-            gsap.set(header, {
-              autoAlpha: 1,
-              y: 0,
-              clearProps: "transform,opacity,visibility",
-            });
-
-            gsap.set(cards, {
-              autoAlpha: 1,
-              y: 0,
-              scale: 1,
-              clearProps: "transform,opacity,visibility",
-            });
-
-            return;
-          }
-
-          gsap.set(header, {
-            autoAlpha: 0,
-            y: 30,
-          });
-
-          gsap.set(cards, {
-            autoAlpha: 0,
-            y: 80,
-            scale: 0.98,
-            transformOrigin: "center bottom",
-          });
-
-          const revealTimeline = gsap.timeline({
-            scrollTrigger: {
-              trigger: section,
-              start: "top 70%",
-              once: true,
-              invalidateOnRefresh: true,
-            },
-          });
-
-          revealTimeline.to(header, {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.7,
-            ease: "power2.out",
-            clearProps: "transform,opacity,visibility",
-          });
-
-          revealTimeline.to(
-            cards,
-            {
-              autoAlpha: 1,
-              y: 0,
-              scale: 1,
-              duration: 1.6,
-              stagger: 0.28,
-              ease: "power2.out",
-              clearProps: "transform,opacity,visibility",
-            },
-            "-=0.2",
-          );
-        },
-      );
-
-      return () => {
-        media.revert();
-      };
-    },
-    {
-      scope: sectionRef,
-    },
-  );
+  useGSAP(() => {}, {});
 
   async function handlePlayVideo(index) {
     const selectedVideo = videoRefs.current[index];
@@ -214,9 +123,7 @@ export default function MakingOfSabalHouse() {
           <h2
             id="making-of-sabal-house-title"
             className="text-balance font-benton-regular text-4xl leading-tight text-stone-950 sm:text-[56px]"
-          >
-            Crafting Sabal House
-          </h2>
+          ></h2>
 
           <p className="mx-auto mt-6 max-w-2xl text-pretty font-central-regular text-base leading-7 text-stone-900 sm:text-[16px] sm:leading-[1.5]">
             Sabal House is being shaped by many hands, each bringing a distinct
