@@ -21,58 +21,115 @@ export default function FullWidth() {
 
   useGSAP(
     () => {
+      const section = sectionRef.current;
+      const panel = panelRef.current;
+      const intro = introRef.current;
+      const content = contentRef.current;
+
+      if (!section || !panel || !intro || !content) return;
+
       const prefersReducedMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
       ).matches;
 
+      /*
+       * ---------------------------------------------------------
+       * REDUCED MOTION
+       * ---------------------------------------------------------
+       */
       if (prefersReducedMotion) {
-        gsap.set(panelRef.current, {
+        gsap.set(panel, {
           width: "100%",
           height: "90vh",
+          y: 0,
         });
 
-        gsap.set(introRef.current, {
+        gsap.set(intro, {
           autoAlpha: 0,
         });
 
-        gsap.set(contentRef.current, {
+        gsap.set(content, {
           autoAlpha: 1,
           y: 0,
+          visibility: "visible",
         });
 
         return;
       }
 
+      /*
+       * ---------------------------------------------------------
+       * HELPERS
+       * ---------------------------------------------------------
+       */
+
+      // Keep the starting square responsive on smaller screens.
       const getStartSize = () => {
         return Math.min(250, window.innerWidth - 40);
       };
 
-      const timeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "+=1400",
-          scrub: true,
-          pin: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        },
+      const getPanelCenterOffset = () => {
+        const rect = panel.getBoundingClientRect();
+
+        const panelCenter = rect.top + rect.height / 2;
+        const viewportCenter = window.innerHeight / 2;
+
+        return viewportCenter - panelCenter;
+      };
+
+      gsap.set(panel, {
+        width: getStartSize(),
+        height: getStartSize(),
+        y: 0,
+      });
+
+      gsap.set(intro, {
+        autoAlpha: 1,
+        y: 0,
+      });
+
+      gsap.set(content, {
+        autoAlpha: 0,
+        y: 24,
+        visibility: "visible",
       });
 
       /*
-       * PHASE 1:
-       * Start as the small centered square and expand
-       * toward the final panel dimensions.
+       * ---------------------------------------------------------
+       * TIMELINE
+       * ---------------------------------------------------------
        */
-      timeline.fromTo(
-        panelRef.current,
-        {
-          width: getStartSize,
-          height: getStartSize,
+
+      const timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: panel,
+
+          start: "70% bottom",
+
+          end: "+=1000",
+
+          scrub: 1,
+
+          pin: section,
+
+          anticipatePin: 1,
+
+          invalidateOnRefresh: true,
+
+          markers: false,
         },
+      });
+
+      /* PHASE 1 — STEP INTO IMAGE */
+
+      timeline.to(
+        panel,
         {
-          width: () => sectionRef.current?.clientWidth ?? window.innerWidth,
+          width: () => section.clientWidth,
           height: () => window.innerHeight * 0.9,
+
+          y: () => getPanelCenterOffset(),
+
           duration: 3,
           ease: "none",
         },
@@ -80,11 +137,13 @@ export default function FullWidth() {
       );
 
       /*
-       * PHASE 2:
-       * Fade the intro away shortly after expansion begins.
+      
+       * PHASE 2 — REMOVE INTRO
+     
        */
+
       timeline.to(
-        introRef.current,
+        intro,
         {
           autoAlpha: 0,
           y: -12,
@@ -95,16 +154,13 @@ export default function FullWidth() {
       );
 
       /*
-       * PHASE 3:
-       * Reveal the final two-column content near the end
-       * of the expansion.
+      
+       * PHASE 3 — REVEAL EXPANDED CONTENT
+      
        */
-      timeline.fromTo(
-        contentRef.current,
-        {
-          autoAlpha: 0,
-          y: 24,
-        },
+
+      timeline.to(
+        content,
         {
           autoAlpha: 1,
           y: 0,
@@ -122,7 +178,7 @@ export default function FullWidth() {
   return (
     <section
       ref={sectionRef}
-      className="flex min-h-screen w-full items-center justify-center"
+      className="flex min-h-screen w-full items-center justify-center  -mb-[350px] "
     >
       <div ref={panelRef} className="relative h-[90vh] w-full overflow-hidden">
         {/* Background image */}

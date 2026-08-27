@@ -19,7 +19,7 @@ const storyCards = [
     kicker: "The Savannah worth knowing often sits just beyond the obvious.",
 
     description:
-      "This text will be a short blurb about who we are. Discover the places, people, and stories that shape the city beyond the familiar.",
+      "This text will be a short blurb about who we are. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 
     cta: {
       label: "Explore Beyond",

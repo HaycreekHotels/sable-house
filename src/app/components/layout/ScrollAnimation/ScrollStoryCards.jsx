@@ -262,14 +262,70 @@ export default function ScrollStoryCards({
       <section
         ref={sectionRef}
         aria-label="Featured stories"
-        className={`relative  motion-reduce:hidden ${className}`}
+        className={`relative motion-reduce:hidden ${className}`}
       >
-        <div className="mx-auto flex min-h-[100svh] max-w-[1600px] items-center px-4 py-4 sm:px-6 lg:px-3 lg:py-2 xl:px-5">
-          <div className="grid w-full gap-7 lg:grid-cols-[minmax(0,1.6fr)_minmax(300px,0.84fr)] lg:gap-10 xl:gap-14">
+        <div
+          className="
+      mx-auto
+      flex
+      min-h-[100svh]
+      max-w-[1600px]
+      items-center
+      px-4
+      py-4
+
+      sm:px-6
+
+      lg:h-[100svh]
+      lg:min-h-0
+      lg:px-3
+      lg:py-0
+
+      xl:px-5
+    "
+        >
+          <div
+            className="
+        grid
+        w-full
+        gap-7
+
+        lg:h-full
+        lg:grid-cols-[minmax(0,1.6fr)_minmax(300px,0.84fr)]
+        lg:gap-10
+
+        xl:gap-14
+      "
+          >
             {/* IMAGE COMPOSITION */}
-            <div className="grid grid-cols-[1.17fr_1fr] items-end gap-3 sm:gap-4 lg:gap-5">
+            <div
+              className="
+          grid
+          grid-cols-[1.17fr_1fr]
+          items-end
+          gap-3
+
+          sm:gap-4
+
+          lg:self-center
+          lg:gap-5
+        "
+            >
               {/* Tall image */}
-              <div className="relative h-[40svh] min-h-[270px] overflow-hidden bg-neutral-200 sm:h-[50svh] lg:h-[calc(100svh-1rem)] lg:max-h-[900px]">
+              <div
+                className="
+            relative
+            h-[38svh]
+            min-h-[260px]
+            overflow-hidden
+            bg-neutral-200
+
+            sm:h-[46svh]
+
+            lg:h-[88svh]
+            lg:max-h-[840px]
+          "
+              >
                 {imageStates.map((state, stateIndex) => {
                   const image = state.images[0];
 
@@ -289,14 +345,36 @@ export default function ScrollStoryCards({
                           `ScrollStoryCards: failed to load image: ${image.src}`,
                         );
                       }}
-                      className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover will-change-transform"
+                      className="
+                  pointer-events-none
+                  absolute
+                  inset-0
+                  h-full
+                  w-full
+                  select-none
+                  object-cover
+                  will-change-transform
+                "
                     />
                   );
                 })}
               </div>
 
               {/* Short image */}
-              <div className="relative h-[26svh] min-h-[175px] overflow-hidden bg-neutral-200 sm:h-[32svh] lg:h-[46svh] lg:max-h-[460px]">
+              <div
+                className="
+            relative
+            h-[24svh]
+            min-h-[165px]
+            overflow-hidden
+            bg-[#f7f6f2]
+
+            sm:h-[30svh]
+
+            lg:h-[42svh]
+            lg:max-h-[420px]
+          "
+              >
                 {imageStates.map((state, stateIndex) => {
                   const image = state.images[1];
 
@@ -316,7 +394,16 @@ export default function ScrollStoryCards({
                           `ScrollStoryCards: failed to load image: ${image.src}`,
                         );
                       }}
-                      className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover will-change-transform"
+                      className="
+                  pointer-events-none
+                  absolute
+                  inset-0
+                  h-full
+                  w-full
+                  select-none
+                  object-cover
+                  will-change-transform
+                "
                     />
                   );
                 })}
@@ -324,7 +411,18 @@ export default function ScrollStoryCards({
             </div>
 
             {/* TEXT COMPOSITION */}
-            <div className="relative min-h-[300px] overflow-hidden lg:min-h-0">
+            <div
+              className="
+          relative
+          min-h-[300px]
+          overflow-hidden
+
+          lg:h-[100%]
+          lg:min-h-0
+          lg:self-end
+          
+        "
+            >
               {cards.map((card, cardIndex) => (
                 <article
                   key={card.id}
@@ -333,32 +431,122 @@ export default function ScrollStoryCards({
                   }}
                   aria-hidden={cardIndex !== 0}
                   inert={cardIndex !== 0}
-                  className="absolute inset-0 flex max-w-[390px] flex-col justify-start pt-5 will-change-[transform,opacity] lg:pt-[22svh]"
+                  className="
+              absolute
+              inset-x-0
+              inset-y-10
+              flex
+              max-w-[390px]
+              flex-col
+              justify-end
+              gap-8
+
+              pt-5
+
+              will-change-[transform,opacity]
+
+              lg:pt-0
+            "
                 >
                   {card.eyebrow && (
-                    <p className="mb-2 text-[10px] font-medium uppercase leading-none tracking-[0.02em] text-neutral-900 lg:text-[11px]">
+                    <p
+                      className=" -mb-3
+                  md:-mb-6
+                  text-[10px]
+                  font-medium
+                  uppercase
+                  leading-none
+                  tracking-[0.02em]
+                  text-neutral-900
+
+                  lg:text-[14px]
+                "
+                    >
                       {card.eyebrow}
                     </p>
                   )}
 
-                  <h2 className="font-serif text-[2rem] leading-[1.03] tracking-[-0.025em] text-neutral-950 sm:text-[2.25rem] lg:text-[2.2rem] xl:text-[2.55rem]">
+                  <h2
+                    className="
+                font-benton-regular
+                text-6xl
+                leading-[1.58]
+                text-neutral-950
+
+                sm:text-[2.25rem]
+
+                lg:text-[2.2rem]
+
+                xl:text-[3.5rem]
+              "
+                  >
                     {card.title}
                   </h2>
 
                   {card.kicker && (
-                    <p className="mt-7 max-w-[320px] text-[10px] font-medium uppercase leading-[1.25] tracking-[0.01em] text-neutral-900 lg:mt-8 lg:text-[11px]">
+                    <p
+                      className="
+                  mt-7
+                  max-w-[320px]
+                  text-[10px]
+                  font-medium
+                  uppercase
+                  leading-[1.25]
+                  tracking-[0.01em]
+                  text-neutral-900
+
+                  lg:mt-0
+                  lg:text-[15px]
+                "
+                    >
                       {card.kicker}
                     </p>
                   )}
 
-                  <p className="mt-7 max-w-[340px] text-[12px] leading-[1.5] text-neutral-800 lg:mt-8 lg:text-[12px]">
+                  <p
+                    className="
+                mt-7
+                max-w-[380px]
+                text-[12px]
+                leading-[1.5]
+                text-neutral-800
+                  text-justify
+                lg:mt-8
+                lg:text-[16px]
+              "
+                  >
                     {card.description}
                   </p>
 
                   <div className="mt-5 lg:mt-6">
                     <a
                       href={card.cta.href}
-                      className="inline-flex min-h-8 items-center justify-center bg-black px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.02em] text-white transition-colors hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-4"
+                      className="
+                  inline-flex
+                  min-h-8
+                  items-center
+                  justify-center
+
+                  bg-black
+                  px-5
+                  py-2
+                  mb-4
+
+                  text-[14px]
+                  font-semibold
+                  uppercase
+                  tracking-[0.02em]
+                  text-white
+
+                  transition-colors
+
+                  hover:bg-neutral-800
+
+                  focus-visible:outline-none
+                  focus-visible:ring-2
+                  focus-visible:ring-black
+                  focus-visible:ring-offset-4
+                "
                     >
                       {card.cta.label}
                     </a>
@@ -400,7 +588,7 @@ export default function ScrollStoryCards({
                   </p>
                 )}
 
-                <h2 className="font-serif text-3xl leading-tight">
+                <h2 className="font-serif text-6xl leading-tight">
                   {card.title}
                 </h2>
 

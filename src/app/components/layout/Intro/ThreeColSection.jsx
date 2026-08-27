@@ -6,10 +6,13 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function IntroSection({
+export default function ThreeColSection({
   label = "Begin",
   heading,
-  children,
+  hr,
+  content,
+  cr,
+  eyebrow,
   className = "",
 }) {
   const sectionRef = useRef(null);
@@ -83,7 +86,7 @@ export default function IntroSection({
           px-6
           py-16
 
-          md:grid-cols-2
+          md:grid-cols-3
           md:gap-16
           md:px-12
           md:py-20
@@ -108,7 +111,7 @@ export default function IntroSection({
           </p>
         </div>
 
-        {/* Right */}
+        {/* Middle */}
         <div
           ref={contentRef}
           className="
@@ -137,11 +140,58 @@ export default function IntroSection({
               text-sm
               leading-[1.65]
               text-neutral-900
+                text-justify
+              md:text-[0.95rem]
+            "
+          >
+            {content}
+          </div>
+        </div>
+        {/* Right */}
+        <div
+          ref={contentRef}
+          className="
+            flex
+            max-w-105
+            flex-col
+            items-start
+            gap-5
+          "
+        >
+          <h2
+            id="intro-section-heading"
+            className="
+              font-benton-regular
+              text-[2rem]
+              leading-[1.05]
+            
+              md:text-6xl
+            "
+          >
+            {hr}
+          </h2>
+
+          <div
+            className="
+              text-sm
+              leading-[1.65]
+              text-neutral-900
+                text-justify
+              md:text-[0.95rem]
+            "
+          >
+            {cr}
+          </div>
+          <div
+            className="
+              text-sm
+              leading-[1.65]
+              text-neutral-900
 
               md:text-[0.95rem]
             "
           >
-            {children}
+            {eyebrow}
           </div>
         </div>
       </div>

@@ -20,35 +20,17 @@ const stories = [
 
     video:
       "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/pat_opcrnn.mp4",
-    poster: "/images/posters/Pat-Shay-Poster.jpg",
+    poster:
+      "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Pat.jpeg",
 
     image:
-      "https://images.unsplash.com/photo-1587582423116-ec07293f0395?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Sabal%20House%20Construction%20Image.jpeg",
     imageAlt: "Mass timber construction at Sabal House",
     imageCaption: "MASS TIMBER · GEORGIA YELLOW PINE",
   },
 
   {
     id: 2,
-    eyebrow: "THE STEWARD",
-    name: "Angela King",
-    description:
-      "Angela brings a deeply personal point of view to Sabal House, rooted in family, preservation, and the feeling of creating somewhere that feels immediately familiar.",
-    quote:
-      "“It’s a slower pace. It’s a comforting feeling. It’s a warmth that is indescribable.”",
-
-    video:
-      "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Reel_ex3fnx.mp4",
-    poster: "/images/posters/Angela-King-Poster.jpg",
-
-    image:
-      "https://images.unsplash.com/photo-1621293954908-907159247fc8?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    imageAlt: "Spanish moss hanging from a tree in Savannah",
-    imageCaption: "SPANISH MOSS · SAVANNAH’S LIVING LANDSCAPE",
-  },
-
-  {
-    id: 3,
     eyebrow: "THE DESIGNER",
     name: "Maria Gossett",
     description:
@@ -58,12 +40,32 @@ const stories = [
 
     video:
       "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Maria_mh89i8.mp4",
-    poster: "/images/posters/Maria-Gossett-Poster.jpg",
+    poster:
+      "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Maria.jpeg",
 
     image:
-      "https://images.unsplash.com/photo-1597199813431-9c7c6e63a7bf?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Chair.jpeg",
     imageAlt: "Interior material details at Sabal House",
     imageCaption: "TABBY · A MATERIAL OF THE LOWCOUNTRY",
+  },
+  {
+    id: 3,
+    eyebrow: "THE STEWARD",
+    name: "Angela King",
+    description:
+      "Angela brings a deeply personal point of view to Sabal House, rooted in family, preservation, and the feeling of creating somewhere that feels immediately familiar.",
+    quote:
+      "“It’s a slower pace. It’s a comforting feeling. It’s a warmth that is indescribable.”",
+
+    video:
+      "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Reel_ex3fnx.mp4",
+    poster:
+      "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/SabalHouse-8.jpeg",
+
+    image:
+      "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/SabalHouse-19.jpeg",
+    imageAlt: "Spanish moss hanging from a tree in Savannah",
+    imageCaption: "SPANISH MOSS · SAVANNAH’S LIVING LANDSCAPE",
   },
 ];
 
@@ -288,11 +290,11 @@ export default function StoryGallery() {
 
                   <h2
                     className="
-                      font-serif
+                      font-benton-regular
                       text-[38px]
-                      leading-[0.95]
-                      tracking-[-0.04em]
-                      md:text-[clamp(34px,3vw,58px)]
+                       leading-[1.22]
+                    tracking-[-0.02em]
+                      md:text-[clamp(34px,3.5vw,60px)]
                     "
                   >
                     {story.name}
@@ -314,51 +316,34 @@ export default function StoryGallery() {
 
                 <blockquote
                   className="
-                    mt-12
+                    
                     max-w-[32rem]
-                    font-serif
-                    text-[27px]
+                    font-benton-regular
+                    text-[36px]
                     italic
                     leading-[1.22]
-                    tracking-[-0.035em]
+                    tracking-[-0.02em]
 
-                    md:mt-0
-                    md:text-[clamp(25px,2.2vw,42px)]
+                  mb-12
+                    md:text-[clamp(25px,2.75vw,56px)]
                   "
                 >
                   {story.quote}
                 </blockquote>
               </div>
 
-              <button
-                type="button"
-                onClick={() => toggleVideo(index)}
-                aria-label={
-                  isPlaying
-                    ? `Pause video featuring ${story.name}`
-                    : `Play video featuring ${story.name}`
-                }
-                aria-pressed={isPlaying}
+              {/* PORTRAIT VIDEO */}
+              <div
                 className="
     story-piece
     pointer-events-auto
     relative
     mx-auto
-    block
     aspect-[0.62]
     w-full
     max-w-[420px]
-    cursor-pointer
-    appearance-none
     overflow-hidden
-    border-0
     bg-neutral-200
-    p-0
-
-    focus-visible:outline
-    focus-visible:outline-2
-    focus-visible:outline-offset-4
-    focus-visible:outline-black
 
     md:h-[86vh]
     md:max-h-[900px]
@@ -397,7 +382,58 @@ export default function StoryGallery() {
                     });
                   }}
                 />
-              </button>
+
+                {/* Whole portrait remains clickable */}
+                <button
+                  type="button"
+                  onClick={() => toggleVideo(index)}
+                  aria-label={
+                    isPlaying
+                      ? `Pause video featuring ${story.name}`
+                      : `Play video featuring ${story.name}`
+                  }
+                  aria-pressed={isPlaying}
+                  className="
+      absolute
+      inset-0
+      z-10
+
+      cursor-pointer
+
+      focus-visible:outline
+      focus-visible:outline-2
+      focus-visible:outline-offset-4
+      focus-visible:outline-black
+    "
+                >
+                  {/* Visible play / pause control */}
+                  <span
+                    aria-hidden="true"
+                    className="
+        absolute
+        bottom-0
+        right-0
+
+        flex
+        h-14
+        w-14
+        items-center
+        justify-center
+
+        bg-black
+        text-white
+
+        transition-colors
+        duration-300
+
+        md:h-16
+        md:w-16
+      "
+                  >
+                    {isPlaying ? <PauseIcon /> : <PlayIcon />}
+                  </span>
+                </button>
+              </div>
 
               <figure
                 className="
@@ -443,5 +479,22 @@ export default function StoryGallery() {
         );
       })}
     </section>
+  );
+}
+function PlayIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="none">
+      <path d="M8 5L19 12L8 19V5Z" fill="currentColor" />
+    </svg>
+  );
+}
+
+function PauseIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="none">
+      <rect x="7" y="5" width="3.5" height="14" fill="currentColor" />
+
+      <rect x="13.5" y="5" width="3.5" height="14" fill="currentColor" />
+    </svg>
   );
 }

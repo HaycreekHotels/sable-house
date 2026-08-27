@@ -49,7 +49,7 @@ export default function NavBar() {
           top-0
           z-50
           flex
-          h-20
+          h-18
           w-full
           items-center
           justify-between

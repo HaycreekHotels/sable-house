@@ -5,7 +5,13 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import NavBar from "./components/layout/Header/NavBar";
 import Footer from "./components/layout/Footer/Footer";
 
-import { bentonLight, bentonReg, centralNoLight, centralNoReg } from "./fonts";
+import {
+  bentonLight,
+  bentonReg,
+  centralNoLight,
+  centralNoReg,
+  handwritingErnie,
+} from "./fonts";
 
 export const metadata = {
   metadataBase: new URL("https://www.sabalhouse.com"),
@@ -96,7 +102,7 @@ export default function RootLayout({ children }) {
       className={` ${bentonLight.variable}
         ${bentonReg.variable}
         ${centralNoLight.variable}
-        ${centralNoReg.variable}h-full antialiased`}
+        ${centralNoReg.variable} ${handwritingErnie.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <NavBar />

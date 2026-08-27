@@ -186,8 +186,8 @@ export default function OpenLetterForm({
               w-20
               -translate-x-1/2
               -translate-y-1/2
-              sm:h-24
-              sm:w-24
+              sm:h-30
+              sm:w-30
             "
             aria-hidden="true"
           >
@@ -447,11 +447,11 @@ export default function OpenLetterForm({
               className="
                 mt-7
                 text-center
-                font-serif
+                font-handwriting
                 text-sm
                 italic
                 text-neutral-950
-                sm:text-base
+                sm:text-xl
               "
             >
               {signature}

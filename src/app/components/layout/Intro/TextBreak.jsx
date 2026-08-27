@@ -63,7 +63,6 @@ export default function TextBreak({
     min-h-[60vh]
     items-center
     justify-center
-
     px-6
     py-20
     sm:px-10
@@ -77,8 +76,8 @@ export default function TextBreak({
         className={`
     w-full
     max-w-[700px]
-    font-serif
-    text-[clamp(1.75rem,3.2vw,3.25rem)]
+    font-benton-regular
+    text-[clamp(1.75rem,3.9vw,4.5rem)]
     leading-[1.25]
     tracking-[-0.025em]
     text-black

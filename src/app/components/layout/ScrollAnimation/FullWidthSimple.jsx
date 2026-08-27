@@ -10,7 +10,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const placeHolder =
-  "https://images.unsplash.com/photo-1608996662204-fa1833820eb4?q=80&w=1548&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+  "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/SabalHouse-66.jpeg";
 
 export default function FullWidthSimple({
   eyebrow = "OUR PHILOSOPHY",
@@ -170,7 +170,7 @@ export default function FullWidthSimple({
   return (
     <section
       ref={sectionRef}
-      className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-white"
+      className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-[#f7f6f2]"
     >
       <div className="pointer-events-none absolute inset-0 z-20">
         {/* Eyebrow */}
@@ -185,7 +185,7 @@ export default function FullWidthSimple({
             uppercase
             tracking-[0.08em]
             text-black
-            md:top-24
+            md:top-36
             md:text-xs
           "
         >
@@ -235,10 +235,10 @@ export default function FullWidthSimple({
             flex
             justify-between
             gap-4
-            font-serif
+            font-benton-regular
             text-[clamp(1.5rem,7vw,2.25rem)]
             leading-none
-            tracking-[-0.04em]
+            tracking-[-0.03em]
             text-black
             md:hidden
           "
@@ -275,7 +275,7 @@ export default function FullWidthSimple({
         <div
           ref={overlayRef}
           aria-hidden="true"
-          className="absolute inset-0 z-10 bg-black/40"
+          className="absolute inset-0 z-10 bg-black/20"
         />
 
         <div

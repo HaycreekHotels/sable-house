@@ -3,7 +3,7 @@
 :root {
   --background: #f3ede2;
   --foreground: #171717;
-  --main: #4f5532;
+  --main: #4f5632;
   --secondary: #f3ede2;
   --contrast: #6a4a3c;
   --textColor: #6a4a3c;
@@ -50,4 +50,8 @@ body {
 
 .font-central-regular {
   font-family: var(--font-central-regular), serif;
+}
+
+.font-handwriting {
+  font-family: var(--handwriting), cursive;
 }
