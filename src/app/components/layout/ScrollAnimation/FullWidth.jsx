@@ -11,7 +11,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const placeHolder =
-  "https://images.unsplash.com/photo-1623184185917-d2e8ec0daa27?q=80&w=2064&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+  "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Guestroom.jpg";
 
 export default function FullWidth() {
   const sectionRef = useRef(null);
@@ -178,7 +178,7 @@ export default function FullWidth() {
   return (
     <section
       ref={sectionRef}
-      className="flex min-h-screen w-full items-center justify-center  -mb-[350px] "
+      className="flex min-h-screen w-full items-center justify-center  -mb-[340px] "
     >
       <div ref={panelRef} className="relative h-[90vh] w-full overflow-hidden">
         {/* Background image */}
@@ -191,7 +191,7 @@ export default function FullWidth() {
         />
 
         {/* Subtle image overlay */}
-        <div aria-hidden="true" className="absolute inset-0 z-10 bg-black/20" />
+        <div aria-hidden="true" className="absolute inset-0 z-10 bg-black/40" />
 
         {/* Small starting state */}
         <div

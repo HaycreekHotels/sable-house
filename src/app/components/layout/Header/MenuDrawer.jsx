@@ -306,7 +306,7 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
                 pointer-events-auto
 
                 absolute
-                left-1/5
+                left-7/16
                 top-5
                 -translate-x-1/2
 

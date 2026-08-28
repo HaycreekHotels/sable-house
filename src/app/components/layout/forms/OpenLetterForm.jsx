@@ -8,7 +8,7 @@ import { useGSAP } from "@gsap/react";
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export default function OpenLetterForm({
-  backgroundImage = "/images/letter-background-placeholder.jpg",
+  backgroundImage = "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/SabalHouse-86.jpg",
   stampImage = "/images/stamp-placeholder.png",
 
   eyebrow = "LETTERS FROM SABAL HOUSE",

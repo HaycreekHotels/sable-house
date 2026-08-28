@@ -1,67 +1,154 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 import whiteLogo from "../../../../../public/images/logos/SH_Primary Logo Offwhite.png";
 
-const LEAF_INTRO_ID = "leaf-intro";
-const LEAF_INTRO_HEADING_ID = `${LEAF_INTRO_ID}-heading`;
+const socialLinks = [
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/thesabalhouse/?utm_source=ig_web_button_share_sheet",
+    external: true,
+  },
+  {
+    label: "Facebook",
+    href: "#", // Replace with actual Facebook URL
+    external: false,
+  },
+  {
+    label: "FAQ",
+    href: "/faq",
+    external: false,
+  },
+];
+
+const utilityLinks = [
+  {
+    label: "Contact Us",
+    href: "/contact-us",
+  },
+  {
+    label: "Accessibility",
+    href: "/accessibility",
+  },
+  {
+    label: "Privacy",
+    href: "/privacy",
+  },
+];
+
+const linkStyles =
+  "inline-block text-sm uppercase tracking-[-0.02em] text-white/95 transition-opacity duration-300 hover:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-transparent sm:text-base lg:text-[15px]";
 
 export default function Footer() {
-  function handleBackToIntro() {
-    const introSection = document.getElementById(LEAF_INTRO_ID);
-    const introHeading = document.getElementById(LEAF_INTRO_HEADING_ID);
-
-    if (!introSection) {
-      return;
-    }
-
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
-    introSection.scrollIntoView({
-      behavior: prefersReducedMotion ? "auto" : "smooth",
-      block: "start",
-    });
-
-    introHeading?.focus({
-      preventScroll: true,
-    });
-  }
-
   return (
-    <footer className="bg-main px-5 py-4 text-white sm:px-8">
-      <div className="mx-auto grid max-w-7xl items-center gap-4 md:grid-cols-[1fr_auto_1fr]">
-        <address className="text-center text-xs leading-5 font-normal tracking-[0.08em] uppercase not-italic md:text-left">
-          225 E. President St
-          <span className="hidden lg:inline">, </span>
-          <span className="block lg:inline">Savannah GA 31401</span>
-        </address>
-
-        <Image
-          src={whiteLogo}
-          alt="Sabal House"
-          className="mx-auto h-auto w-32"
-          sizes="8rem"
-        />
-
-        <button
-          type="button"
-          onClick={handleBackToIntro}
-          className="mx-auto inline-flex min-h-11 cursor-pointer items-center gap-2 border-b border-white px-2 py-2 text-xs font-medium tracking-[0.1em] uppercase transition-colors duration-200 hover:border-white/65 hover:text-white/65 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--color-main)] motion-reduce:transition-none md:mx-0 md:justify-self-end"
-        >
-          Contact Us
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 24 24"
-            fill="none"
-            className="size-4 stroke-current"
-            strokeWidth="2"
+    <footer className="bg-main text-white">
+      <div
+        className="
+          mx-auto
+          flex
+          min-h-[220px]
+          w-full
+          flex-col
+          gap-16
+          px-6
+          py-12
+          sm:px-10
+          md:min-h-[280px]
+          md:px-12
+          md:py-14
+          lg:grid
+          lg:grid-cols-[1fr_auto]
+          lg:items-start
+          lg:gap-24
+          lg:px-16
+          lg:py-14
+          xl:min-h-[300px]
+          xl:px-[4vw]
+        "
+      >
+        {/* Logo */}
+        <div className="flex items-start">
+          <Link
+            href="/"
+            aria-label="Sabal House home"
+            className="
+              inline-block
+              rounded-sm
+              focus-visible:outline-none
+              focus-visible:ring-2
+              focus-visible:ring-white
+              focus-visible:ring-offset-4
+              focus-visible:ring-offset-transparent
+            "
           >
-            <path d="M12 19V5M6 11l6-6 6 6" />
-          </svg>
-        </button>
+            <Image
+              src={whiteLogo}
+              alt=""
+              width={200}
+              height={190}
+              className="
+                h-auto
+                w-[140px]
+                sm:w-[160px]
+                lg:w-[180px]
+                xl:w-[200px]
+              "
+              sizes="(max-width: 640px) 220px, (max-width: 1024px) 260px, 340px"
+            />
+          </Link>
+        </div>
+
+        {/* Navigation */}
+        <nav
+          aria-label="Footer navigation"
+          className="
+            grid
+            w-full
+            grid-cols-2
+            gap-x-8
+            gap-y-10
+            sm:max-w-[540px]
+            sm:gap-x-16
+            md:gap-x-24
+            lg:w-[560px]
+            lg:max-w-none
+            lg:gap-x-28
+            xl:w-[600px]
+          "
+        >
+          <ul className="flex flex-col gap-3 sm:gap-4 lg:gap-5">
+            {socialLinks.map((link) => (
+              <li key={link.label}>
+                {link.external ? (
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={linkStyles}
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link href={link.href} className={linkStyles}>
+                    {link.label}
+                  </Link>
+                )}
+              </li>
+            ))}
+          </ul>
+
+          <ul className="flex flex-col gap-3 sm:gap-4 lg:gap-5">
+            {utilityLinks.map((link) => (
+              <li key={link.label}>
+                <Link href={link.href} className={linkStyles}>
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
     </footer>
   );

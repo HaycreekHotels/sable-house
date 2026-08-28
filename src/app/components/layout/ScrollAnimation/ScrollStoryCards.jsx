@@ -132,27 +132,6 @@ export default function ScrollStoryCards({
 
       setAccessibleCard(0);
 
-      /*
-        One GSAP timeline unit = one visual scroll step.
-
-        With two cards the sequence is:
-
-        time 0:
-          Card 1 text
-          images 1 + 2
-
-        time 1:
-          Card 1 text
-          images 3 + 4
-
-        time 2:
-          Card 2 text
-          images 5 + 6
-
-        time 3:
-          Card 2 text
-          images 7 + 8
-      */
       const timeline = gsap.timeline({
         scrollTrigger: {
           trigger: section,
@@ -518,7 +497,7 @@ export default function ScrollStoryCards({
                     {card.description}
                   </p>
 
-                  <div className="mt-5 lg:mt-6">
+                  <div className="mt-5 lg:mt-6 mb-20">
                     <a
                       href={card.cta.href}
                       className="
