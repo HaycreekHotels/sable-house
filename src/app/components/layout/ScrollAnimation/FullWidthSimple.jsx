@@ -185,7 +185,7 @@ export default function FullWidthSimple({
             uppercase
             tracking-[0.08em]
             text-black
-            md:top-36
+            md:top-44
             md:text-xs
           "
         >

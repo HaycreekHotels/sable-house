@@ -17,7 +17,7 @@ export default function StoryPage() {
         content="From the beginning, Sabal House was imagined as a quieter way to experience Savannah, a place to arrive, find your footing, and become more attuned to the city areound you."
         cr="That idea is taking shape through architecture, material, and the people behind it, bringing together a luxury new building and the restored Heritage Rooms as one Sabal House."
         eyebrow="TOLD BY THE PEOPLE SHAPING IT"
-        className="mb-[1px] bg-[#f7f6f2]"
+        className="-mb-[80px] bg-[#f7f6f2]"
       />
       <FullWidthSimple />
       <StoryGallery />

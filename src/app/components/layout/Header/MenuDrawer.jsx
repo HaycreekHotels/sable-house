@@ -24,10 +24,6 @@ const menuSections = [
         label: "The Making of Sabal House",
         href: "/our-story/making-of-sabal-house",
       },
-      {
-        label: "Artist Journal",
-        href: "/our-story/artist-journal",
-      },
     ],
   },
   {
@@ -36,10 +32,6 @@ const menuSections = [
       {
         label: "Accommodations",
         href: "/stay/accommodations",
-      },
-      {
-        label: "Offers",
-        href: "/stay/offers",
       },
     ],
   },
