@@ -41,6 +41,9 @@ const utilityLinks = [
 const linkStyles =
   "inline-block text-sm uppercase tracking-[-0.02em] text-white/95 transition-opacity duration-300 hover:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-transparent sm:text-base lg:text-[15px]";
 
+const contactStyles =
+  "text-sm uppercase tracking-[-0.02em] text-white/95 sm:text-base lg:text-[15px]";
+
 export default function Footer() {
   return (
     <footer className="bg-main text-white">
@@ -48,23 +51,24 @@ export default function Footer() {
         className="
           mx-auto
           flex
-          min-h-[220px]
+          min-h-[200px]
           w-full
           flex-col
-          gap-16
+          gap-12
           px-6
           py-12
           sm:px-10
-          md:min-h-[280px]
+          md:min-h-[220px]
           md:px-12
           md:py-14
           lg:grid
-          lg:grid-cols-[1fr_auto]
+          lg:grid-cols-[1fr_1fr_auto]
           lg:items-start
-          lg:gap-24
+          lg:gap-16
           lg:px-16
           lg:py-14
-          xl:min-h-[300px]
+          xl:min-h-[240px]
+          xl:gap-24
           xl:px-[4vw]
         "
       >
@@ -95,9 +99,32 @@ export default function Footer() {
                 lg:w-[180px]
                 xl:w-[200px]
               "
-              sizes="(max-width: 640px) 220px, (max-width: 1024px) 260px, 340px"
+              sizes="(max-width: 640px) 140px, (max-width: 1024px) 160px, (max-width: 1280px) 180px, 200px"
             />
           </Link>
+        </div>
+
+        {/* Contact Info */}
+        <div
+          className="
+            flex
+            flex-col
+            gap-3
+            lg:items-start
+            lg:justify-self-center
+          "
+        >
+          <a
+            href="tel:+19122331600"
+            className={`${contactStyles} transition-opacity duration-300 hover:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white`}
+          >
+            912-233-1600
+          </a>
+
+          <address className={`${contactStyles} max-w-[240px] not-italic`}>
+            225 E. President St,
+            <br /> Savannah GA 31401
+          </address>
         </div>
 
         {/* Navigation */}
@@ -109,16 +136,17 @@ export default function Footer() {
             grid-cols-2
             gap-x-8
             gap-y-10
-            sm:max-w-[540px]
+            sm:max-w-[240px]
             sm:gap-x-16
             md:gap-x-24
-            lg:w-[560px]
+            lg:w-[360px]
             lg:max-w-none
-            lg:gap-x-28
-            xl:w-[600px]
+            lg:justify-self-end
+            lg:gap-x-0
+            xl:w-[400px]
           "
         >
-          <ul className="flex flex-col gap-3 sm:gap-4 lg:gap-5">
+          <ul className="flex flex-col gap-3 ">
             {socialLinks.map((link) => (
               <li key={link.label}>
                 {link.external ? (
@@ -139,7 +167,7 @@ export default function Footer() {
             ))}
           </ul>
 
-          <ul className="flex flex-col gap-3 sm:gap-4 lg:gap-5">
+          <ul className="flex flex-col gap-3 ">
             {utilityLinks.map((link) => (
               <li key={link.label}>
                 <Link href={link.href} className={linkStyles}>
