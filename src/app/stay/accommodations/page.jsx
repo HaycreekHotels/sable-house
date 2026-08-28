@@ -119,102 +119,134 @@ export default function AccommodationsPage() {
 
   return (
     <main ref={pageRef} className="min-h-screen bg-[#fdfdfc] text-black">
-      {/* ================================================================ */}
-      {/* HERO                                                             */}
-      {/* ================================================================ */}
-
       <section
         ref={heroRef}
         aria-labelledby="accommodations-heading"
         className="
-          mx-auto
-          max-w-[1600px]
-          px-5
-          pb-14
-          pt-20
-          sm:px-8
-          sm:pb-16
-          sm:pt-24
-          lg:px-12
-          lg:pb-20
-          lg:pt-28
-          xl:px-16
-        "
+    mx-auto
+    w-full
+    max-w-[1800px]
+    px-5
+    pb-14
+    pt-28
+    sm:px-8
+    sm:pb-16
+    sm:pt-36
+    lg:px-12
+    lg:pb-20
+    lg:pt-52
+    xl:px-16
+    xl:pt-56
+  "
       >
+        {/* ------------------------------------------------------------ */}
+        {/* HERO                                                         */}
+        {/* ------------------------------------------------------------ */}
+
         <div
           className="
-            grid
-            grid-cols-1
-            gap-10
-            lg:grid-cols-12
-            lg:items-end
-            lg:gap-x-8
-          "
+      grid
+      grid-cols-1
+      gap-y-8
+      lg:grid-cols-12
+      lg:gap-x-8
+      lg:gap-y-12
+    "
         >
-          {/* ------------------------------------------------------------ */}
-          {/* TITLE                                                        */}
-          {/* ------------------------------------------------------------ */}
-
-          <div data-hero className="lg:col-span-7">
-            <h1
-              id="accommodations-heading"
+          {/* Heading */}
+          <h1
+            id="accommodations-heading"
+            data-hero
+            className="
+        grid
+        grid-cols-1
+        gap-y-1
+        font-benton-regular
+        text-[clamp(3.5rem,8vw,5.75rem)]
+        font-normal
+        leading-[0.92]
+        tracking-[-0.03em]
+        lg:col-span-12
+        lg:grid-cols-12
+        lg:items-end
+        lg:gap-x-8
+        lg:text-[clamp(4.5rem,5vw,6rem)]
+      "
+          >
+            <span
               className="
-                max-w-[900px]
-                font-serif
-                text-[clamp(3.5rem,7vw,7.5rem)]
-                font-normal
-                leading-[0.9]
-                tracking-[-0.055em]
-              "
+          block
+          lg:col-span-3
+        "
             >
-              Find Your Place
-              <br />
-              At Sabal House
-            </h1>
-          </div>
+              Find
+            </span>
 
-          {/* ------------------------------------------------------------ */}
-          {/* DESCRIPTION                                                  */}
-          {/* ------------------------------------------------------------ */}
+            <span
+              className="
+          block
+          lg:col-span-4
+          lg:col-start-5
+        "
+            >
+              Your Place
+            </span>
 
+            <span
+              className="
+          block
+          whitespace-nowrap
+          lg:col-span-4
+          lg:col-start-9
+        "
+            >
+              at Sabal House
+            </span>
+          </h1>
+
+          {/* Description */}
           <div
             data-hero
             className="
-              max-w-xl
-              lg:col-span-5
-              lg:max-w-md
-              lg:justify-self-end
-              lg:pb-1
-            "
+        mt-4
+        max-w-md
+        lg:col-span-4
+        lg:col-start-9
+        lg:mt-0
+        lg:max-w-[460px]
+      "
           >
             <p
               className="
-                text-[13px]
-                leading-[1.65]
-                sm:text-sm
-              "
+          font-central-regular
+          text-[13px]
+          leading-[1.65]
+          sm:text-sm
+          lg:text-[15px]
+          lg:leading-[1.5]
+        "
             >
-              Choose between the light-filled rooms of Sabal House and the
-              Heritage Rooms, set within the former Presidents&apos; Quarters.
-              Two distinct expressions, each part of the same stay.
+              Choose between the light-filled rooms of the Sabal House building
+              and The Heritage Rooms, set within the former Presidents&apos;
+              Quarters. Two distinct expressions, each part of the same stay.
             </p>
           </div>
         </div>
 
-        {/* ============================================================ */}
+        {/* ------------------------------------------------------------ */}
         {/* FILTER                                                       */}
-        {/* ============================================================ */}
+        {/* ------------------------------------------------------------ */}
 
         <div
           data-hero
           className="
-            mt-14
-            border-t
-            border-black/15
-            pt-6
-            sm:mt-20
-            lg:mt-24
-          "
+      mt-14
+      border-t
+      border-black/15
+      pt-6
+      sm:mt-20
+      lg:mt-24
+    "
         >
           <RoomFilter
             activeFilter={activeFilter}

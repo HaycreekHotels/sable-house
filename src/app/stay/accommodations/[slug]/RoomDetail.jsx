@@ -16,6 +16,12 @@ export default function RoomDetail({ room }) {
   const collageRef = useRef(null);
   const amenitiesRef = useRef(null);
 
+  const titleWords = room.name.trim().split(/\s+/);
+
+  const firstTitleWord = titleWords[0] ?? "";
+  const secondTitleWord = titleWords[1] ?? "";
+  const remainingTitleWords = titleWords.slice(2).join(" ");
+
   useLayoutEffect(() => {
     const reducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
@@ -86,145 +92,242 @@ export default function RoomDetail({ room }) {
         ref={heroRef}
         aria-labelledby="room-title"
         className="
-          mx-auto
-          max-w-[1600px]
-          px-5
-          pb-16
-          pt-28
-          sm:px-8
-          sm:pt-32
-          lg:px-12
-          lg:pb-20
-          lg:pt-36
-        "
+    mx-auto
+    w-full
+    max-w-[1800px]
+    px-5
+    pb-16
+    pt-28
+    sm:px-8
+    sm:pt-32
+    lg:px-12
+    lg:pb-20
+    lg:pt-40
+    xl:px-16
+  "
       >
+        {/* ------------------------------------------------------------ */}
+        {/* HOUSE LABEL                                                  */}
+        {/* ------------------------------------------------------------ */}
+
         <p
           data-hero-item
           className="
-            mb-16
-            text-[10px]
-            font-medium
-            uppercase
-            tracking-[0.04em]
-            lg:mb-24
-          "
+      mb-14
+      font-central-regular
+      text-[14px]
+      uppercase
+      tracking-[0.04em]
+      lg:mb-20
+    "
         >
           {room.houseLabel}
         </p>
 
-        <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
-          {/* Room name / information */}
+        {/* Real accessible page heading */}
+        <h1 id="room-title" className="sr-only">
+          {room.name}
+        </h1>
 
-          <div className="lg:col-span-7">
-            <h1 id="room-title" data-hero-item className="sr-only">
-              {room.name}
-            </h1>
+        {/* ------------------------------------------------------------ */}
+        {/* MOBILE TITLE                                                 */}
+        {/* ------------------------------------------------------------ */}
 
-            <div
-              aria-hidden="true"
+        <div data-hero-item aria-hidden="true" className="lg:hidden">
+          <p
+            className="
+        max-w-[700px]
+        font-benton-regular
+        text-[clamp(3.5rem,14vw,6.5rem)]
+        font-normal
+        leading-[0.9]
+        tracking-[-0.05em]
+      "
+          >
+            {room.name}
+          </p>
+        </div>
+
+        {/* ------------------------------------------------------------ */}
+        {/* DESKTOP TITLE                                                */}
+        {/* ------------------------------------------------------------ */}
+
+        <div
+          aria-hidden="true"
+          className="
+      hidden
+      lg:grid
+      lg:grid-cols-12
+      lg:items-end
+      lg:gap-x-8
+    "
+        >
+          {/* Column 1 */}
+          <div data-hero-item className="lg:col-span-3">
+            <p
               className="
-                grid
-                gap-4
-                sm:grid-cols-2
-                sm:gap-10
-                lg:gap-14
-              "
+          font-benton-regular
+          text-[clamp(3.5rem,6vw,6.5rem)]
+          font-normal
+          leading-[0.9]
+          tracking-[-0.01em]
+        "
             >
-              <div data-hero-item>
-                <p
-                  className="
-                    font-serif
-                    text-[clamp(3.5rem,6vw,6.5rem)]
-                    font-normal
-                    leading-[0.9]
-                    tracking-[-0.05em]
-                  "
-                >
-                  {room.title[0]}
-                </p>
-
-                <p
-                  className="
-                    mt-8
-                    text-[10px]
-                    font-medium
-                    uppercase
-                    tracking-[0.02em]
-                    sm:mt-12
-                  "
-                >
-                  {room.bed}
-                </p>
-              </div>
-
-              <div data-hero-item>
-                <p
-                  className="
-                    font-serif
-                    text-[clamp(3.5rem,6vw,6.5rem)]
-                    font-normal
-                    leading-[0.9]
-                    tracking-[-0.05em]
-                  "
-                >
-                  {room.title[1]}
-                </p>
-
-                <p
-                  className="
-                    mt-8
-                    text-[10px]
-                    font-medium
-                    uppercase
-                    tracking-[0.02em]
-                    sm:mt-12
-                  "
-                >
-                  {room.size}
-                </p>
-              </div>
-            </div>
+              {firstTitleWord}
+            </p>
           </div>
 
-          {/* Description */}
-
+          {/* Column 2 */}
           <div
             data-hero-item
             className="
-              max-w-lg
-              lg:col-span-5
-              lg:max-w-md
-              lg:pb-1
-            "
+        lg:col-span-4
+        lg:col-start-5
+      "
           >
-            <p className="text-[13px] leading-[1.6] sm:text-sm">
+            <p
+              className="
+          font-benton-regular
+          text-[clamp(3.5rem,6vw,6.5rem)]
+          font-normal
+          leading-[0.9]
+         tracking-[-0.01em]
+        "
+            >
+              {secondTitleWord}
+            </p>
+          </div>
+
+          {/* Column 3 */}
+          {remainingTitleWords && (
+            <div
+              data-hero-item
+              className="
+          lg:col-span-4
+          lg:col-start-9
+        "
+            >
+              <p
+                className="
+            font-benton-regular
+            text-[clamp(3.5rem,6vw,6.5rem)]
+            font-normal
+            leading-[0.9]
+            tracking-[-0.01em]
+          "
+              >
+                {remainingTitleWords}
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* ------------------------------------------------------------ */}
+        {/* ROOM DETAILS                                                 */}
+        {/* ------------------------------------------------------------ */}
+
+        <div
+          className="
+      mt-10
+      grid
+      grid-cols-2
+      gap-x-8
+      gap-y-10
+      sm:mt-12
+      lg:mt-12
+      lg:grid-cols-12
+      lg:gap-x-8
+    "
+        >
+          {/* Bed */}
+          <div
+            data-hero-item
+            className="
+        col-span-1
+        lg:col-span-3
+      "
+          >
+            <p
+              className="
+          font-central-regular
+          text-[14px]
+          uppercase
+          tracking-[0.02em]
+        "
+            >
+              {room.bed}
+            </p>
+          </div>
+
+          {/* Room size */}
+          <div
+            data-hero-item
+            className="
+        col-span-1
+        lg:col-span-4
+        lg:col-start-5
+      "
+          >
+            <p
+              className="
+          font-central-regular
+          text-[14px]
+          uppercase
+          tracking-[0.02em]
+        "
+            >
+              {room.size}
+            </p>
+          </div>
+
+          {/* Description + CTA */}
+          <div
+            data-hero-item
+            className="
+        col-span-2
+        max-w-lg
+        lg:col-span-4
+        lg:col-start-9
+        lg:max-w-[460px]
+      "
+          >
+            <p
+              className="
+          font-central-regular
+          text-[13px]
+          leading-[1.6]
+          sm:text-sm
+          lg:text-[15px]
+          lg:leading-[1.55]
+        "
+            >
               {room.description}
             </p>
 
             <Link
               href="/book"
               className="
-                mt-8
-                inline-flex
-                min-h-11
-                min-w-[150px]
-                items-center
-                justify-center
-                bg-black
-                px-8
-                text-[10px]
-                font-medium
-                uppercase
-                tracking-[0.03em]
-                text-white
-                transition-colors
-                duration-300
-                hover:bg-black/75
-                focus-visible:outline
-                focus-visible:outline-2
-                focus-visible:outline-offset-4
-                focus-visible:outline-black
-              "
+          mt-8
+          inline-flex
+          min-h-11
+          min-w-[150px]
+          items-center
+          justify-center
+          bg-black
+          px-8
+          font-central-regular
+          text-[14px]
+          uppercase
+          tracking-[0.03em]
+          text-white
+          transition-colors
+          duration-300
+          hover:bg-black/75
+          focus-visible:outline
+          focus-visible:outline-2
+          focus-visible:outline-offset-4
+          focus-visible:outline-black
+        "
             >
               Book Now
             </Link>
@@ -381,11 +484,11 @@ export default function RoomDetail({ room }) {
             data-amenity-item
             className="
               mb-7
-              font-serif
-              text-3xl
+              font-benton-regular
+              text-4xl
               font-normal
               tracking-[-0.04em]
-              sm:text-4xl
+              sm:text-5xl
             "
           >
             Amenities
@@ -397,8 +500,8 @@ export default function RoomDetail({ room }) {
               grid-cols-1
               gap-x-14
               gap-y-3
-              text-[12px]
-              font-medium
+              text-[14px]
+              font-central-regular
               sm:grid-cols-2
               md:grid-cols-3
             "
@@ -418,8 +521,8 @@ export default function RoomDetail({ room }) {
             className="
               group
               inline-block
-              text-[10px]
-              font-medium
+              text-[14px]
+              font-central-regular
               uppercase
               tracking-[0.03em]
               focus-visible:outline
