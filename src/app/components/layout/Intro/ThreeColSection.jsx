@@ -112,11 +112,7 @@ export default function ThreeColSection({
 
       mm.add("(prefers-reduced-motion: reduce)", () => {
         gsap.set(
-          [
-            labelElement,
-            ...middleElement.children,
-            ...rightElement.children,
-          ],
+          [labelElement, ...middleElement.children, ...rightElement.children],
           {
             clearProps: "opacity,visibility,transform",
           },
@@ -148,7 +144,7 @@ export default function ThreeColSection({
           grid-cols-1
           gap-10
           px-6
-          py-16
+          py-20
 
           sm:gap-12
           sm:px-8
