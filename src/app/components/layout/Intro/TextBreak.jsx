@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -17,38 +18,62 @@ export default function TextBreak({
 
   useGSAP(
     () => {
-      const prefersReducedMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      ).matches;
+      const section = sectionRef.current;
+      const text = textRef.current;
 
-      if (prefersReducedMotion) {
-        gsap.set(textRef.current, {
-          opacity: 1,
-          y: 0,
-        });
+      if (!section || !text) return;
 
-        return;
-      }
+      const mm = gsap.matchMedia();
 
-      gsap.fromTo(
-        textRef.current,
+      /*
+       * Standard motion.
+       *
+       * Keep the movement smaller on phones so the text feels like it
+       * settles into place rather than sliding a long distance upward.
+       */
+      mm.add(
         {
-          opacity: 0,
-          y: 60,
+          isMobile: "(max-width: 767px)",
+          reduceMotion: "(prefers-reduced-motion: reduce)",
         },
-        {
-          opacity: 1,
-          y: 0,
-          ease: "none",
+        (context) => {
+          const { isMobile, reduceMotion } = context.conditions;
 
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 85%",
-            end: "top 45%",
-            scrub: 1,
-          },
+          if (reduceMotion) {
+            gsap.set(text, {
+              autoAlpha: 1,
+              y: 0,
+              clearProps: "transform",
+            });
+
+            return;
+          }
+
+          gsap.fromTo(
+            text,
+            {
+              autoAlpha: 0,
+              y: isMobile ? 28 : 48,
+            },
+            {
+              autoAlpha: 1,
+              y: 0,
+              ease: "none",
+              scrollTrigger: {
+                trigger: section,
+                start: isMobile ? "top 90%" : "top 85%",
+                end: isMobile ? "top 62%" : "top 48%",
+                scrub: 0.8,
+                invalidateOnRefresh: true,
+              },
+            },
+          );
         },
       );
+
+      return () => {
+        mm.revert();
+      };
     },
     {
       scope: sectionRef,
@@ -56,36 +81,61 @@ export default function TextBreak({
   );
 
   return (
-    <section
+    <div
       ref={sectionRef}
       className={`
-    flex
-    min-h-[60vh]
-    items-center
-    justify-center
-    px-6
-    py-20
-    sm:px-10
-    md:px-16
-    lg:px-24
-    ${className}
-  `}
+        flex
+        min-h-[50svh]
+        w-full
+        items-center
+        justify-center
+
+        px-5
+        py-16
+
+        sm:min-h-[55svh]
+        sm:px-8
+        sm:py-20
+
+        md:min-h-[60svh]
+        md:px-12
+        md:py-24
+
+        lg:px-20
+        lg:py-28
+
+        xl:px-24
+
+        ${className}
+      `}
     >
       <p
         ref={textRef}
         className={`
-    w-full
-    max-w-[700px]
-    font-benton-regular
-    text-[clamp(1.75rem,3.9vw,4.5rem)]
-    leading-[1.25]
-    tracking-[-0.025em]
-    text-black
-    ${textClassName}
-  `}
+          w-full
+          max-w-[46rem]
+
+          font-benton-regular
+          text-[clamp(1.75rem,7.5vw,2.5rem)]
+          leading-[1.12]
+          tracking-[-0.025em]
+          text-black
+
+          sm:text-[clamp(2rem,5.5vw,3rem)]
+          sm:leading-[1.15]
+
+          md:text-[clamp(2.5rem,4.2vw,4.25rem)]
+          md:leading-[1.18]
+
+          lg:max-w-[50rem]
+          lg:text-[clamp(3rem,4vw,4.5rem)]
+          lg:leading-[1.2]
+
+          ${textClassName}
+        `}
       >
         {children}
       </p>
-    </section>
+    </div>
   );
 }

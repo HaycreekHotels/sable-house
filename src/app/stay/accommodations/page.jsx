@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useLayoutEffect, useRef, useState } from "react";
 
@@ -9,6 +10,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { rooms } from "@/app/data/accommodations";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const ROOM_PLACEHOLDER_IMAGE =
+  "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Guestroom.jpg";
 
 const filters = [
   {
@@ -37,19 +41,13 @@ export default function AccommodationsPage() {
       ? rooms
       : rooms.filter((room) => room.house === activeFilter);
 
-  /* ---------------------------------------------------------------------- */
-  /* HERO ANIMATION                                                         */
-  /* ---------------------------------------------------------------------- */
-
   useLayoutEffect(() => {
     const context = gsap.context(() => {
       const prefersReducedMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
       ).matches;
 
-      if (prefersReducedMotion) {
-        return;
-      }
+      if (prefersReducedMotion) return;
 
       gsap.fromTo(
         "[data-hero]",
@@ -70,19 +68,13 @@ export default function AccommodationsPage() {
     return () => context.revert();
   }, []);
 
-  /* ---------------------------------------------------------------------- */
-  /* ROOM CARD ANIMATION                                                    */
-  /* ---------------------------------------------------------------------- */
-
   useLayoutEffect(() => {
     const context = gsap.context(() => {
       const prefersReducedMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
       ).matches;
 
-      if (prefersReducedMotion) {
-        return;
-      }
+      if (prefersReducedMotion) return;
 
       const cards = gsap.utils.toArray("[data-room-card]");
 
@@ -123,108 +115,105 @@ export default function AccommodationsPage() {
         ref={heroRef}
         aria-labelledby="accommodations-heading"
         className="
-    mx-auto
-    w-full
-    max-w-[1800px]
-    px-5
-    pb-14
-    pt-28
-    sm:px-8
-    sm:pb-16
-    sm:pt-36
-    lg:px-12
-    lg:pb-20
-    lg:pt-52
-    xl:px-16
-    xl:pt-56
-  "
-      >
-        {/* ------------------------------------------------------------ */}
-        {/* HERO                                                         */}
-        {/* ------------------------------------------------------------ */}
+          mx-auto
+          w-full
+          max-w-[1800px]
+          px-5
+          pb-14
+          pt-28
 
+          sm:px-8
+          sm:pb-16
+          sm:pt-36
+
+          lg:px-12
+          lg:pb-20
+          lg:pt-52
+
+          xl:px-16
+          xl:pt-56
+        "
+      >
         <div
           className="
-      grid
-      grid-cols-1
-      gap-y-8
-      lg:grid-cols-12
-      lg:gap-x-8
-      lg:gap-y-12
-    "
+            grid
+            grid-cols-1
+            gap-y-8
+
+            lg:grid-cols-12
+            lg:gap-x-8
+            lg:gap-y-12
+          "
         >
-          {/* Heading */}
           <h1
             id="accommodations-heading"
             data-hero
             className="
-        grid
-        grid-cols-1
-        gap-y-1
-        font-benton-regular
-        text-[clamp(3.5rem,8vw,5.75rem)]
-        font-normal
-        leading-[0.92]
-        tracking-[-0.03em]
-        lg:col-span-12
-        lg:grid-cols-12
-        lg:items-end
-        lg:gap-x-8
-        lg:text-[clamp(4.5rem,5vw,6rem)]
-      "
+              grid
+              grid-cols-1
+              gap-y-1
+
+              font-benton-regular
+              text-[clamp(3.5rem,8vw,5.75rem)]
+              font-normal
+              leading-[0.92]
+              tracking-[-0.03em]
+
+              lg:col-span-12
+              lg:grid-cols-12
+              lg:items-end
+              lg:gap-x-8
+              lg:text-[clamp(4.5rem,5vw,6rem)]
+            "
           >
-            <span
-              className="
-          block
-          lg:col-span-3
-        "
-            >
-              Find
-            </span>
+            <span className="block lg:col-span-3">Find</span>
 
             <span
               className="
-          block
-          lg:col-span-4
-          lg:col-start-5
-        "
+                block
+                lg:col-span-4
+                lg:col-start-5
+              "
             >
               Your Place
             </span>
 
             <span
               className="
-          block
-          whitespace-nowrap
-          lg:col-span-4
-          lg:col-start-9
-        "
+                block
+                whitespace-nowrap
+
+                lg:col-span-4
+                lg:col-start-9
+              "
             >
               at Sabal House
             </span>
           </h1>
 
-          {/* Description */}
           <div
             data-hero
             className="
-        mt-4
-        max-w-md
-        lg:col-span-4
-        lg:col-start-9
-        lg:mt-0
-        lg:max-w-[460px]
-      "
+              mt-4
+              max-w-md
+
+              lg:col-span-4
+              lg:col-start-9
+              lg:mt-0
+              lg:max-w-[460px]
+            "
           >
             <p
               className="
-          font-central-regular
-          text-[13px]
-          leading-[1.65]
-          sm:text-sm
-          lg:text-[15px]
-          lg:leading-[1.5]
-        "
+                font-central-regular
+                text-[13px]
+                leading-[1.65]
+
+                sm:text-sm
+
+                lg:text-[15px]
+                lg:leading-[1.5]
+              "
             >
               Choose between the light-filled rooms of the Sabal House building
               and The Heritage Rooms, set within the former Presidents&apos;
@@ -233,20 +222,18 @@ export default function AccommodationsPage() {
           </div>
         </div>
 
-        {/* ------------------------------------------------------------ */}
-        {/* FILTER                                                       */}
-        {/* ------------------------------------------------------------ */}
-
         <div
           data-hero
           className="
-      mt-14
-      border-t
-      border-black/15
-      pt-6
-      sm:mt-20
-      lg:mt-24
-    "
+            mt-14
+            border-t
+            border-black/15
+            pt-6
+
+            sm:mt-20
+
+            lg:mt-24
+          "
         >
           <RoomFilter
             activeFilter={activeFilter}
@@ -254,10 +241,6 @@ export default function AccommodationsPage() {
           />
         </div>
       </section>
-
-      {/* ================================================================ */}
-      {/* ROOM GRID                                                        */}
-      {/* ================================================================ */}
 
       <section
         ref={gridRef}
@@ -267,7 +250,9 @@ export default function AccommodationsPage() {
           max-w-[1600px]
           px-2
           pb-24
+
           sm:px-3
+
           lg:px-4
           lg:pb-36
         "
@@ -275,8 +260,6 @@ export default function AccommodationsPage() {
         <h2 id="rooms-heading" className="sr-only">
           Accommodations
         </h2>
-
-        {/* Accessibility announcement when filtering */}
 
         <p aria-live="polite" aria-atomic="true" className="sr-only">
           Showing {filteredRooms.length}{" "}
@@ -289,8 +272,10 @@ export default function AccommodationsPage() {
             grid-cols-1
             gap-x-3
             gap-y-16
+
             md:grid-cols-2
             md:gap-y-20
+
             lg:gap-x-4
             lg:gap-y-24
           "
@@ -303,10 +288,6 @@ export default function AccommodationsPage() {
     </main>
   );
 }
-
-/* ========================================================================== */
-/* FILTER                                                                     */
-/* ========================================================================== */
 
 function RoomFilter({ activeFilter, onFilterChange }) {
   return (
@@ -324,7 +305,9 @@ function RoomFilter({ activeFilter, onFilterChange }) {
           items-center
           gap-x-7
           gap-y-3
+
           sm:gap-x-10
+
           lg:gap-x-14
         "
       >
@@ -344,14 +327,13 @@ function RoomFilter({ activeFilter, onFilterChange }) {
                 items-center
                 gap-2.5
                 text-left
+
                 focus-visible:outline
                 focus-visible:outline-2
                 focus-visible:outline-offset-4
                 focus-visible:outline-black
               "
             >
-              {/* Checkbox-inspired indicator */}
-
               <span
                 aria-hidden="true"
                 className={`
@@ -363,8 +345,10 @@ function RoomFilter({ activeFilter, onFilterChange }) {
                   justify-center
                   border
                   border-black
+
                   transition-colors
                   duration-300
+
                   ${
                     isActive
                       ? "bg-black"
@@ -377,8 +361,10 @@ function RoomFilter({ activeFilter, onFilterChange }) {
                     h-1
                     w-1
                     bg-white
+
                     transition-opacity
                     duration-300
+
                     ${isActive ? "opacity-100" : "opacity-0"}
                   `}
                 />
@@ -390,6 +376,7 @@ function RoomFilter({ activeFilter, onFilterChange }) {
                   font-medium
                   uppercase
                   tracking-[0.03em]
+
                   sm:text-[10px]
                 "
               >
@@ -403,10 +390,6 @@ function RoomFilter({ activeFilter, onFilterChange }) {
   );
 }
 
-/* ========================================================================== */
-/* ROOM CARD                                                                  */
-/* ========================================================================== */
-
 function RoomCard({ room }) {
   return (
     <article data-room-card className="min-w-0">
@@ -416,41 +399,51 @@ function RoomCard({ room }) {
         className="
           group
           block
+
           focus-visible:outline
           focus-visible:outline-2
           focus-visible:outline-offset-4
           focus-visible:outline-black
         "
       >
-        {/* ============================================================ */}
-        {/* IMAGE                                                        */}
-        {/* ============================================================ */}
-
         <div
           className="
             relative
             aspect-[1.15/1]
             overflow-hidden
             bg-[#f1eadf]
+
             sm:aspect-[4/3]
+
             lg:aspect-[1.55/1]
           "
         >
-          <RoomPlaceholder room={room} />
+          <Image
+            src={ROOM_PLACEHOLDER_IMAGE}
+            alt=""
+            fill
+            sizes="(min-width: 768px) 50vw, 100vw"
+            className="
+              object-cover
+
+              transition-transform
+              duration-700
+              ease-out
+
+              motion-reduce:transition-none
+
+              group-hover:scale-[1.025]
+            "
+          />
         </div>
 
-        {/* ============================================================ */}
-        {/* ROOM INFORMATION                                             */}
-        {/* ============================================================ */}
-
         <div className="pt-4 sm:pt-5">
-          {/* Name + specifications */}
-
           <div
             className="
               grid
               grid-cols-1
               gap-2
+
               sm:grid-cols-[1fr_auto]
               sm:items-start
               sm:gap-6
@@ -473,24 +466,22 @@ function RoomCard({ room }) {
                 flex
                 flex-wrap
                 gap-x-2
+
                 text-[10px]
                 font-medium
                 uppercase
                 leading-5
                 tracking-[0.02em]
+
                 sm:justify-end
                 sm:text-right
               "
             >
               <span>{room.bed}</span>
-
               <span aria-hidden="true">|</span>
-
               <span>{room.size}</span>
             </div>
           </div>
-
-          {/* Description */}
 
           <p
             className="
@@ -498,13 +489,12 @@ function RoomCard({ room }) {
               max-w-xl
               text-[12px]
               leading-[1.65]
+
               sm:text-[13px]
             "
           >
             {room.shortDescription}
           </p>
-
-          {/* View room */}
 
           <span
             className="
@@ -512,6 +502,7 @@ function RoomCard({ room }) {
               mt-4
               inline-block
               pb-1
+
               text-[10px]
               font-medium
               uppercase
@@ -529,8 +520,10 @@ function RoomCard({ room }) {
                 w-full
                 origin-left
                 bg-black
+
                 transition-transform
                 duration-300
+
                 group-hover:scale-x-0
               "
             />
@@ -538,209 +531,5 @@ function RoomCard({ room }) {
         </div>
       </Link>
     </article>
-  );
-}
-
-/* ========================================================================== */
-/* PLACEHOLDER ART                                                           */
-/* ========================================================================== */
-
-function RoomPlaceholder({ room }) {
-  const isHeritage = room.house === "heritage";
-
-  return (
-    <div
-      aria-hidden="true"
-      className="
-        relative
-        h-full
-        w-full
-        overflow-hidden
-        bg-[#f3ecdf]
-      "
-    >
-      {/* Back artwork */}
-
-      <div
-        className={`
-          absolute
-          left-1/2
-          top-[10%]
-          h-[58%]
-          w-[25%]
-          -translate-x-1/2
-          transition-transform
-          duration-700
-          ease-out
-          group-hover:-translate-x-1/2
-          group-hover:scale-[1.025]
-          ${isHeritage ? "bg-[#6f4738]" : "bg-[#9c8b7e]"}
-        `}
-      />
-
-      {/* Hanging light */}
-
-      <div
-        className="
-          absolute
-          left-[24%]
-          top-[-6%]
-          z-10
-          h-[15%]
-          w-[6%]
-          rounded-b-full
-          bg-[#b08c51]
-        "
-      />
-
-      <div
-        className="
-          absolute
-          left-[19%]
-          top-[5%]
-          z-10
-          h-[15%]
-          w-[16%]
-          rounded-[50%]
-          bg-[#eee8df]
-          shadow-sm
-        "
-      />
-
-      {/* Left furniture */}
-
-      <div
-        className="
-          absolute
-          bottom-[25%]
-          left-[8%]
-          h-[24%]
-          w-[31%]
-          border
-          border-black/10
-          bg-[#d9dcd5]
-          shadow-sm
-          transition-transform
-          duration-700
-          ease-out
-          group-hover:-translate-y-1
-        "
-      >
-        <div
-          className="
-            grid
-            h-full
-            w-full
-            grid-cols-5
-            opacity-20
-          "
-        >
-          <span className="border-r border-black" />
-          <span className="border-r border-black" />
-          <span className="border-r border-black" />
-          <span className="border-r border-black" />
-        </div>
-      </div>
-
-      {/* Right rug / art */}
-
-      <div
-        className={`
-          absolute
-          bottom-[14%]
-          right-[8%]
-          h-[38%]
-          w-[31%]
-          border-[5px]
-          transition-transform
-          duration-700
-          ease-out
-          group-hover:translate-y-[-3px]
-          ${
-            isHeritage
-              ? "border-[#654b39] bg-[#b99c7b]"
-              : "border-[#263c52] bg-[#c0ae86]"
-          }
-        `}
-      >
-        <div
-          className="
-            flex
-            h-full
-            w-full
-            items-center
-            justify-center
-            overflow-hidden
-            text-center
-            font-serif
-            text-3xl
-            opacity-20
-          "
-        >
-          ✦
-        </div>
-      </div>
-
-      {/* Bench */}
-
-      <div
-        className="
-          absolute
-          bottom-[10%]
-          left-[38%]
-          z-20
-          h-[17%]
-          w-[28%]
-          rounded-[45%_45%_10%_10%]
-          bg-[#ebe6dc]
-          shadow-sm
-          transition-transform
-          duration-700
-          ease-out
-          group-hover:-translate-y-1
-        "
-      >
-        <div
-          className="
-            absolute
-            -left-[6%]
-            bottom-0
-            h-[85%]
-            w-[11%]
-            rounded-full
-            bg-[#ebe6dc]
-          "
-        />
-
-        <div
-          className="
-            absolute
-            -right-[6%]
-            bottom-0
-            h-[85%]
-            w-[11%]
-            rounded-full
-            bg-[#ebe6dc]
-          "
-        />
-      </div>
-
-      {/* Label */}
-
-      <span
-        className="
-          absolute
-          bottom-4
-          right-4
-          text-[8px]
-          font-medium
-          uppercase
-          tracking-[0.12em]
-          text-black/30
-        "
-      >
-        Placeholder
-      </span>
-    </div>
   );
 }

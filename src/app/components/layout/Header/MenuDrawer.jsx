@@ -1,9 +1,14 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { usePathname } from "next/navigation";
 
 import gsap from "gsap";
@@ -70,6 +75,23 @@ function animateDrawerClose(drawer, backdrop, onComplete) {
     return;
   }
 
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  if (prefersReducedMotion) {
+    gsap.set(drawer, {
+      xPercent: -100,
+    });
+
+    gsap.set(backdrop, {
+      autoAlpha: 0,
+    });
+
+    onComplete?.();
+    return;
+  }
+
   const timeline = gsap.timeline({
     onComplete,
   });
@@ -78,7 +100,7 @@ function animateDrawerClose(drawer, backdrop, onComplete) {
     drawer,
     {
       xPercent: -100,
-      duration: 0.8,
+      duration: 0.7,
       ease: "power2.inOut",
     },
     0,
@@ -88,23 +110,51 @@ function animateDrawerClose(drawer, backdrop, onComplete) {
     backdrop,
     {
       autoAlpha: 0,
-      duration: 0.55,
+      duration: 0.45,
       ease: "power2.inOut",
     },
-    0.15,
+    0.12,
   );
+}
+
+function getFocusableElements(container) {
+  if (!container) return [];
+
+  return Array.from(
+    container.querySelectorAll(
+      [
+        "a[href]",
+        "button:not([disabled])",
+        "input:not([disabled])",
+        "select:not([disabled])",
+        "textarea:not([disabled])",
+        '[tabindex]:not([tabindex="-1"])',
+      ].join(","),
+    ),
+  ).filter((element) => {
+    if (element.closest("[inert]")) return false;
+    if (element.getAttribute("aria-hidden") === "true") return false;
+
+    return element.getClientRects().length > 0;
+  });
 }
 
 export default function MenuDrawer({ onClose, returnFocusRef }) {
   const pathname = usePathname();
 
+  const modalRef = useRef(null);
   const drawerRef = useRef(null);
   const backdropRef = useRef(null);
   const closeButtonRef = useRef(null);
+  const isClosingRef = useRef(false);
 
   const previousPathnameRef = useRef(pathname);
+
   const [openSection, setOpenSection] = useState(null);
 
+  /*
+   * Prevent the page behind the modal navigation from scrolling.
+   */
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
 
@@ -115,6 +165,9 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
     };
   }, []);
 
+  /*
+   * Move keyboard focus into the dialog when it opens.
+   */
   useEffect(() => {
     closeButtonRef.current?.focus({
       preventScroll: true,
@@ -122,14 +175,24 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
   }, []);
 
   const finishDrawerClose = useCallback(() => {
-    returnFocusRef?.current?.focus({
-      preventScroll: true,
-    });
-
     onClose();
+
+    /*
+     * Wait until React removes the modal before restoring focus to
+     * the trigger that opened it.
+     */
+    window.requestAnimationFrame(() => {
+      returnFocusRef?.current?.focus({
+        preventScroll: true,
+      });
+    });
   }, [onClose, returnFocusRef]);
 
   const handleCloseDrawer = useCallback(() => {
+    if (isClosingRef.current) return;
+
+    isClosingRef.current = true;
+
     animateDrawerClose(
       drawerRef.current,
       backdropRef.current,
@@ -137,6 +200,9 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
     );
   }, [finishDrawerClose]);
 
+  /*
+   * Close once a client-side route change completes.
+   */
   useEffect(() => {
     const previousPathname = previousPathnameRef.current;
 
@@ -146,61 +212,141 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
     }
   }, [pathname, handleCloseDrawer]);
 
+  /*
+   * Modal keyboard behavior:
+   * - Escape closes the drawer.
+   * - Tab and Shift+Tab remain inside the whole menu experience,
+   *   including the desktop logo and booking CTA.
+   */
   useEffect(() => {
     function handleKeyDown(event) {
+      const modal = modalRef.current;
+
+      if (!modal) return;
+
       if (event.key === "Escape") {
+        event.preventDefault();
         handleCloseDrawer();
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+
+      const focusableElements = getFocusableElements(modal);
+
+      if (!focusableElements.length) {
+        event.preventDefault();
+        return;
+      }
+
+      const firstElement = focusableElements[0];
+      const lastElement =
+        focusableElements[focusableElements.length - 1];
+      const activeElement = document.activeElement;
+
+      if (event.shiftKey) {
+        if (
+          activeElement === firstElement ||
+          !modal.contains(activeElement)
+        ) {
+          event.preventDefault();
+          lastElement.focus();
+        }
+
+        return;
+      }
+
+      if (
+        activeElement === lastElement ||
+        !modal.contains(activeElement)
+      ) {
+        event.preventDefault();
+        firstElement.focus();
       }
     }
 
-    window.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [handleCloseDrawer]);
 
+  /*
+   * Drawer entrance animation.
+   */
   useGSAP(
     () => {
-      const timeline = gsap.timeline();
+      const drawer = drawerRef.current;
+      const backdrop = backdropRef.current;
 
-      timeline.fromTo(
-        backdropRef.current,
-        {
-          autoAlpha: 0,
-        },
-        {
+      if (!drawer || !backdrop) return;
+
+      const mm = gsap.matchMedia();
+
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const timeline = gsap.timeline();
+
+        timeline.fromTo(
+          backdrop,
+          {
+            autoAlpha: 0,
+          },
+          {
+            autoAlpha: 1,
+            duration: 0.4,
+            ease: "power2.out",
+          },
+          0,
+        );
+
+        timeline.fromTo(
+          drawer,
+          {
+            xPercent: -100,
+          },
+          {
+            xPercent: 0,
+            duration: 0.85,
+            ease: "power3.out",
+          },
+          0,
+        );
+
+        timeline.from(
+          ".menu-reveal",
+          {
+            autoAlpha: 0,
+            y: 12,
+            duration: 0.42,
+            stagger: 0.06,
+            ease: "power2.out",
+          },
+          0.3,
+        );
+
+        return () => {
+          timeline.kill();
+        };
+      });
+
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        gsap.set(backdrop, {
           autoAlpha: 1,
-          duration: 0.45,
-          ease: "power2.out",
-        },
-        0,
-      );
+        });
 
-      timeline.fromTo(
-        drawerRef.current,
-        {
-          xPercent: -100,
-        },
-        {
+        gsap.set(drawer, {
           xPercent: 0,
-          duration: 0.9,
-          ease: "power3.out",
-        },
-        0,
-      );
+        });
 
-      timeline.from(
-        ".menu-reveal",
-        {
-          opacity: 0,
-          y: 12,
-          duration: 0.45,
-          stagger: 0.07,
-          ease: "power2.out",
-        },
-        0.35,
-      );
+        gsap.set(".menu-reveal", {
+          clearProps: "opacity,visibility,transform",
+        });
+      });
+
+      return () => {
+        mm.revert();
+      };
     },
     {
       scope: drawerRef,
@@ -214,19 +360,34 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
   }
 
   return (
-    <>
-      {/* Full-screen backdrop */}
+    <div
+      id="site-menu"
+      ref={modalRef}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="site-menu-title"
+      className="
+        fixed
+        inset-0
+        z-[100]
+      "
+    >
+      <h2 id="site-menu-title" className="sr-only">
+        Site navigation
+      </h2>
+
+      {/* Full-screen visual backdrop */}
       <div
         ref={backdropRef}
         className="
-          fixed
+          absolute
           inset-0
-          z-[100]
           bg-black
         "
       >
         {/* Right-side photograph */}
         <div
+          aria-hidden="true"
           className="
             absolute
             inset-y-0
@@ -239,181 +400,187 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
             bg-no-repeat
 
             sm:left-[420px]
+
             lg:left-[min(42vw,420px)]
           "
         >
-          {/* Slight image darkening */}
           <div
-            aria-hidden="true"
             className="
               pointer-events-none
               absolute
               inset-0
-              z-[1]
               bg-black/10
             "
           />
-
-          {/* Clicking the photograph closes the menu */}
-          <button
-            type="button"
-            tabIndex={-1}
-            aria-label="Close menu"
-            onClick={handleCloseDrawer}
-            className="
-              absolute
-              inset-0
-              z-0
-              cursor-default
-            "
-          />
-
-          {/* Transparent right-side header */}
-          <div
-            className="
-              pointer-events-none
-              absolute
-              inset-x-0
-              top-0
-              z-20
-
-              hidden
-              h-24
-              items-start
-              justify-end
-
-              px-7
-              py-6
-
-              sm:flex
-              lg:px-8
-              lg:py-7
-            "
-          >
-            {/* Logo */}
-            <Link
-              href="/"
-              aria-label="Sabal House home"
-              className="
-                pointer-events-auto
-
-                absolute
-                left-7/16
-                top-5
-                -translate-x-1/2
-
-                flex
-                flex-col
-                items-center
-
-                text-white
-
-                transition-opacity
-                duration-300
-
-                hover:opacity-70
-
-                focus-visible:outline-none
-                focus-visible:ring-2
-                focus-visible:ring-white
-
-                lg:top-7
-              "
-            >
-              <Image
-                src={Logo}
-                alt="Sabal House"
-                width={100}
-                height={50}
-                priority
-              />
-            </Link>
-
-            {/* Book button */}
-            <Link
-              href="/stay/accommodations"
-              className="
-                pointer-events-auto
-
-                inline-flex
-                min-h-10
-                items-center
-                justify-center
-
-                bg-black
-                px-4
-                py-2.5
-
-                text-[11px]
-                font-semibold
-                uppercase
-                tracking-[0.02em]
-                text-white
-
-                transition-colors
-                duration-300
-
-                hover:bg-neutral-800
-
-                focus-visible:outline-none
-                focus-visible:ring-2
-                focus-visible:ring-white
-                focus-visible:ring-offset-2
-                focus-visible:ring-offset-black
-              "
-            >
-              Book Your Stay
-            </Link>
-          </div>
         </div>
       </div>
 
-      {/* Green menu drawer */}
-      <nav
-        id="site-menu"
-        ref={drawerRef}
-        aria-label="Site menu"
+      {/* Clicking the photograph closes the menu. */}
+      <button
+        type="button"
+        tabIndex={-1}
+        aria-hidden="true"
+        onClick={handleCloseDrawer}
         className="
-          fixed
+          absolute
+          inset-y-0
+          right-0
+          z-[5]
+
+          hidden
+
+          cursor-default
+          bg-transparent
+
+          sm:block
+          sm:left-[420px]
+
+          lg:left-[min(42vw,420px)]
+        "
+      />
+
+      {/* Transparent desktop header over the photograph */}
+      <div
+        className="
+          pointer-events-none
+          absolute
+          right-0
+          top-0
+          z-20
+
+          hidden
+          h-24
+
+          items-start
+          justify-end
+
+          px-7
+          py-6
+
+          sm:flex
+          sm:left-[420px]
+
+          lg:left-[min(42vw,420px)]
+          lg:px-8
+          lg:py-7
+        "
+      >
+        <Link
+          href="/"
+          aria-label="Sabal House home"
+          className="
+            pointer-events-auto
+
+            absolute
+            left-1/2
+            top-5
+            -translate-x-1/2
+
+            transition-opacity
+            duration-300
+
+            hover:opacity-70
+
+            focus-visible:outline
+            focus-visible:outline-2
+            focus-visible:outline-offset-4
+            focus-visible:outline-white
+
+            lg:top-7
+          "
+        >
+          <Image
+            src={Logo}
+            alt=""
+            width={100}
+            height={50}
+            priority
+          />
+        </Link>
+
+        <Link
+          href="/stay/accommodations"
+          className="
+            pointer-events-auto
+
+            inline-flex
+            min-h-11
+            items-center
+            justify-center
+
+            bg-black
+            px-4
+            py-2.5
+
+            text-[11px]
+            font-semibold
+            uppercase
+            tracking-[0.02em]
+            text-white
+
+            transition-colors
+            duration-300
+
+            hover:bg-neutral-800
+
+            focus-visible:outline
+            focus-visible:outline-2
+            focus-visible:outline-offset-2
+            focus-visible:outline-white
+          "
+        >
+          Book Your Stay
+        </Link>
+      </div>
+
+      {/* Green menu drawer */}
+      <div
+        ref={drawerRef}
+        className="
+          absolute
           left-0
           top-0
-          z-[110]
+          z-10
 
-          h-dvh
+          h-[100dvh]
           w-full
 
           overflow-hidden
 
           bg-main
 
-          px-8
-          py-8
+          px-6
+          py-6
 
           font-central-regular
           text-secondary
 
           sm:w-[420px]
+          sm:px-8
+          sm:py-8
 
           lg:w-[42vw]
           lg:max-w-[420px]
         "
       >
-        {/* Close is intentionally outside .menu-reveal so GSAP never hides it */}
+        {/* Close remains fixed while the inner navigation can scroll. */}
         <button
           ref={closeButtonRef}
           type="button"
-          aria-label="Close menu"
+          aria-label="Close navigation menu"
           onClick={handleCloseDrawer}
           className="
             absolute
-            left-8
-            top-8
-            z-[999]
+            left-5
+            top-5
+            z-30
 
             flex
             min-h-11
             items-center
             gap-3
+
+            px-1
 
             text-secondary
 
@@ -427,257 +594,310 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
             focus-visible:ring-secondary
             focus-visible:ring-offset-4
             focus-visible:ring-offset-main
+
+            sm:left-8
+            sm:top-8
           "
         >
           <Image
             src={CloseSvg}
             alt=""
-            aria-hidden="true"
             width={24}
             height={24}
-            className="
-              h-6
-              w-6
-              shrink-0
-            "
+            className="h-6 w-6 shrink-0"
           />
 
-          <span className="text-xs font-bold uppercase">Close</span>
+          <span className="text-xs font-bold uppercase">
+            Close
+          </span>
         </button>
 
-        <div
+        <nav
+          aria-label="Site menu"
           className="
             relative
             z-10
 
-            flex
             h-full
-            flex-col
-            items-start
+            overflow-y-auto
+            overscroll-contain
           "
         >
-          {/* Main accordions */}
           <div
             className="
-              mt-20
-
               flex
-              w-full
-              max-w-[330px]
+              min-h-full
               flex-col
-              gap-7
+              items-start
 
-              sm:mt-24
+              pb-[max(0.75rem,env(safe-area-inset-bottom))]
+              pt-16
+
+              sm:pt-20
             "
           >
-            {menuSections.map((section) => {
-              const isOpen = openSection === section.title;
+            {/* Main accordions */}
+            <div
+              className="
+                flex
+                w-full
+                max-w-[330px]
+                flex-col
+                gap-5
 
-              const panelId = `menu-${section.title
-                .toLowerCase()
-                .replaceAll(" ", "-")}`;
+                sm:gap-7
+              "
+            >
+              {menuSections.map((section) => {
+                const isOpen = openSection === section.title;
 
-              return (
-                <section key={section.title} className="menu-reveal">
-                  <h2>
-                    <button
-                      type="button"
-                      aria-expanded={isOpen}
-                      aria-controls={panelId}
-                      onClick={() => toggleSection(section.title)}
+                const panelId = `menu-${section.title
+                  .toLowerCase()
+                  .replaceAll(" ", "-")}`;
+
+                return (
+                  <section
+                    key={section.title}
+                    className="menu-reveal"
+                  >
+                    <h3>
+                      <button
+                        type="button"
+                        aria-expanded={isOpen}
+                        aria-controls={panelId}
+                        onClick={() =>
+                          toggleSection(section.title)
+                        }
+                        className="
+                          flex
+                          min-h-11
+                          w-full
+                          items-center
+                          justify-start
+                          gap-6
+
+                          text-left
+
+                          font-benton-regular
+                          text-[2rem]
+                          leading-none
+
+                          transition-opacity
+                          duration-300
+
+                          hover:opacity-75
+
+                          focus-visible:outline-none
+                          focus-visible:ring-2
+                          focus-visible:ring-secondary
+                          focus-visible:ring-offset-4
+                          focus-visible:ring-offset-main
+
+                          lg:text-[2.15rem]
+                        "
+                      >
+                        <span>{section.title}</span>
+
+                        <Image
+                          src={Chevron}
+                          alt=""
+                          width={16}
+                          height={16}
+                          className={`
+                            mt-1
+                            h-4
+                            w-4
+                            shrink-0
+
+                            transition-transform
+                            duration-300
+
+                            ${
+                              isOpen
+                                ? "rotate-180"
+                                : "rotate-0"
+                            }
+                          `}
+                        />
+                      </button>
+                    </h3>
+
+                    <div
+                      id={panelId}
+                      aria-hidden={!isOpen}
+                      inert={!isOpen || undefined}
+                      className={`
+                        grid
+
+                        transition-[grid-template-rows,opacity]
+                        duration-300
+                        ease-out
+
+                        ${
+                          isOpen
+                            ? "grid-rows-[1fr] opacity-100"
+                            : "grid-rows-[0fr] opacity-0"
+                        }
+                      `}
+                    >
+                      <div className="overflow-hidden">
+                        <div
+                          className="
+                            flex
+                            flex-col
+                            gap-2.5
+
+                            pb-2
+                            pt-3
+                          "
+                        >
+                          {section.links.map((link) => {
+                            const isCurrent =
+                              pathname === link.href;
+
+                            return (
+                              <Link
+                                key={link.label}
+                                href={link.href}
+                                aria-current={
+                                  isCurrent
+                                    ? "page"
+                                    : undefined
+                                }
+                                className="
+                                  w-fit
+
+                                  py-1
+
+                                  text-[13px]
+                                  font-medium
+
+                                  transition-opacity
+                                  duration-300
+
+                                  hover:opacity-65
+
+                                  focus-visible:outline-none
+                                  focus-visible:ring-2
+                                  focus-visible:ring-secondary
+                                  focus-visible:ring-offset-2
+                                  focus-visible:ring-offset-main
+                                "
+                              >
+                                {link.label}
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                );
+              })}
+            </div>
+
+            {/* Footer links */}
+            <div
+              className="
+                menu-reveal
+
+                mt-auto
+
+                flex
+                w-full
+                max-w-[300px]
+                flex-col
+                gap-5
+
+                pt-12
+              "
+            >
+              <span
+                aria-hidden="true"
+                className="h-px w-28 bg-white/20"
+              />
+
+              <div className="flex flex-col gap-2">
+                {menuFooterSections.map((link) => {
+                  const isExternal =
+                    link.href.startsWith("http");
+                  const isCurrent =
+                    !isExternal &&
+                    link.href !== "#" &&
+                    pathname === link.href;
+
+                  return (
+                    <Link
+                      key={link.label}
+                      href={link.href}
+                      target={
+                        isExternal ? "_blank" : undefined
+                      }
+                      rel={
+                        isExternal
+                          ? "noopener noreferrer"
+                          : undefined
+                      }
+                      aria-current={
+                        isCurrent ? "page" : undefined
+                      }
+                      aria-label={
+                        isExternal
+                          ? `${link.label} (opens in a new tab)`
+                          : undefined
+                      }
                       className="
-                        flex
-                        min-h-11
-                        w-full
-                        items-center
-                        justify-start
-                        gap-8
+                        w-fit
 
-                        text-left
+                        py-1
 
-                        font-benton-regular
-                        text-[2rem]
-                        leading-none
+                        text-xs
+                        uppercase
+                        tracking-[0.02em]
 
                         transition-opacity
                         duration-300
 
-                        hover:opacity-75
+                        hover:opacity-65
 
                         focus-visible:outline-none
                         focus-visible:ring-2
                         focus-visible:ring-secondary
-                        focus-visible:ring-offset-4
+                        focus-visible:ring-offset-2
                         focus-visible:ring-offset-main
-
-                        lg:text-[2.15rem]
                       "
                     >
-                      <span>{section.title}</span>
-
-                      <Image
-                        src={Chevron}
-                        alt=""
-                        aria-hidden="true"
-                        width={16}
-                        height={16}
-                        className={`
-                          mt-2
-                          h-4
-                          w-4
-                          shrink-0
-
-                          transition-transform
-                          duration-300
-
-                          ${isOpen ? "rotate-180" : "rotate-0"}
-                        `}
-                      />
-                    </button>
-                  </h2>
-
-                  <div
-                    id={panelId}
-                    aria-hidden={!isOpen}
-                    className={`
-                      grid
-
-                      transition-[grid-template-rows,opacity]
-                      duration-300
-                      ease-out
-
-                      ${
-                        isOpen
-                          ? "grid-rows-[1fr] opacity-100"
-                          : "grid-rows-[0fr] opacity-0"
-                      }
-                    `}
-                  >
-                    <div className="overflow-hidden">
-                      <div
-                        className="
-                          flex
-                          flex-col
-                          gap-2.5
-
-                          pb-2
-                          pt-3
-                        "
-                      >
-                        {section.links.map((link) => (
-                          <Link
-                            key={link.label}
-                            href={link.href}
-                            tabIndex={isOpen ? 0 : -1}
-                            className="
-                              w-fit
-
-                              text-[13px]
-                              font-medium
-
-                              transition-opacity
-                              duration-300
-
-                              hover:opacity-65
-
-                              focus-visible:outline-none
-                              focus-visible:ring-2
-                              focus-visible:ring-secondary
-                              focus-visible:ring-offset-2
-                              focus-visible:ring-offset-main
-                            "
-                          >
-                            {link.label}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </section>
-              );
-            })}
-          </div>
-
-          {/* Footer links */}
-          <div
-            className="
-              menu-reveal
-
-              mt-auto
-
-              flex
-              w-full
-              max-w-[300px]
-              flex-col
-              gap-5
-
-              pb-3
-            "
-          >
-            <span
-              aria-hidden="true"
-              className="
-                h-px
-                w-28
-                bg-white/20
-              "
-            />
-
-            <div className="flex flex-col gap-2.5">
-              {menuFooterSections.map((link) => {
-                const isExternal = link.href.startsWith("http");
-
-                return (
-                  <Link
-                    key={link.label}
-                    href={link.href}
-                    target={isExternal ? "_blank" : undefined}
-                    rel={isExternal ? "noopener noreferrer" : undefined}
-                    className="
-                      w-fit
-
-                      text-xs
-                      uppercase
-
-                      transition-opacity
-                      duration-300
-
-                      hover:opacity-65
-
-                      focus-visible:outline-none
-                      focus-visible:ring-2
-                      focus-visible:ring-secondary
-                      focus-visible:ring-offset-2
-                      focus-visible:ring-offset-main
-                    "
-                  >
-                    {link.label}
-                  </Link>
-                );
-              })}
+                      {link.label}
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
           </div>
-        </div>
+        </nav>
 
         {/* Decorative leaf */}
         <div
           aria-hidden="true"
           className="
             pointer-events-none
-
             absolute
             -bottom-32
             -right-32
             z-0
 
             -rotate-45
-
             opacity-60
           "
         >
-          <Image src={Leaf} alt="" width={440} height={440} />
+          <Image
+            src={Leaf}
+            alt=""
+            width={440}
+            height={440}
+          />
         </div>
-      </nav>
-    </>
+      </div>
+    </div>
   );
 }

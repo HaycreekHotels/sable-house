@@ -16,10 +16,15 @@ export default function NavBar() {
 
   useEffect(() => {
     function handleScroll() {
-      setIsScrolled(window.scrollY > 40);
+      const nextScrolledState = window.scrollY > 40;
+
+      setIsScrolled((currentState) =>
+        currentState === nextScrolledState
+          ? currentState
+          : nextScrolledState,
+      );
     }
 
-    // Check initial position in case the page loads while already scrolled.
     handleScroll();
 
     window.addEventListener("scroll", handleScroll, {
@@ -43,87 +48,74 @@ export default function NavBar() {
     <>
       <nav
         aria-label="Primary navigation"
+        aria-hidden={isOpen ? "true" : undefined}
+        inert={isOpen || undefined}
         className={`
           fixed
-          left-0
+          inset-x-0
           top-0
           z-50
+
           flex
-          h-18
+          h-[72px]
           w-full
           items-center
           justify-between
-          px-6
+
+          px-4
+
           transition-colors
           duration-500
           ease-out
+
+          sm:px-6
           md:px-8
           lg:px-12
+
           ${isScrolled || isOpen ? "bg-main" : "bg-transparent"}
         `}
       >
-        {/* Menu Button */}
+        {/* Menu button */}
         <button
           ref={menuButtonRef}
           type="button"
-          className="
-            relative
-            flex
-            h-6
-            w-10
-            cursor-pointer
-            flex-col
-            justify-between
-            bg-transparent
-            p-0
-            focus-visible:outline
-            focus-visible:outline-2
-            focus-visible:outline-offset-4
-            focus-visible:outline-white
-          "
-          aria-label="Open menu"
+          aria-label="Open navigation menu"
           aria-controls="site-menu"
           aria-expanded={isOpen}
           onClick={handleOpenMenu}
+          className="
+            relative
+
+            flex
+            h-11
+            w-11
+            shrink-0
+            cursor-pointer
+            items-center
+            justify-center
+
+            bg-transparent
+
+            focus-visible:outline
+            focus-visible:outline-2
+            focus-visible:outline-offset-2
+            focus-visible:outline-white
+          "
         >
           <span
             aria-hidden="true"
             className="
-              h-px
-              w-full
-              rounded-lg
-              bg-white
-              transition-transform
-              duration-300
-              ease-out
+              flex
+              h-5
+              w-8
+              flex-col
+              justify-between
             "
-          />
-
-          <span
-            aria-hidden="true"
-            className="
-              h-px
-              w-full
-              rounded-lg
-              bg-white
-              transition-transform
-              duration-300
-              ease-out
-            "
-          />
-
-          <span
-            aria-hidden="true"
-            className="
-              h-px
-              w-full
-              rounded-lg
-              bg-white
-              transition-transform
-              duration-300
-              ease-out
-            "
-          />
+          >
+            <span className="h-px w-full rounded-full bg-white" />
+            <span className="h-px w-full rounded-full bg-white" />
+            <span className="h-px w-full rounded-full bg-white" />
+          </span>
         </button>
 
         {/* Logo */}
@@ -134,6 +126,7 @@ export default function NavBar() {
             absolute
             left-1/2
             -translate-x-1/2
+
             focus-visible:outline
             focus-visible:outline-2
             focus-visible:outline-offset-4
@@ -145,46 +138,63 @@ export default function NavBar() {
             width={100}
             height={50}
             priority
-            className="h-auto w-[90px] sm:w-[100px]"
-            alt="Sabal House"
+            alt=""
+            className="
+              h-auto
+              w-[82px]
+
+              sm:w-[94px]
+              md:w-[100px]
+            "
           />
         </Link>
 
         {/* Booking CTA */}
         <Link
+          href="/stay/accommodations"
           className="
-            flex
+            inline-flex
+            min-h-11
+            shrink-0
             items-center
             justify-center
+
             bg-black
             px-3
-            py-2
+            py-2.5
+
             text-[10px]
             font-bold
             uppercase
-            tracking-wide
+            tracking-[0.04em]
             text-secondary
+
             transition-colors
             duration-300
+
             hover:bg-neutral-800
+
             focus-visible:outline
             focus-visible:outline-2
-            focus-visible:outline-offset-4
+            focus-visible:outline-offset-2
             focus-visible:outline-white
+
             sm:px-4
             sm:text-xs
+
             md:text-sm
           "
-          href="#"
         >
           <span className="hidden sm:inline">Book Your Stay</span>
-
           <span className="sm:hidden">Book</span>
         </Link>
       </nav>
 
       {isOpen && (
-        <MenuDrawer onClose={handleCloseMenu} returnFocusRef={menuButtonRef} />
+        <MenuDrawer
+          onClose={handleCloseMenu}
+          returnFocusRef={menuButtonRef}
+        />
       )}
     </>
   );

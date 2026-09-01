@@ -32,16 +32,17 @@ export default function FullWidth() {
         "(prefers-reduced-motion: reduce)",
       ).matches;
 
+      const getStartSize = () => Math.min(250, window.innerWidth - 40);
+
       /*
-       * ---------------------------------------------------------
-       * REDUCED MOTION
-       * ---------------------------------------------------------
+       * Reduced motion:
+       * Skip the pinned scroll animation and show the useful final state.
        */
       if (prefersReducedMotion) {
         gsap.set(panel, {
           width: "100%",
-          height: "90vh",
-          y: 0,
+          height: "100svh",
+          clearProps: "transform",
         });
 
         gsap.set(intro, {
@@ -51,32 +52,14 @@ export default function FullWidth() {
         gsap.set(content, {
           autoAlpha: 1,
           y: 0,
-          visibility: "visible",
         });
 
         return;
       }
 
       /*
-       * ---------------------------------------------------------
-       * HELPERS
-       * ---------------------------------------------------------
+       * Initial state
        */
-
-      // Keep the starting square responsive on smaller screens.
-      const getStartSize = () => {
-        return Math.min(250, window.innerWidth - 40);
-      };
-
-      const getPanelCenterOffset = () => {
-        const rect = panel.getBoundingClientRect();
-
-        const panelCenter = rect.top + rect.height / 2;
-        const viewportCenter = window.innerHeight / 2;
-
-        return viewportCenter - panelCenter;
-      };
-
       gsap.set(panel, {
         width: getStartSize(),
         height: getStartSize(),
@@ -88,48 +71,44 @@ export default function FullWidth() {
         y: 0,
       });
 
+      /*
+       * autoAlpha: 0 also applies visibility: hidden.
+       * This keeps the hidden CTA/content out of normal keyboard interaction
+       * until the reveal begins.
+       */
       gsap.set(content, {
         autoAlpha: 0,
         y: 24,
-        visibility: "visible",
       });
 
       /*
-       * ---------------------------------------------------------
-       * TIMELINE
-       * ---------------------------------------------------------
+       * Scroll sequence
+       *
+       * Pin only after the entire starting square has had a chance to enter
+       * the viewport. The panel expands to the full viewport height so there
+       * is no exposed strip beneath it on desktop.
        */
-
       const timeline = gsap.timeline({
         scrollTrigger: {
-          trigger: panel,
-
-          start: "70% bottom",
-
-          end: "+=1000",
-
+          trigger: section,
+          start: "top top",
+          end: () => `+=${window.innerWidth < 768 ? 720 : 1000}`,
           scrub: 1,
-
           pin: section,
-
+          pinSpacing: true,
           anticipatePin: 1,
-
           invalidateOnRefresh: true,
-
-          markers: false,
         },
       });
 
-      /* PHASE 1 — STEP INTO IMAGE */
-
+      /*
+       * Phase 1 — step into the image
+       */
       timeline.to(
         panel,
         {
           width: () => section.clientWidth,
-          height: () => window.innerHeight * 0.9,
-
-          y: () => getPanelCenterOffset(),
-
+          height: "100svh",
           duration: 3,
           ease: "none",
         },
@@ -137,11 +116,8 @@ export default function FullWidth() {
       );
 
       /*
-      
-       * PHASE 2 — REMOVE INTRO
-     
+       * Phase 2 — remove the intro
        */
-
       timeline.to(
         intro,
         {
@@ -154,11 +130,8 @@ export default function FullWidth() {
       );
 
       /*
-      
-       * PHASE 3 — REVEAL EXPANDED CONTENT
-      
+       * Phase 3 — reveal the expanded content
        */
-
       timeline.to(
         content,
         {
@@ -167,8 +140,13 @@ export default function FullWidth() {
           duration: 0.8,
           ease: "none",
         },
-        2.35,
+        2.2,
       );
+
+      return () => {
+        timeline.scrollTrigger?.kill();
+        timeline.kill();
+      };
     },
     {
       scope: sectionRef,
@@ -178,35 +156,60 @@ export default function FullWidth() {
   return (
     <section
       ref={sectionRef}
-      className="flex min-h-screen w-full items-center justify-center  -mb-[340px] "
+      aria-labelledby="sabal-house-rooms-heading"
+      className="
+        relative
+        flex
+        min-h-[100svh]
+        w-full
+        items-center
+        justify-center
+        overflow-hidden
+      "
     >
-      <div ref={panelRef} className="relative h-[90vh] w-full overflow-hidden">
-        {/* Background image */}
+      <div
+        ref={panelRef}
+        className="
+          relative
+          h-[min(250px,calc(100vw-2.5rem))]
+          w-[min(250px,calc(100vw-2.5rem))]
+          shrink-0
+          overflow-hidden
+          motion-reduce:h-[100svh]
+          motion-reduce:w-full
+        "
+      >
+        {/* Decorative background image */}
         <Image
           src={placeHolder}
-          alt="Flourishing green forest in Savannah, Georgia"
+          alt=""
           fill
           sizes="100vw"
           className="object-cover"
         />
 
-        {/* Subtle image overlay */}
-        <div aria-hidden="true" className="absolute inset-0 z-10 bg-black/40" />
+        {/* Image overlay for text contrast */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-10 bg-black/40"
+        />
 
-        {/* Small starting state */}
+        {/* Starting square state */}
         <div
           ref={introRef}
+          aria-hidden="true"
           className="
             absolute inset-0 z-20
             flex flex-col
             items-center justify-center
             px-5
-            text-center text-secondary
+            text-center
+            text-secondary
           "
         >
           <p className="mb-2 text-xs uppercase tracking-[0.15em]">Two ways</p>
 
-          <h2
+          <p
             className="
               max-w-50
               font-benton-regular
@@ -217,7 +220,7 @@ export default function FullWidth() {
             "
           >
             To Stay
-          </h2>
+          </p>
         </div>
 
         {/* Expanded state */}
@@ -228,18 +231,27 @@ export default function FullWidth() {
             absolute inset-x-0 bottom-0 z-20
 
             grid grid-cols-1
-            gap-8
+            gap-7
 
-            px-5 pb-10
+            px-5
+            pb-[max(2rem,env(safe-area-inset-bottom))]
 
             text-secondary
 
-            md:grid-cols-2
-            md:gap-16
-            md:px-16
-            md:pb-14
+            sm:px-8
+            sm:pb-[max(2.5rem,env(safe-area-inset-bottom))]
 
-            lg:px-36
+            md:grid-cols-2
+            md:gap-12
+            md:px-12
+            md:pb-12
+
+            lg:gap-16
+            lg:px-20
+            lg:pb-14
+
+            xl:px-28
+            2xl:px-36
           "
         >
           {/* Left column */}
@@ -248,20 +260,20 @@ export default function FullWidth() {
 
             <div className="flex items-end gap-5">
               <h2
+                id="sabal-house-rooms-heading"
                 className="
-                  max-w-120
+                  max-w-[11ch]
                   font-benton-regular
-                  text-[2.25rem]
+                  text-[clamp(2.25rem,10vw,3rem)]
                   leading-[0.95]
 
-                  md:text-[3.25rem]
-                  lg:text-[4rem]
+                  md:max-w-[10ch]
+                  md:text-[clamp(3rem,5vw,4rem)]
                 "
               >
                 Sabal House Rooms
               </h2>
 
-              {/* Decorative arrow */}
               <span
                 aria-hidden="true"
                 className="
@@ -271,7 +283,6 @@ export default function FullWidth() {
                   items-center justify-center
                   rounded-full
                   border border-secondary/70
-
                   md:flex
                 "
               >
@@ -294,13 +305,12 @@ export default function FullWidth() {
           </div>
 
           {/* Right column */}
-          <div className="flex flex-col items-start justify-end gap-6">
+          <div className="flex flex-col items-start justify-end gap-5 md:gap-6">
             <p
               className="
                 max-w-xl
                 text-sm
                 leading-relaxed
-
                 md:text-base
               "
             >
@@ -310,22 +320,26 @@ export default function FullWidth() {
             </p>
 
             <Link
-              href="#"
+              href="/stay/accommodations"
               className="
                 inline-flex
                 min-h-11
-                items-center justify-center
+                items-center
+                justify-center
 
                 bg-black
                 px-5 py-3
 
-                text-xs font-bold
-                uppercase tracking-wide
+                text-xs
+                font-bold
+                uppercase
+                tracking-wide
                 text-secondary
 
-                transition-opacity
-                hover:opacity-80
+                motion-safe:transition-opacity
+                motion-safe:hover:opacity-80
 
+                focus-visible:outline
                 focus-visible:outline-2
                 focus-visible:outline-offset-4
                 focus-visible:outline-white
