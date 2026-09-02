@@ -12,18 +12,18 @@ const storyCards = [
   {
     id: "crafting-sabal-house",
 
-    eyebrow: "Lorem & Ipsum",
+    eyebrow: "DETAILED HOSPITALITY",
 
     title: "Crafting Sabal House",
 
-    kicker: "Shaped by many hands.",
+    kicker: "SHAPED BY MANY HANDS.",
 
     description:
-      "This text will be a short blurb about who we are. Explore the craftsmanship, collaboration, and attention to detail behind Sabal House.",
+      "Deeply inspired and shaped by the undeniable spirit of our native coast, Sabal House has taken form slowly and with intention. Through a shared point of view and the hands of those bringing it to life, every decision tells part of the story of a place that belongs to Savannah while finding an expression entirely its own. ",
 
     cta: {
       label: "Our Story",
-      href: "#",
+      href: "/our-story/making-of-sabal-house",
     },
 
     images: [
@@ -49,26 +49,30 @@ const storyCards = [
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-[#F7F6F2]">
       <HeroVideo videoSrc={VIDEO_SRC} />
-      <IntroSection label="Begin" heading="At Sabal House">
-        <p>
-          This text will be a short blurb about why they should start at Sabal
-          House. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </p>
+      <IntroSection
+        className="bg-[#F7F6F2]"
+        label="Begin"
+        heading="At Sabal House"
+        leftText="Beyond the famous squares lies a quieter, deeper Savannah. One measured by the shift of the tides, the perfume of night-blooming vines, and secrets kept by ancient moss."
+      >
+        Sabal House anchors itself in this interplay of urban heritage and
+        natural landscape. Situated directly across from Oglethorpe Square, our
+        space is an homage to the native Sabal leaf and the enduring,
+        atmospheric beauty of the Georgia coast.
       </IntroSection>
       <FullWidth />
       <TextBreak>
-        Design isnt just what something looks like.{" "}
-        <em>Its how it makes someone feel.</em>
+        We transform hospitality into an intimate immersion, blending polished
+        coastal sophistication with the honest pulse of Savannah.
       </TextBreak>
       <ScrollStoryCards cards={storyCards} />
       <OpenLetterForm
         backgroundImage="https://sabal-house.b-cdn.net/making%20of%20sabal%20house/SabalHouse-86.jpg"
         stampImage="/images/decorative/SH Wax Seal.png"
         eyebrow="LETTERS FROM SABAL HOUSE"
-        description="Stay informed as we continue to build Sabal House. Sign up to receive occasional updates from us."
+        description="Stay informed as Sabal House takes shape, with occasional notes from Savannah, and a first look at what’s to come."
         buttonLabel="STAY CLOSE"
         signature="Until Then."
       />

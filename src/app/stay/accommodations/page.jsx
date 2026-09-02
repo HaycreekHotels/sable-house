@@ -110,7 +110,7 @@ export default function AccommodationsPage() {
   }
 
   return (
-    <main ref={pageRef} className="min-h-screen bg-[#fdfdfc] text-black">
+    <main ref={pageRef} className="min-h-screen bg-[#f7f6f2] text-black">
       <section
         ref={heroRef}
         aria-labelledby="accommodations-heading"
@@ -451,7 +451,7 @@ function RoomCard({ room }) {
           >
             <h3
               className="
-                text-[10px]
+                text-[13px]
                 font-medium
                 uppercase
                 leading-5
@@ -467,7 +467,7 @@ function RoomCard({ room }) {
                 flex-wrap
                 gap-x-2
 
-                text-[10px]
+                text-[13px]
                 font-medium
                 uppercase
                 leading-5
@@ -487,7 +487,7 @@ function RoomCard({ room }) {
             className="
               mt-3
               max-w-xl
-              text-[12px]
+              text-[15px]
               leading-[1.65]
 
               sm:text-[13px]
@@ -503,7 +503,7 @@ function RoomCard({ room }) {
               inline-block
               pb-1
 
-              text-[10px]
+              text-[13px]
               font-medium
               uppercase
               tracking-[0.025em]

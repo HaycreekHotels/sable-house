@@ -107,7 +107,7 @@ export default function AccessibilityClient() {
               <p className="mb-3 text-[11px] uppercase tracking-[0.3em] text-white/80 md:text-xs">
                 The Sabal House
               </p>
-              <h1 className="text-4xl font-medium leading-tight text-white md:text-6xl">
+              <h1 className="text-4xl font-benton-regular leading-tight text-white md:text-6xl">
                 Accessibility,
                 <span className="block text-white/85">
                   for Savannah, Georgia.
@@ -129,7 +129,7 @@ export default function AccessibilityClient() {
             <p className="text-[11px] uppercase tracking-[0.28em] text-[#6c6a63] md:text-xs">
               Our commitment
             </p>
-            <h2 className="mt-3 max-w-2xl text-3xl font-medium leading-tight md:text-5xl">
+            <h2 className="mt-3 max-w-2xl text-3xl font-benton-regular leading-tight md:text-5xl">
               A more inclusive stay begins with a more accessible website.
             </h2>
           </div>
@@ -163,7 +163,7 @@ export default function AccessibilityClient() {
             <p className="text-[11px] uppercase tracking-[0.28em] text-[#6c6a63] md:text-xs">
               Ongoing improvements
             </p>
-            <h2 className="mt-3 text-3xl font-medium md:text-4xl">
+            <h2 className="mt-3 text-3xl font-benton-regular md:text-4xl">
               Focus areas across the website
             </h2>
             <p className="mt-4 text-sm leading-7 text-[#4f4d46] md:text-base">
@@ -180,7 +180,7 @@ export default function AccessibilityClient() {
                 data-card
                 className="rounded-3xl border border-black/8 bg-[#faf8f4] p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)]"
               >
-                <h3 className="text-lg font-medium text-[#1e1e1a]">
+                <h3 className="text-lg font-benton-regular text-[#1e1e1a]">
                   {item.title}
                 </h3>
                 <p className="mt-3 text-sm leading-7 text-[#4f4d46]">
@@ -201,7 +201,7 @@ export default function AccessibilityClient() {
             <p className="text-[11px] uppercase tracking-[0.28em] text-[#6c6a63] md:text-xs">
               Standards
             </p>
-            <h2 className="mt-3 text-2xl font-medium md:text-3xl">
+            <h2 className="mt-3 text-2xl font-benton-regular md:text-3xl">
               Partial Conformance
             </h2>
             <p className="mt-4 text-sm leading-7 text-[#4f4d46] md:text-base">
@@ -219,7 +219,7 @@ export default function AccessibilityClient() {
             <p className="text-[11px] uppercase tracking-[0.28em] text-white/60 md:text-xs">
               Partnership
             </p>
-            <h2 className="mt-3 text-2xl font-medium md:text-3xl">
+            <h2 className="mt-3 text-2xl font-benton-regular md:text-3xl">
               Web Accessibility Partner
             </h2>
             <p className="mt-4 text-sm leading-7 text-white/75 md:text-base">
@@ -238,7 +238,7 @@ export default function AccessibilityClient() {
               <p className="text-[11px] uppercase tracking-[0.28em] text-[#6c6a63] md:text-xs">
                 Looking ahead
               </p>
-              <h2 className="mt-3 text-3xl font-medium leading-tight md:text-5xl">
+              <h2 className="mt-3 text-3xl font-benton-regular leading-tight md:text-5xl">
                 Accessibility is an ongoing part of how we improve.
               </h2>
               <p className="mt-5 max-w-2xl text-sm leading-7 text-[#4f4d46] md:text-base">
@@ -252,7 +252,7 @@ export default function AccessibilityClient() {
               data-reveal
               className="rounded-[2rem] border border-black/8 bg-white p-8 shadow-[0_8px_30px_rgba(0,0,0,0.04)] md:p-10"
             >
-              <h2 className="text-2xl font-medium md:text-3xl">
+              <h2 className="text-2xl font-benton-regular md:text-3xl">
                 Need assistance?
               </h2>
               <p className="mt-4 text-sm leading-7 text-[#4f4d46] md:text-base">
@@ -265,7 +265,7 @@ export default function AccessibilityClient() {
                   Contact
                 </p>
                 <address className="mt-4 space-y-3 text-base text-[#1e1e1a] not-italic">
-                  <p className="font-medium">Michael Mount</p>
+                  <p className="font-central-regular">Michael Mount</p>
                   <p>
                     <a
                       href="tel:1234567890"

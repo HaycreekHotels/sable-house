@@ -21,8 +21,7 @@ export default function ScrollStoryCards({
 
   /*
    * Only cards with the four images required by this component participate
-   * in the animated story. Keeping one filtered source of truth prevents
-   * image/text state counts from falling out of sync.
+   * in the animated story.
    */
   const usableCards = useMemo(() => {
     return cards.filter(
@@ -90,10 +89,7 @@ export default function ScrollStoryCards({
       const safeScrollPerStep = Math.max(0.4, Number(scrollPerStep) || 0.8);
 
       /*
-       * GSAP exclusively owns image transforms.
-       *
-       * State 0 begins on screen. Every later state begins exactly one
-       * frame below it and rises over the previous state as the user scrolls.
+       * Initial image positions.
        */
       firstImages.forEach((image, index) => {
         gsap.set(image, {
@@ -112,7 +108,7 @@ export default function ScrollStoryCards({
       });
 
       /*
-       * All copy panels occupy the same physical location.
+       * Initial text positions.
        */
       gsap.set(textPanels, {
         autoAlpha: 0,
@@ -126,9 +122,7 @@ export default function ScrollStoryCards({
       });
 
       /*
-       * Keep only the currently relevant visual state exposed to assistive
-       * technology. This avoids a screen reader encountering every stacked
-       * image and every hidden CTA at once.
+       * Keep only the relevant story exposed to assistive technology.
        */
       const setAccessibleState = (stateIndex) => {
         const activeCardIndex = imageStates[stateIndex].cardIndex;
@@ -157,16 +151,15 @@ export default function ScrollStoryCards({
 
       setAccessibleState(0);
 
+      /*
+       * Main pinned story timeline.
+       */
       const timeline = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           start: "top top",
           end: () =>
-            `+=${
-              window.innerHeight *
-              safeScrollPerStep *
-              numberOfTransitions
-            }`,
+            `+=${window.innerHeight * safeScrollPerStep * numberOfTransitions}`,
           pin: section,
           pinSpacing: true,
           scrub: 0.5,
@@ -177,7 +170,10 @@ export default function ScrollStoryCards({
             numberOfTransitions > 0
               ? {
                   snapTo: 1 / numberOfTransitions,
-                  duration: { min: 0.12, max: 0.3 },
+                  duration: {
+                    min: 0.12,
+                    max: 0.3,
+                  },
                   delay: 0.04,
                   ease: "power1.inOut",
                 }
@@ -186,10 +182,7 @@ export default function ScrollStoryCards({
           onUpdate: (self) => {
             const stateIndex = Math.min(
               imageStates.length - 1,
-              Math.max(
-                0,
-                Math.round(self.progress * numberOfTransitions),
-              ),
+              Math.max(0, Math.round(self.progress * numberOfTransitions)),
             );
 
             setAccessibleState(stateIndex);
@@ -206,8 +199,7 @@ export default function ScrollStoryCards({
         const stepStart = index;
 
         /*
-         * Only the incoming image pair moves. The previous pair remains
-         * beneath it so reversing the scroll naturally reveals it again.
+         * Incoming image pair scrolls upward over the current pair.
          */
         timeline.to(
           [firstImages[nextIndex], secondImages[nextIndex]],
@@ -220,7 +212,7 @@ export default function ScrollStoryCards({
         );
 
         /*
-         * Copy changes only when the next image state belongs to a new card.
+         * Change text only when moving into a new story card.
          */
         if (currentState.cardIndex !== nextState.cardIndex) {
           timeline.to(
@@ -296,6 +288,7 @@ export default function ScrollStoryCards({
             h-full
             w-full
             max-w-[1600px]
+
             grid-rows-[44svh_minmax(0,1fr)]
             gap-5
             px-4
@@ -311,11 +304,11 @@ export default function ScrollStoryCards({
             lg:grid-cols-[minmax(0,1.6fr)_minmax(300px,0.84fr)]
             lg:grid-rows-1
             lg:gap-10
-            lg:px-3
+            lg:px-5
             lg:py-0
 
             xl:gap-14
-            xl:px-5
+            xl:px-6
           "
         >
           {/* IMAGE COMPOSITION */}
@@ -329,8 +322,9 @@ export default function ScrollStoryCards({
 
               sm:gap-4
 
-              lg:self-center
-              lg:gap-5
+              lg:self-end
+              lg:gap-4
+              lg:pb-[4.5svh]
             "
           >
             {/* Tall image */}
@@ -342,8 +336,8 @@ export default function ScrollStoryCards({
                 overflow-hidden
                 bg-neutral-200
 
-                lg:h-[88svh]
-                lg:max-h-[840px]
+                lg:h-[86.5svh]
+                lg:max-h-[850px]
               "
             >
               {imageStates.map((state, stateIndex) => {
@@ -385,7 +379,7 @@ export default function ScrollStoryCards({
                 overflow-hidden
                 bg-neutral-200
 
-                lg:h-[42svh]
+                lg:h-[41.5svh]
                 lg:max-h-[420px]
               "
             >
@@ -428,7 +422,7 @@ export default function ScrollStoryCards({
               overflow-hidden
 
               lg:h-full
-              lg:self-end
+              lg:pl-12
             "
           >
             {usableCards.map((card, cardIndex) => (
@@ -442,6 +436,7 @@ export default function ScrollStoryCards({
                 className="
                   absolute
                   inset-0
+
                   flex
                   max-w-[390px]
                   flex-col
@@ -452,54 +447,61 @@ export default function ScrollStoryCards({
                   will-change-[transform,opacity]
 
                   lg:inset-x-0
-                  lg:inset-y-10
+                  lg:top-[28.5svh]
+                  lg:bottom-[4.5svh]
+                  lg:justify-between
                   lg:pb-0
                 "
               >
-                {card.eyebrow && (
-                  <p
+                {/* Heading group */}
+                <div>
+                  {card.eyebrow && (
+                    <p
+                      className="
+                        mb-2
+                        text-[10px]
+                        font-medium
+                        uppercase
+                        leading-none
+                        tracking-[0.04em]
+                        text-neutral-900
+
+                        sm:text-[11px]
+
+                        lg:mb-4
+                        lg:text-[15px]
+                      "
+                    >
+                      {card.eyebrow}
+                    </p>
+                  )}
+
+                  <h2
                     className="
-                      mb-2
-                      text-[10px]
-                      font-medium
-                      uppercase
-                      leading-none
-                      tracking-[0.04em]
-                      text-neutral-900
+                      font-benton-regular
+                      text-[clamp(2rem,8.5vw,3rem)]
+                      font-normal
+                      leading-[0.95]
+                      tracking-[-0.035em]
+                      text-neutral-950
 
-                      sm:text-[11px]
+                      sm:text-[clamp(2.25rem,6vw,3.25rem)]
 
-                      lg:mb-3
-                      lg:text-[13px]
+                      lg:text-[clamp(3rem,4.25vw,4rem)]
+                      lg:leading-[0.95]
                     "
                   >
-                    {card.eyebrow}
-                  </p>
-                )}
+                    {card.title}
+                  </h2>
+                </div>
 
-                <h2
-                  className="
-                    font-benton-regular
-                    text-[clamp(2rem,8.5vw,3rem)]
-                    font-normal
-                    leading-[0.95]
-                    tracking-[-0.035em]
-                    text-neutral-950
-
-                    sm:text-[clamp(2.25rem,6vw,3.25rem)]
-
-                    lg:text-[clamp(2.2rem,3.6vw,3.5rem)]
-                    lg:leading-[1]
-                  "
-                >
-                  {card.title}
-                </h2>
-
+                {/* Middle kicker */}
                 {card.kicker && (
                   <p
                     className="
                       mt-3
-                      max-w-[320px]
+                      max-w-[340px]
+
                       text-[10px]
                       font-medium
                       uppercase
@@ -510,66 +512,69 @@ export default function ScrollStoryCards({
                       sm:mt-4
                       sm:text-[11px]
 
-                      lg:mt-7
-                      lg:text-[13px]
+                      lg:mt-0
+                      lg:text-[15px]
                     "
                   >
                     {card.kicker}
                   </p>
                 )}
 
-                <p
-                  className="
-                    mt-3
-                    max-w-[380px]
-                    text-[12px]
-                    leading-[1.5]
-                    text-neutral-800
+                {/* Bottom copy */}
+                <div className="mt-3 sm:mt-4 lg:mt-0">
+                  <p
+                    className="
+                      max-w-[380px]
 
-                    sm:mt-4
-                    sm:text-[13px]
+                      text-[12px]
+                      leading-[1.5]
+                      text-neutral-800
 
-                    lg:mt-7
-                    lg:text-[15px]
-                    lg:leading-[1.6]
-                  "
-                >
-                  {card.description}
-                </p>
+                      sm:text-[13px]
 
-                {card.cta?.href && card.cta?.label && (
-                  <div className="mt-4 lg:mt-6">
-                    <a
-                      href={card.cta.href}
-                      className="
-                        inline-flex
-                        min-h-11
-                        items-center
-                        justify-center
+                      lg:text-[15px]
+                      lg:leading-[1.65]
+                    "
+                  >
+                    {card.description}
+                  </p>
 
-                        bg-black
-                        px-5
-                        py-3
+                  {card.cta?.href && card.cta?.label && (
+                    <div className="mt-4 lg:mt-5">
+                      <a
+                        href={card.cta.href}
+                        className="
+                          inline-flex
+                          min-h-11
+                          items-center
+                          justify-center
 
-                        text-[11px]
-                        font-semibold
-                        uppercase
-                        tracking-[0.04em]
-                        text-white
+                          bg-black
+                          px-5
+                          py-3
 
-                        transition-colors
-                        hover:bg-neutral-800
+                          text-[11px]
+                          font-semibold
+                          uppercase
+                          tracking-[0.04em]
+                          text-white
 
-                        focus-visible:outline
-                        focus-visible:outline-2
-                        focus-visible:outline-offset-4
-                        focus-visible:outline-black
-                      "
-                    >
-                      {card.cta.label}
-                    </a>
-                  </div>
-                )}
+                          transition-colors
+                          hover:bg-neutral-800
+
+                          focus-visible:outline
+                          focus-visible:outline-2
+                          focus-visible:outline-offset-4
+                          focus-visible:outline-black
+
+                          lg:min-w-[200px]
+                        "
+                      >
+                        {card.cta.label}
+                      </a>
+                    </div>
+                  )}
+                </div>
               </article>
             ))}
           </div>
@@ -664,14 +669,17 @@ export default function ScrollStoryCards({
                       w-fit
                       items-center
                       justify-center
+
                       bg-black
                       px-5
                       py-3
+
                       text-[11px]
                       font-semibold
                       uppercase
                       tracking-[0.04em]
                       text-white
+
                       focus-visible:outline
                       focus-visible:outline-2
                       focus-visible:outline-offset-4

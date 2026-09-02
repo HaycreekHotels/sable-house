@@ -3,12 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
 import gsap from "gsap";
@@ -52,14 +47,6 @@ const menuFooterSections = [
     href: "#",
   },
   {
-    label: "FAQ",
-    href: "/faq",
-  },
-  {
-    label: "Contact Us",
-    href: "/contact-us",
-  },
-  {
     label: "Accessibility",
     href: "/accessibility",
   },
@@ -69,7 +56,7 @@ const menuFooterSections = [
   },
 ];
 
-function animateDrawerClose(drawer, backdrop, onComplete) {
+function animateDrawerClose(drawer, backdrop, desktopHeader, onComplete) {
   if (!drawer || !backdrop) {
     onComplete?.();
     return;
@@ -88,6 +75,12 @@ function animateDrawerClose(drawer, backdrop, onComplete) {
       autoAlpha: 0,
     });
 
+    if (desktopHeader) {
+      gsap.set(desktopHeader, {
+        autoAlpha: 0,
+      });
+    }
+
     onComplete?.();
     return;
   }
@@ -95,6 +88,23 @@ function animateDrawerClose(drawer, backdrop, onComplete) {
   const timeline = gsap.timeline({
     onComplete,
   });
+
+  /*
+   * Fade the floating logo / booking button first so it feels
+   * attached to the photograph rather than the green drawer.
+   */
+  if (desktopHeader) {
+    timeline.to(
+      desktopHeader,
+      {
+        autoAlpha: 0,
+        y: -6,
+        duration: 0.25,
+        ease: "power2.in",
+      },
+      0,
+    );
+  }
 
   timeline.to(
     drawer,
@@ -145,6 +155,13 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
   const modalRef = useRef(null);
   const drawerRef = useRef(null);
   const backdropRef = useRef(null);
+
+  /*
+   * This ref controls the floating desktop header sitting over
+   * the photograph.
+   */
+  const desktopHeaderRef = useRef(null);
+
   const closeButtonRef = useRef(null);
   const isClosingRef = useRef(false);
 
@@ -177,10 +194,6 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
   const finishDrawerClose = useCallback(() => {
     onClose();
 
-    /*
-     * Wait until React removes the modal before restoring focus to
-     * the trigger that opened it.
-     */
     window.requestAnimationFrame(() => {
       returnFocusRef?.current?.focus({
         preventScroll: true,
@@ -196,6 +209,7 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
     animateDrawerClose(
       drawerRef.current,
       backdropRef.current,
+      desktopHeaderRef.current,
       finishDrawerClose,
     );
   }, [finishDrawerClose]);
@@ -215,8 +229,7 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
   /*
    * Modal keyboard behavior:
    * - Escape closes the drawer.
-   * - Tab and Shift+Tab remain inside the whole menu experience,
-   *   including the desktop logo and booking CTA.
+   * - Tab and Shift+Tab remain inside the entire menu.
    */
   useEffect(() => {
     function handleKeyDown(event) {
@@ -240,15 +253,11 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
       }
 
       const firstElement = focusableElements[0];
-      const lastElement =
-        focusableElements[focusableElements.length - 1];
+      const lastElement = focusableElements[focusableElements.length - 1];
       const activeElement = document.activeElement;
 
       if (event.shiftKey) {
-        if (
-          activeElement === firstElement ||
-          !modal.contains(activeElement)
-        ) {
+        if (activeElement === firstElement || !modal.contains(activeElement)) {
           event.preventDefault();
           lastElement.focus();
         }
@@ -256,10 +265,7 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
         return;
       }
 
-      if (
-        activeElement === lastElement ||
-        !modal.contains(activeElement)
-      ) {
+      if (activeElement === lastElement || !modal.contains(activeElement)) {
         event.preventDefault();
         firstElement.focus();
       }
@@ -279,6 +285,7 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
     () => {
       const drawer = drawerRef.current;
       const backdrop = backdropRef.current;
+      const desktopHeader = desktopHeaderRef.current;
 
       if (!drawer || !backdrop) return;
 
@@ -287,6 +294,9 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         const timeline = gsap.timeline();
 
+        /*
+         * Photograph / backdrop.
+         */
         timeline.fromTo(
           backdrop,
           {
@@ -300,6 +310,9 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
           0,
         );
 
+        /*
+         * Green drawer.
+         */
         timeline.fromTo(
           drawer,
           {
@@ -313,8 +326,34 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
           0,
         );
 
+        /*
+         * Logo + booking CTA.
+         *
+         * These arrive shortly after the photograph begins
+         * appearing so they feel like part of the same reveal.
+         */
+        if (desktopHeader) {
+          timeline.fromTo(
+            desktopHeader,
+            {
+              autoAlpha: 0,
+              y: -8,
+            },
+            {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.45,
+              ease: "power2.out",
+            },
+            0.28,
+          );
+        }
+
+        /*
+         * Drawer navigation content.
+         */
         timeline.from(
-          ".menu-reveal",
+          drawer.querySelectorAll(".menu-reveal"),
           {
             autoAlpha: 0,
             y: 12,
@@ -339,7 +378,14 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
           xPercent: 0,
         });
 
-        gsap.set(".menu-reveal", {
+        if (desktopHeader) {
+          gsap.set(desktopHeader, {
+            autoAlpha: 1,
+            y: 0,
+          });
+        }
+
+        gsap.set(drawer.querySelectorAll(".menu-reveal"), {
           clearProps: "opacity,visibility,transform",
         });
       });
@@ -349,7 +395,7 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
       };
     },
     {
-      scope: drawerRef,
+      scope: modalRef,
     },
   );
 
@@ -415,7 +461,7 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
         </div>
       </div>
 
-      {/* Clicking the photograph closes the menu. */}
+      {/* Clicking photograph closes menu */}
       <button
         type="button"
         tabIndex={-1}
@@ -439,32 +485,46 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
         "
       />
 
-      {/* Transparent desktop header over the photograph */}
+      {/*
+       * DESKTOP FLOATING HEADER
+       *
+       * This now mirrors NavBar:
+       *
+       * - 72px height
+       * - viewport-wide positioning
+       * - logo centered on viewport
+       * - same logo width
+       * - same horizontal padding
+       * - same Book Your Stay sizing
+       *
+       * It intentionally starts at lg so the viewport center
+       * cannot overlap the 420px drawer on tablet widths.
+       */}
       <div
+        ref={desktopHeaderRef}
         className="
           pointer-events-none
+
           absolute
-          right-0
+          inset-x-0
           top-0
           z-20
 
           hidden
-          h-24
+          h-[72px]
 
-          items-start
+          items-center
           justify-end
 
-          px-7
-          py-6
+          px-4
 
-          sm:flex
-          sm:left-[420px]
-
-          lg:left-[min(42vw,420px)]
-          lg:px-8
-          lg:py-7
+          sm:px-6
+          md:px-8
+          lg:flex
+          lg:px-12
         "
       >
+        {/* Logo — same position and size as NavBar */}
         <Link
           href="/"
           aria-label="Sabal House home"
@@ -473,7 +533,6 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
 
             absolute
             left-1/2
-            top-5
             -translate-x-1/2
 
             transition-opacity
@@ -485,19 +544,25 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
             focus-visible:outline-2
             focus-visible:outline-offset-4
             focus-visible:outline-white
-
-            lg:top-7
           "
         >
           <Image
             src={Logo}
-            alt=""
             width={100}
             height={50}
             priority
+            alt=""
+            className="
+              h-auto
+              w-[82px]
+
+              sm:w-[94px]
+              md:w-[100px]
+            "
           />
         </Link>
 
+        {/* Booking CTA — same sizing as NavBar */}
         <Link
           href="/stay/accommodations"
           className="
@@ -505,18 +570,19 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
 
             inline-flex
             min-h-11
+            shrink-0
             items-center
             justify-center
 
             bg-black
-            px-4
+            px-3
             py-2.5
 
-            text-[11px]
-            font-semibold
+            text-[10px]
+            font-bold
             uppercase
-            tracking-[0.02em]
-            text-white
+            tracking-[0.04em]
+            text-secondary
 
             transition-colors
             duration-300
@@ -527,6 +593,11 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
             focus-visible:outline-2
             focus-visible:outline-offset-2
             focus-visible:outline-white
+
+            sm:px-4
+            sm:text-xs
+
+            md:text-sm
           "
         >
           Book Your Stay
@@ -563,7 +634,7 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
           lg:max-w-[420px]
         "
       >
-        {/* Close remains fixed while the inner navigation can scroll. */}
+        {/* Close button */}
         <button
           ref={closeButtonRef}
           type="button"
@@ -607,9 +678,7 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
             className="h-6 w-6 shrink-0"
           />
 
-          <span className="text-xs font-bold uppercase">
-            Close
-          </span>
+          <span className="text-xs font-bold uppercase">Close</span>
         </button>
 
         <nav
@@ -656,18 +725,13 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
                   .replaceAll(" ", "-")}`;
 
                 return (
-                  <section
-                    key={section.title}
-                    className="menu-reveal"
-                  >
+                  <section key={section.title} className="menu-reveal">
                     <h3>
                       <button
                         type="button"
                         aria-expanded={isOpen}
                         aria-controls={panelId}
-                        onClick={() =>
-                          toggleSection(section.title)
-                        }
+                        onClick={() => toggleSection(section.title)}
                         className="
                           flex
                           min-h-11
@@ -693,7 +757,7 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
                           focus-visible:ring-offset-4
                           focus-visible:ring-offset-main
 
-                          lg:text-[2.15rem]
+                          lg:text-[2.5rem]
                         "
                       >
                         <span>{section.title}</span>
@@ -712,11 +776,7 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
                             transition-transform
                             duration-300
 
-                            ${
-                              isOpen
-                                ? "rotate-180"
-                                : "rotate-0"
-                            }
+                            ${isOpen ? "rotate-180" : "rotate-0"}
                           `}
                         />
                       </button>
@@ -752,24 +812,19 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
                           "
                         >
                           {section.links.map((link) => {
-                            const isCurrent =
-                              pathname === link.href;
+                            const isCurrent = pathname === link.href;
 
                             return (
                               <Link
                                 key={link.label}
                                 href={link.href}
-                                aria-current={
-                                  isCurrent
-                                    ? "page"
-                                    : undefined
-                                }
+                                aria-current={isCurrent ? "page" : undefined}
                                 className="
                                   w-fit
 
                                   py-1
 
-                                  text-[13px]
+                                  text-[18px]
                                   font-medium
 
                                   transition-opacity
@@ -812,35 +867,22 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
                 pt-12
               "
             >
-              <span
-                aria-hidden="true"
-                className="h-px w-28 bg-white/20"
-              />
+              <span aria-hidden="true" className="h-px w-28 bg-white/20" />
 
               <div className="flex flex-col gap-2">
                 {menuFooterSections.map((link) => {
-                  const isExternal =
-                    link.href.startsWith("http");
+                  const isExternal = link.href.startsWith("http");
+
                   const isCurrent =
-                    !isExternal &&
-                    link.href !== "#" &&
-                    pathname === link.href;
+                    !isExternal && link.href !== "#" && pathname === link.href;
 
                   return (
                     <Link
                       key={link.label}
                       href={link.href}
-                      target={
-                        isExternal ? "_blank" : undefined
-                      }
-                      rel={
-                        isExternal
-                          ? "noopener noreferrer"
-                          : undefined
-                      }
-                      aria-current={
-                        isCurrent ? "page" : undefined
-                      }
+                      target={isExternal ? "_blank" : undefined}
+                      rel={isExternal ? "noopener noreferrer" : undefined}
+                      aria-current={isCurrent ? "page" : undefined}
                       aria-label={
                         isExternal
                           ? `${link.label} (opens in a new tab)`
@@ -890,12 +932,7 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
             opacity-60
           "
         >
-          <Image
-            src={Leaf}
-            alt=""
-            width={440}
-            height={440}
-          />
+          <Image src={Leaf} alt="" width={440} height={440} />
         </div>
       </div>
     </div>

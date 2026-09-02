@@ -27,20 +27,13 @@ export const rooms = [
       "Salt & Stone Bathroom Amenities",
       "Robes",
     ],
-
-    images: [
-      "https://placehold.co/700x850/C8B9A8/222222?text=Wall",
-      "https://placehold.co/700x500/E8E4DC/222222?text=Cabinet",
-      "https://placehold.co/700x700/27405A/FFFFFF?text=Rug",
-      "https://placehold.co/700x500/F4F0E9/222222?text=Bench",
-    ],
   },
 
   {
     id: 2,
     slug: "classic-double-queen",
-    house: "heritage",
-    houseLabel: "Heritage House",
+    house: "sabal",
+    houseLabel: "Sabal House",
     title: ["Classic", "Double Queen"],
     name: "Classic Double Queen",
 
@@ -51,7 +44,7 @@ export const rooms = [
       "Two queen beds with a contemporary layout, well suited for friends or families.",
 
     description:
-      "Designed for guests traveling together, the Classic Double Queen offers two queen beds within a comfortable and thoughtfully composed room. Contemporary details meet the character of Sabal House for an easy place to begin and end days spent exploring Savannah.",
+      "Designed with room to travel together, the Classic Double Queen features two queen beds within the contemporary Sabal House building. A natural choice for friends and families, it offers a comfortable, considered home base for days spent discovering Savannah.",
 
     amenities: [
       "Nespresso Coffee Machine",
@@ -63,13 +56,6 @@ export const rooms = [
       '55" Smart TV',
       "Salt & Stone Bathroom Amenities",
       "Robes",
-    ],
-
-    images: [
-      "https://placehold.co/700x850/533C34/FFFFFF?text=Artwork",
-      "https://placehold.co/700x500/E7E2DA/222222?text=Bed",
-      "https://placehold.co/700x700/C7B49A/222222?text=Chair",
-      "https://placehold.co/700x500/9D896E/FFFFFF?text=Table",
     ],
   },
 
@@ -85,10 +71,10 @@ export const rooms = [
     size: "326 Sq. Ft.",
 
     shortDescription:
-      "A spacious accessible king room with thoughtful details and additional room to move.",
+      "A contemporary accessible king room with a roll-in shower and additional space.",
 
     description:
-      "The Classic King Accessible room brings the character and comfort of the Classic King into a more spacious and accessible layout. Thoughtfully planned details allow for easier movement while maintaining the same relaxed residential feeling found throughout Sabal House.",
+      "Thoughtfully designed for a more accessible stay, the Classic King Accessible pairs a king bed and contemporary guestroom design with additional space and a roll-in shower. Refined finishes and modern comforts create a room that feels considered without losing the character of the Sabal House experience.",
 
     amenities: [
       "Accessible Bathroom",
@@ -101,20 +87,13 @@ export const rooms = [
       '55" Smart TV',
       "Robes",
     ],
-
-    images: [
-      "https://placehold.co/700x850/827465/FFFFFF?text=Room",
-      "https://placehold.co/700x500/DAD2C7/222222?text=Desk",
-      "https://placehold.co/700x700/B5A18C/222222?text=Chair",
-      "https://placehold.co/700x500/EDE5D9/222222?text=Bed",
-    ],
   },
 
   {
     id: 4,
     slug: "deluxe-park-view-king",
-    house: "heritage",
-    houseLabel: "Heritage House",
+    house: "sabal",
+    houseLabel: "Sabal House",
     title: ["Deluxe Park", "View King"],
     name: "Deluxe Park View King",
 
@@ -122,10 +101,10 @@ export const rooms = [
     size: "295 Sq. Ft.",
 
     shortDescription:
-      "A contemporary king room overlooking Savannah's nearby historic green space.",
+      "A contemporary king room overlooking Savannah’s nearby historic green space.",
 
     description:
-      "The Deluxe Park View King pairs a peaceful king room with views toward Savannah's nearby green spaces. Layered materials, comfortable furnishings, and an understated palette create a quiet retreat just beyond the activity of the city.",
+      "A room with Savannah just outside the window. The Deluxe Park View King pairs contemporary Sabal House design with one of the property’s most scenic outlooks, overlooking nearby historic green space. With a king bed and a quieter connection to the landscape of the Historic District, it is a stay shaped as much by what surrounds you as what is within.",
 
     amenities: [
       "Park View",
@@ -138,31 +117,24 @@ export const rooms = [
       '55" Smart TV',
       "Robes",
     ],
-
-    images: [
-      "https://placehold.co/700x850/68705A/FFFFFF?text=Artwork",
-      "https://placehold.co/700x500/D6CBB9/222222?text=Bed",
-      "https://placehold.co/700x700/C8A685/222222?text=Lamp",
-      "https://placehold.co/700x500/EEE7DD/222222?text=Window",
-    ],
   },
 
   {
     id: 5,
-    slug: "premium-king",
-    house: "sabal",
-    houseLabel: "Sabal House",
-    title: ["Premium", "King"],
-    name: "Premium King",
+    slug: "traditional-king",
+    house: "heritage",
+    houseLabel: "The Heritage Rooms",
+    title: ["Traditional", "King"],
+    name: "Traditional King",
 
     bed: "1 King Bed",
-    size: "310 Sq. Ft.",
+    size: "237 Sq. Ft.",
 
     shortDescription:
-      "An elevated king room with additional space and considered design details.",
+      "A classic king room with hardwood floors, historic details, and the character of the former Presidents’ Quarters.",
 
     description:
-      "The Premium King adds a little more room to settle in while preserving the calm, residential character of Sabal House. A king bed, comfortable furnishings, and carefully selected materials create a relaxed base for a stay in Savannah.",
+      "Set within the former Presidents’ Quarters, the Traditional King brings a king bed to one of the Heritage Rooms’ more intimate layouts. Hardwood floors, original details, and the individuality of the historic building give each room a character that feels distinctly its own.",
 
     amenities: [
       "Nespresso Coffee Machine",
@@ -175,31 +147,115 @@ export const rooms = [
       "Salt & Stone Bathroom Amenities",
       "Robes",
     ],
-
-    images: [
-      "https://placehold.co/700x850/B39E87/222222?text=Artwork",
-      "https://placehold.co/700x500/E8DDD0/222222?text=Bed",
-      "https://placehold.co/700x700/C7B69D/222222?text=Chair",
-      "https://placehold.co/700x500/EEE9E1/222222?text=Table",
-    ],
   },
 
   {
     id: 6,
-    slug: "heritage-suite",
+    slug: "traditional-queen",
     house: "heritage",
-    houseLabel: "Heritage House",
-    title: ["Heritage", "Suite"],
-    name: "Heritage Suite",
+    houseLabel: "The Heritage Rooms",
+    title: ["Traditional", "Queen"],
+    name: "Traditional Queen",
 
-    bed: "1 King Bed",
-    size: "415 Sq. Ft.",
+    bed: "1 Queen Bed",
+    size: "237 Sq. Ft.",
 
     shortDescription:
-      "A larger stay with additional living space and a relaxed residential character.",
+      "An intimate room with hardwood floors, historic details, and the individual character of the original building.",
 
     description:
-      "With additional space for relaxing, the Heritage Suite offers a more residential interpretation of a stay at Sabal House. A separate seating area, king bed, and expressive details make the room especially suited to longer stays and slower mornings.",
+      "Intimate in scale and rich in character, the Traditional Queen is set within the former Presidents’ Quarters. Hardwood floors, original details, and an individual layout preserve the feeling of the historic building, offering a more traditional way to experience a stay in Savannah.",
+
+    amenities: [
+      "Nespresso Coffee Machine",
+      "Mini-Fridge",
+      "In-room Safe",
+      "Hairdryer",
+      "Steamer",
+      "Bluetooth Alarm Clock",
+      '55" Smart TV',
+      "Salt & Stone Bathroom Amenities",
+      "Robes",
+    ],
+  },
+
+  {
+    id: 7,
+    slug: "heritage-king",
+    house: "heritage",
+    houseLabel: "The Heritage Rooms",
+    title: ["Heritage", "King"],
+    name: "Heritage King",
+
+    bed: "1 King Bed",
+    size: "309 Sq. Ft.",
+
+    shortDescription:
+      "A more spacious historic king room, with original details and layouts that vary from room to room.",
+
+    description:
+      "With more room to unfold, the Heritage King pairs a king bed with the hardwood floors, historic details, and individual character of the former Presidents’ Quarters. Layouts vary throughout the collection, allowing the architecture of the original building to remain part of the experience rather than be designed away.",
+
+    amenities: [
+      "Nespresso Coffee Machine",
+      "Mini-Fridge",
+      "In-room Safe",
+      "Hairdryer",
+      "Steamer",
+      "Bluetooth Alarm Clock",
+      '55" Smart TV',
+      "Salt & Stone Bathroom Amenities",
+      "Robes",
+    ],
+  },
+
+  {
+    id: 8,
+    slug: "heritage-double-queen",
+    house: "heritage",
+    houseLabel: "The Heritage Rooms",
+    title: ["Heritage", "Double Queen"],
+    name: "Heritage Double Queen",
+
+    bed: "2 Queen Beds",
+    size: "384 Sq. Ft.",
+
+    shortDescription:
+      "A spacious two-queen room with hardwood floors, historic details, and room for traveling together.",
+
+    description:
+      "Made for sharing Savannah without giving up the character of a historic stay, the Heritage Double Queen offers two queen beds and a more generous layout within the former Presidents’ Quarters. Hardwood floors and original details remain part of the experience, with individual features and layouts that may vary from room to room.",
+
+    amenities: [
+      "Nespresso Coffee Machine",
+      "Mini-Fridge",
+      "In-room Safe",
+      "Hairdryer",
+      "Steamer",
+      "Bluetooth Alarm Clock",
+      '55" Smart TV',
+      "Salt & Stone Bathroom Amenities",
+      "Robes",
+    ],
+  },
+
+  {
+    id: 9,
+    slug: "heritage-loft-suite",
+    house: "heritage",
+    houseLabel: "The Heritage Rooms",
+    title: ["Heritage", "Loft Suite"],
+    name: "Heritage Loft Suite",
+
+    bed: "1 King Bed",
+    size: "465 Sq. Ft.",
+    layout: "Two Levels",
+
+    shortDescription:
+      "A distinctive two-level suite with a living area below and king bedroom in the upstairs loft.",
+
+    description:
+      "A stay with a story of its own. The Heritage Loft Suite unfolds across two levels, with an intimate living area on the entry level and a king bedroom tucked into the loft above. Hardwood floors and original details carry the character of the former Presidents’ Quarters throughout, creating one of Sabal House’s most distinctive room experiences.",
 
     amenities: [
       "Separate Sitting Area",
@@ -212,12 +268,35 @@ export const rooms = [
       '55" Smart TV',
       "Robes",
     ],
+  },
 
-    images: [
-      "https://placehold.co/700x850/635848/FFFFFF?text=Artwork",
-      "https://placehold.co/700x500/D9CDBD/222222?text=Sofa",
-      "https://placehold.co/700x700/BBA58A/222222?text=Chair",
-      "https://placehold.co/700x500/E7DFD4/222222?text=Bed",
+  {
+    id: 10,
+    slug: "heritage-king-accessible",
+    house: "heritage",
+    houseLabel: "The Heritage Rooms",
+    title: ["Heritage King", "Accessible"],
+    name: "Heritage King Accessible",
+
+    bed: "1 King Bed",
+    size: "404 Sq. Ft.",
+
+    shortDescription:
+      "A spacious historic king room with a roll-in shower and accessibility-focused features.",
+
+    description:
+      "Generous in scale while retaining the character of the original building, the Heritage King Accessible pairs a king bed with hardwood floors, historic details, and additional room to move comfortably. A roll-in shower and accessibility-focused features are thoughtfully integrated into a Heritage Room that still feels connected to the architecture and individuality of the former Presidents’ Quarters.",
+
+    amenities: [
+      "Accessible Bathroom",
+      "Roll-in Shower",
+      "Nespresso Coffee Machine",
+      "Mini-Fridge",
+      "In-room Safe",
+      "Hairdryer",
+      "Steamer",
+      '55" Smart TV',
+      "Robes",
     ],
   },
 ];

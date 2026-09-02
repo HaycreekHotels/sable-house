@@ -9,21 +9,23 @@ gsap.registerPlugin(ScrollTrigger);
 export default function IntroSection({
   label = "Begin",
   heading,
+  leftText,
   children,
   className = "",
 }) {
   const sectionRef = useRef(null);
-  const labelRef = useRef(null);
-  const contentRef = useRef(null);
+  const leftContentRef = useRef(null);
+  const rightContentRef = useRef(null);
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
+    const leftContent = leftContentRef.current;
+    const rightContent = rightContentRef.current;
 
-    if (!section) return;
+    if (!section || !leftContent || !rightContent) return;
 
     const ctx = gsap.context(() => {
       ScrollTrigger.matchMedia({
-        // Normal animation
         "(prefers-reduced-motion: no-preference)": () => {
           const timeline = gsap.timeline({
             scrollTrigger: {
@@ -31,7 +33,6 @@ export default function IntroSection({
               start: "top 80%",
               toggleActions: "play none none none",
             },
-
             defaults: {
               duration: 0.8,
               ease: "power2.out",
@@ -39,12 +40,13 @@ export default function IntroSection({
           });
 
           timeline
-            .from(labelRef.current, {
+            .from(leftContent.children, {
               autoAlpha: 0,
               y: 12,
+              stagger: 0.1,
             })
             .from(
-              contentRef.current.children,
+              rightContent.children,
               {
                 autoAlpha: 0,
                 y: 12,
@@ -54,9 +56,8 @@ export default function IntroSection({
             );
         },
 
-        // Accessibility: don't animate for reduced motion users
         "(prefers-reduced-motion: reduce)": () => {
-          gsap.set([labelRef.current, ...contentRef.current.children], {
+          gsap.set([...leftContent.children, ...rightContent.children], {
             clearProps: "all",
           });
         },
@@ -89,13 +90,24 @@ export default function IntroSection({
           md:py-20
 
           lg:min-h-87.5
-          lg:px-20
+          lg:px-72
         "
       >
         {/* Left */}
-        <div className="flex md:justify-center">
+        <div
+          ref={leftContentRef}
+          className="
+            flex
+            max-w-105
+            flex-col
+            items-start
+            gap-5
+
+            md:mx-auto
+            md:w-full
+          "
+        >
           <p
-            ref={labelRef}
             className="
               font-benton-regular
               text-[2rem]
@@ -106,11 +118,26 @@ export default function IntroSection({
           >
             {label}
           </p>
+
+          {leftText && (
+            <p
+              className="
+                max-w-90
+                text-sm
+                leading-[1.65]
+                text-neutral-900
+
+                md:text-[0.95rem]
+              "
+            >
+              {leftText}
+            </p>
+          )}
         </div>
 
         {/* Right */}
         <div
-          ref={contentRef}
+          ref={rightContentRef}
           className="
             flex
             max-w-105
@@ -132,7 +159,7 @@ export default function IntroSection({
             {heading}
           </h2>
 
-          <div
+          <p
             className="
               text-sm
               leading-[1.65]
@@ -142,7 +169,7 @@ export default function IntroSection({
             "
           >
             {children}
-          </div>
+          </p>
         </div>
       </div>
     </section>

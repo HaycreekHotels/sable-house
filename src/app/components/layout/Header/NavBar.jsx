@@ -2,26 +2,32 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import MenuDrawer from "./MenuDrawer";
 
-import Logo from "../../../../../public/images/logos/SH_Primary Logo Offwhite.png";
+import LogoWhite from "../../../../../public/images/logos/SH_Primary Logo Offwhite.png";
+import LogoBlack from "../../../../../public/images/logos/SH_Primary Logo Black.png";
 
 export default function NavBar() {
+  const pathname = usePathname();
+
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   const menuButtonRef = useRef(null);
+
+  const isStayPage = pathname === "/stay" || pathname.startsWith("/stay/");
+
+  const useDarkNav = isStayPage && !isScrolled && !isOpen;
 
   useEffect(() => {
     function handleScroll() {
       const nextScrolledState = window.scrollY > 40;
 
       setIsScrolled((currentState) =>
-        currentState === nextScrolledState
-          ? currentState
-          : nextScrolledState,
+        currentState === nextScrolledState ? currentState : nextScrolledState,
       );
     }
 
@@ -83,7 +89,7 @@ export default function NavBar() {
           aria-controls="site-menu"
           aria-expanded={isOpen}
           onClick={handleOpenMenu}
-          className="
+          className={`
             relative
 
             flex
@@ -99,8 +105,13 @@ export default function NavBar() {
             focus-visible:outline
             focus-visible:outline-2
             focus-visible:outline-offset-2
-            focus-visible:outline-white
-          "
+
+            ${
+              useDarkNav
+                ? "focus-visible:outline-black"
+                : "focus-visible:outline-white"
+            }
+          `}
         >
           <span
             aria-hidden="true"
@@ -112,9 +123,47 @@ export default function NavBar() {
               justify-between
             "
           >
-            <span className="h-px w-full rounded-full bg-white" />
-            <span className="h-px w-full rounded-full bg-white" />
-            <span className="h-px w-full rounded-full bg-white" />
+            <span
+              className={`
+                h-px
+                w-full
+                rounded-full
+
+                transition-colors
+                duration-500
+                ease-out
+
+                ${useDarkNav ? "bg-black" : "bg-white"}
+              `}
+            />
+
+            <span
+              className={`
+                h-px
+                w-full
+                rounded-full
+
+                transition-colors
+                duration-500
+                ease-out
+
+                ${useDarkNav ? "bg-black" : "bg-white"}
+              `}
+            />
+
+            <span
+              className={`
+                h-px
+                w-full
+                rounded-full
+
+                transition-colors
+                duration-500
+                ease-out
+
+                ${useDarkNav ? "bg-black" : "bg-white"}
+              `}
+            />
           </span>
         </button>
 
@@ -122,7 +171,7 @@ export default function NavBar() {
         <Link
           href="/"
           aria-label="Sabal House home"
-          className="
+          className={`
             absolute
             left-1/2
             -translate-x-1/2
@@ -130,11 +179,16 @@ export default function NavBar() {
             focus-visible:outline
             focus-visible:outline-2
             focus-visible:outline-offset-4
-            focus-visible:outline-white
-          "
+
+            ${
+              useDarkNav
+                ? "focus-visible:outline-black"
+                : "focus-visible:outline-white"
+            }
+          `}
         >
           <Image
-            src={Logo}
+            src={useDarkNav ? LogoBlack : LogoWhite}
             width={100}
             height={50}
             priority
@@ -191,10 +245,7 @@ export default function NavBar() {
       </nav>
 
       {isOpen && (
-        <MenuDrawer
-          onClose={handleCloseMenu}
-          returnFocusRef={menuButtonRef}
-        />
+        <MenuDrawer onClose={handleCloseMenu} returnFocusRef={menuButtonRef} />
       )}
     </>
   );

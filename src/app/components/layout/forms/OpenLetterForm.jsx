@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -22,6 +23,110 @@ export default function OpenLetterForm({
   const sectionRef = useRef(null);
   const letterRef = useRef(null);
   const stampRef = useRef(null);
+
+  useEffect(() => {
+    const storedTarget = sessionStorage.getItem("sabal-scroll-target");
+
+    const hasMatchingHash = window.location.hash === "#open-letter-form";
+
+    const shouldScroll = storedTarget === "open-letter-form" || hasMatchingHash;
+
+    if (!shouldScroll) {
+      return;
+    }
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    let cancelled = false;
+
+    async function positionForm() {
+      /*
+       * Wait for fonts because font loading can change the
+       * heights of sections above this component.
+       */
+      if (document.fonts?.ready) {
+        await document.fonts.ready;
+      }
+
+      if (cancelled) return;
+
+      /*
+       * Give React and the homepage GSAP components time
+       * to establish their initial layout.
+       */
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          if (cancelled || !sectionRef.current) {
+            return;
+          }
+
+          /*
+           * Recalculate all pin spacing before locating
+           * OpenLetterForm.
+           */
+          ScrollTrigger.refresh();
+
+          window.requestAnimationFrame(() => {
+            if (cancelled || !sectionRef.current) {
+              return;
+            }
+
+            /*
+             * Now that the final homepage layout exists,
+             * move directly to the form.
+             *
+             * scroll-mt-20 on the section handles the
+             * fixed navbar offset.
+             */
+            sectionRef.current.scrollIntoView({
+              behavior: "auto",
+              block: "start",
+            });
+
+            /*
+             * IMPORTANT:
+             *
+             * Do not remove this before the async work.
+             * Waiting until the scroll succeeds makes this
+             * safe with React Strict Mode in development.
+             */
+            sessionStorage.removeItem("sabal-scroll-target");
+
+            /*
+             * Ensure the final URL includes the anchor.
+             */
+            if (window.location.hash !== "#open-letter-form") {
+              window.history.replaceState(null, "", "/#open-letter-form");
+            }
+
+            if (prefersReducedMotion) {
+              gsap.set(document.body, {
+                opacity: 1,
+                clearProps: "opacity",
+              });
+
+              return;
+            }
+
+            gsap.to(document.body, {
+              opacity: 1,
+              duration: 0.55,
+              ease: "power2.out",
+              clearProps: "opacity",
+            });
+          });
+        });
+      });
+    }
+
+    positionForm();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -142,8 +247,24 @@ export default function OpenLetterForm({
 
   return (
     <section
+      id="open-letter-form"
       ref={sectionRef}
-      className={`relative w-full overflow-hidden px-4 py-14 sm:px-6 sm:py-20 lg:px-8 lg:py-24 ${className}`}
+      className={`
+        relative
+        w-full
+        scroll-mt-24
+        overflow-hidden
+        px-4
+        py-14
+
+        sm:px-6
+        sm:py-20
+
+        lg:px-8
+        lg:py-24
+
+        ${className}
+      `}
       style={{
         backgroundImage: `url("${backgroundImage}")`,
         backgroundSize: "cover",
@@ -152,9 +273,23 @@ export default function OpenLetterForm({
       aria-labelledby="open-letter-heading"
     >
       {/* Subtle image overlay for readability */}
-      <div className="absolute inset-0 bg-black/5" aria-hidden="true" />
+      <div
+        className="
+          absolute
+          inset-0
+          bg-black/5
+        "
+        aria-hidden="true"
+      />
 
-      <div className="relative mx-auto w-full max-w-5xl">
+      <div
+        className="
+          relative
+          mx-auto
+          w-full
+          max-w-5xl
+        "
+      >
         <div
           ref={letterRef}
           className="
@@ -162,15 +297,21 @@ export default function OpenLetterForm({
             mx-auto
             w-full
             max-w-[820px]
+
             bg-[#f7f3ee]
+
             px-6
             pb-12
             pt-20
+
             shadow-[0_12px_50px_rgba(0,0,0,0.08)]
+
             sm:px-12
             sm:pb-16
             sm:pt-24
+
             md:px-20
+
             lg:px-28
           "
         >
@@ -182,10 +323,13 @@ export default function OpenLetterForm({
               left-1/2
               top-0
               z-10
+
               h-20
               w-20
+
               -translate-x-1/2
               -translate-y-1/2
+
               sm:h-30
               sm:w-30
             "
@@ -194,12 +338,23 @@ export default function OpenLetterForm({
             <img
               src={stampImage}
               alt=""
-              className="h-full w-full object-contain drop-shadow-md"
+              className="
+                h-full
+                w-full
+                object-contain
+                drop-shadow-md
+              "
             />
           </div>
 
           {/* Header */}
-          <header className="mx-auto max-w-xl text-center">
+          <header
+            className="
+              mx-auto
+              max-w-xl
+              text-center
+            "
+          >
             <p
               data-letter-copy
               className="
@@ -208,6 +363,7 @@ export default function OpenLetterForm({
                 uppercase
                 tracking-[0.08em]
                 text-neutral-900
+
                 sm:text-xs
               "
             >
@@ -224,9 +380,11 @@ export default function OpenLetterForm({
                 mx-auto
                 mt-5
                 max-w-md
+
                 text-xs
                 leading-5
                 text-neutral-800
+
                 sm:mt-6
                 sm:text-sm
                 sm:leading-6
@@ -239,20 +397,37 @@ export default function OpenLetterForm({
           {/* Form */}
           <form
             onSubmit={handleSubmit}
-            className="mx-auto mt-10 max-w-lg sm:mt-12"
+            className="
+              mx-auto
+              mt-10
+              max-w-lg
+
+              sm:mt-12
+            "
           >
             {/* Name fields */}
-            <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 sm:gap-10">
+            <div
+              className="
+                grid
+                grid-cols-1
+                gap-7
+
+                sm:grid-cols-2
+                sm:gap-10
+              "
+            >
               <div data-form-field className="group">
                 <label
                   htmlFor="open-letter-first-name"
                   className="
                     mb-2
                     block
+
                     text-center
                     text-[10px]
                     font-medium
                     text-neutral-900
+
                     sm:text-xs
                   "
                 >
@@ -266,18 +441,25 @@ export default function OpenLetterForm({
                   autoComplete="given-name"
                   className="
                     w-full
+
                     border-0
                     border-b
                     border-neutral-400
+
                     bg-transparent
+
                     px-1
                     py-1.5
+
                     text-center
                     text-sm
                     text-neutral-950
+
                     outline-none
+
                     transition-colors
                     duration-300
+
                     focus:border-neutral-950
                     focus:ring-0
                   "
@@ -290,10 +472,12 @@ export default function OpenLetterForm({
                   className="
                     mb-2
                     block
+
                     text-center
                     text-[10px]
                     font-medium
                     text-neutral-900
+
                     sm:text-xs
                   "
                 >
@@ -307,18 +491,25 @@ export default function OpenLetterForm({
                   autoComplete="family-name"
                   className="
                     w-full
+
                     border-0
                     border-b
                     border-neutral-400
+
                     bg-transparent
+
                     px-1
                     py-1.5
+
                     text-center
                     text-sm
                     text-neutral-950
+
                     outline-none
+
                     transition-colors
                     duration-300
+
                     focus:border-neutral-950
                     focus:ring-0
                   "
@@ -327,16 +518,27 @@ export default function OpenLetterForm({
             </div>
 
             {/* Email */}
-            <div data-form-field className="mx-auto mt-7 max-w-sm sm:mt-9">
+            <div
+              data-form-field
+              className="
+                mx-auto
+                mt-7
+                max-w-sm
+
+                sm:mt-9
+              "
+            >
               <label
                 htmlFor="open-letter-email"
                 className="
                   mb-2
                   block
+
                   text-center
                   text-[10px]
                   font-medium
                   text-neutral-900
+
                   sm:text-xs
                 "
               >
@@ -351,18 +553,25 @@ export default function OpenLetterForm({
                 required
                 className="
                   w-full
+
                   border-0
                   border-b
                   border-neutral-400
+
                   bg-transparent
+
                   px-1
                   py-1.5
+
                   text-center
                   text-sm
                   text-neutral-950
+
                   outline-none
+
                   transition-colors
                   duration-300
+
                   focus:border-neutral-950
                   focus:ring-0
                 "
@@ -370,16 +579,27 @@ export default function OpenLetterForm({
             </div>
 
             {/* Zip */}
-            <div data-form-field className="mx-auto mt-7 max-w-[170px] sm:mt-9">
+            <div
+              data-form-field
+              className="
+                mx-auto
+                mt-7
+                max-w-[170px]
+
+                sm:mt-9
+              "
+            >
               <label
                 htmlFor="open-letter-zip"
                 className="
                   mb-2
                   block
+
                   text-center
                   text-[10px]
                   font-medium
                   text-neutral-900
+
                   sm:text-xs
                 "
               >
@@ -394,18 +614,25 @@ export default function OpenLetterForm({
                 inputMode="numeric"
                 className="
                   w-full
+
                   border-0
                   border-b
                   border-neutral-400
+
                   bg-transparent
+
                   px-1
                   py-1.5
+
                   text-center
                   text-sm
                   text-neutral-950
+
                   outline-none
+
                   transition-colors
                   duration-300
+
                   focus:border-neutral-950
                   focus:ring-0
                 "
@@ -413,27 +640,42 @@ export default function OpenLetterForm({
             </div>
 
             {/* Button */}
-            <div data-letter-footer className="mt-9 flex justify-center">
+            <div
+              data-letter-footer
+              className="
+                mt-9
+                flex
+                justify-center
+              "
+            >
               <button
                 type="submit"
                 className="
                   min-w-[150px]
+
                   bg-black
+
                   px-7
                   py-3
+
                   text-[10px]
                   font-medium
                   uppercase
                   tracking-[0.04em]
                   text-white
+
                   transition
                   duration-300
+
                   hover:bg-neutral-800
+
                   focus-visible:outline
                   focus-visible:outline-2
                   focus-visible:outline-offset-4
                   focus-visible:outline-black
+
                   active:scale-[0.98]
+
                   sm:text-xs
                 "
               >
@@ -446,11 +688,13 @@ export default function OpenLetterForm({
               data-letter-footer
               className="
                 mt-7
+
                 text-center
                 font-handwriting
                 text-sm
                 italic
                 text-neutral-950
+
                 sm:text-xl
               "
             >

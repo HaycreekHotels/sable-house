@@ -13,7 +13,15 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 const placeHolder =
   "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Guestroom.jpg";
 
-export default function FullWidth() {
+export default function FullWidth({
+  leftIntroHeading = "Past & Present",
+  rightIntroHeading = "Perfected",
+  title = "Sabal House Rooms",
+  description = "A lighter, more contemporary expression of Sabal House. Refined finishes, thoughtful layouts, and a calm sense of ease within the new building.",
+  ctaLabel = "Explore Your Stay",
+  ctaHref = "/stay/accommodations",
+  imageSrc = placeHolder,
+}) {
   const sectionRef = useRef(null);
   const panelRef = useRef(null);
   const introRef = useRef(null);
@@ -72,9 +80,8 @@ export default function FullWidth() {
       });
 
       /*
-       * autoAlpha: 0 also applies visibility: hidden.
-       * This keeps the hidden CTA/content out of normal keyboard interaction
-       * until the reveal begins.
+       * Keep the expanded-state content out of keyboard interaction
+       * until reveal begins.
        */
       gsap.set(content, {
         autoAlpha: 0,
@@ -83,10 +90,6 @@ export default function FullWidth() {
 
       /*
        * Scroll sequence
-       *
-       * Pin only after the entire starting square has had a chance to enter
-       * the viewport. The panel expands to the full viewport height so there
-       * is no exposed strip beneath it on desktop.
        */
       const timeline = gsap.timeline({
         scrollTrigger: {
@@ -102,7 +105,7 @@ export default function FullWidth() {
       });
 
       /*
-       * Phase 1 — step into the image
+       * Phase 1 — expand the square into the image
        */
       timeline.to(
         panel,
@@ -116,7 +119,7 @@ export default function FullWidth() {
       );
 
       /*
-       * Phase 2 — remove the intro
+       * Phase 2 — remove the side headers
        */
       timeline.to(
         intro,
@@ -156,7 +159,7 @@ export default function FullWidth() {
   return (
     <section
       ref={sectionRef}
-      aria-labelledby="sabal-house-rooms-heading"
+      aria-label={title}
       className="
         relative
         flex
@@ -167,6 +170,103 @@ export default function FullWidth() {
         overflow-hidden
       "
     >
+      {/* Intro headings / starting state */}
+      <div
+        ref={introRef}
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-20"
+      >
+        {/* Mobile: heading above and below the square */}
+        <div
+          className="
+            flex
+            h-full
+            flex-col
+            items-center
+            justify-between
+            px-6
+            py-10
+            text-center
+            md:hidden
+          "
+        >
+          <p
+            className="
+               whitespace-nowrap
+    text-right
+    font-benton-regular
+    text-[clamp(2.75rem,5vw,5rem)]
+    leading-[0.92]
+            "
+          >
+            {leftIntroHeading}
+          </p>
+
+          {/* Spacer that mirrors the square footprint */}
+          <div
+            aria-hidden="true"
+            className="h-[min(250px,calc(100vw-2.5rem))] w-[min(250px,calc(100vw-2.5rem))] shrink-0 opacity-0"
+          />
+
+          <p
+            className="
+              font-benton-regular
+              text-[clamp(2.25rem,10vw,3.5rem)]
+              leading-[0.95]
+            "
+          >
+            {rightIntroHeading}
+          </p>
+        </div>
+
+        {/* Desktop: heading on both sides of the square */}
+        <div
+          className="
+            hidden
+            h-full
+            items-center
+            px-8
+            md:grid
+            md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]
+            md:gap-8
+            lg:px-16
+            xl:px-24
+          "
+        >
+          <div className="flex justify-end">
+            <p
+              className="
+                
+                text-right
+                font-benton-regular
+                text-[clamp(2.75rem,4vw,3.5rem)]
+                leading-[0.92]
+              "
+            >
+              {leftIntroHeading}
+            </p>
+          </div>
+
+          {/* Spacer column that matches the starting square */}
+          <div aria-hidden="true" className="h-[250px] w-[250px] shrink-0" />
+
+          <div className="flex justify-start">
+            <p
+              className="
+              
+                text-left
+                font-benton-regular
+                text-[clamp(2.75rem,4vw,3.5rem)]
+                leading-[0.92]
+              "
+            >
+              {rightIntroHeading}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Expanding image panel */}
       <div
         ref={panelRef}
         className="
@@ -181,7 +281,7 @@ export default function FullWidth() {
       >
         {/* Decorative background image */}
         <Image
-          src={placeHolder}
+          src={imageSrc}
           alt=""
           fill
           sizes="100vw"
@@ -193,35 +293,6 @@ export default function FullWidth() {
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 z-10 bg-black/40"
         />
-
-        {/* Starting square state */}
-        <div
-          ref={introRef}
-          aria-hidden="true"
-          className="
-            absolute inset-0 z-20
-            flex flex-col
-            items-center justify-center
-            px-5
-            text-center
-            text-secondary
-          "
-        >
-          <p className="mb-2 text-xs uppercase tracking-[0.15em]">Two ways</p>
-
-          <p
-            className="
-              max-w-50
-              font-benton-regular
-              text-[2rem]
-              leading-[0.95]
-              uppercase
-              md:text-[2.5rem]
-            "
-          >
-            To Stay
-          </p>
-        </div>
 
         {/* Expanded state */}
         <div
@@ -260,7 +331,6 @@ export default function FullWidth() {
 
             <div className="flex items-end gap-5">
               <h2
-                id="sabal-house-rooms-heading"
                 className="
                   max-w-[11ch]
                   font-benton-regular
@@ -271,7 +341,7 @@ export default function FullWidth() {
                   md:text-[clamp(3rem,5vw,4rem)]
                 "
               >
-                Sabal House Rooms
+                {title}
               </h2>
 
               <span
@@ -314,13 +384,11 @@ export default function FullWidth() {
                 md:text-base
               "
             >
-              A lighter, more contemporary expression of Sabal House. Refined
-              finishes, thoughtful layouts, and a calm sense of ease within the
-              new building.
+              {description}
             </p>
 
             <Link
-              href="/stay/accommodations"
+              href={ctaHref}
               className="
                 inline-flex
                 min-h-11
@@ -345,7 +413,7 @@ export default function FullWidth() {
                 focus-visible:outline-white
               "
             >
-              Explore Your Stay
+              {ctaLabel}
             </Link>
           </div>
         </div>

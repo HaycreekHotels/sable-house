@@ -127,7 +127,7 @@ export default function TextBreak({
           md:text-[clamp(2.5rem,4.2vw,4.25rem)]
           md:leading-[1.18]
 
-          lg:max-w-[50rem]
+          lg:max-w-[54rem]
           lg:text-[clamp(3rem,4vw,4.5rem)]
           lg:leading-[1.2]
 
