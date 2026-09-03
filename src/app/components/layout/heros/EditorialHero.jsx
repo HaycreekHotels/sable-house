@@ -387,7 +387,6 @@ export default function EditorialHero({
           )}
         </div>
       </div>
-
     </section>
   );
 }

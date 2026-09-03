@@ -429,7 +429,6 @@ export default function RoomDetail({ room }) {
             "
           >
             Back to Accommodations
-
             <span
               aria-hidden="true"
               className="

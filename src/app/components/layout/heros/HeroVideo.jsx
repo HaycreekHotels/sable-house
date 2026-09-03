@@ -19,9 +19,7 @@ export default function HeroVideo({
 
     if (!video) return;
 
-    const motionQuery = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    );
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     const applyMotionPreference = () => {
       if (motionQuery.matches) {
@@ -170,8 +168,8 @@ export default function HeroVideo({
               font-benton-regular
               text-[clamp(3rem,14vw,5rem)]
               font-normal
-              leading-[0.88]
-              tracking-[-0.045em]
+             
+             
               text-secondary
 
               sm:text-[clamp(3.75rem,11vw,6rem)]
@@ -181,14 +179,12 @@ export default function HeroVideo({
               md:items-center
               md:gap-[2.5vw]
               md:text-[clamp(2.75rem,5.2vw,6rem)]
-              md:leading-[0.92]
+              
 
               xl:grid-cols-[0.4fr_1fr_0.55fr_1.35fr]
             "
           >
-            <span className="self-start md:self-auto">
-              {headingStart}
-            </span>
+            <span className="self-start md:self-auto">{headingStart}</span>
 
             <span
               className="
@@ -225,7 +221,9 @@ export default function HeroVideo({
       <button
         type="button"
         onClick={togglePlayback}
-        aria-label={isPlaying ? "Pause background video" : "Play background video"}
+        aria-label={
+          isPlaying ? "Pause background video" : "Play background video"
+        }
         aria-pressed={isPlaying}
         className="
           absolute
@@ -270,12 +268,7 @@ export default function HeroVideo({
 
 function PlayIcon() {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-      className="h-5 w-5"
-      fill="none"
-    >
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="none">
       <path d="M8 5L19 12L8 19V5Z" fill="currentColor" />
     </svg>
   );
@@ -283,12 +276,7 @@ function PlayIcon() {
 
 function PauseIcon() {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-      className="h-5 w-5"
-      fill="none"
-    >
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="none">
       <rect x="7" y="5" width="3.5" height="14" fill="currentColor" />
       <rect x="13.5" y="5" width="3.5" height="14" fill="currentColor" />
     </svg>

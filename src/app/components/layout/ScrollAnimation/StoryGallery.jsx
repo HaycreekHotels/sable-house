@@ -84,10 +84,11 @@ export default function StoryGallery() {
       /*
        * DESKTOP
        *
-       * The stories occupy one pinned viewport and transition in place.
+       * Stories share one pinned viewport.
+       * Each story transitions into the same editorial layout.
        */
       mm.add(
-        "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
+        "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
         () => {
           if (cards.length < 2) return;
 
@@ -96,12 +97,12 @@ export default function StoryGallery() {
               const isActive = index === activeIndex;
 
               card.setAttribute("aria-hidden", isActive ? "false" : "true");
+
               card.inert = !isActive;
             });
 
             /*
-             * Stop audio/video from a story once the user scrolls to a
-             * different story.
+             * Stop an interview when its story leaves the viewport.
              */
             if (activeDesktopCardRef.current !== activeIndex) {
               const previousVideo =
@@ -120,8 +121,8 @@ export default function StoryGallery() {
           };
 
           /*
-           * Card one begins visible. Later cards stay in the same physical
-           * viewport but their individual pieces begin below the frame.
+           * First card is visible.
+           * Following cards begin below the frame.
            */
           cards.forEach((card, index) => {
             const pieces = card.querySelectorAll(".story-piece");
@@ -152,21 +153,20 @@ export default function StoryGallery() {
             scrollTrigger: {
               trigger: section,
               start: "top top",
-              end: () =>
-                `+=${window.innerHeight * numberOfTransitions}`,
+
+              end: () => `+=${window.innerHeight * numberOfTransitions}`,
+
               pin: section,
               pinSpacing: true,
               scrub: 1,
+
               anticipatePin: 1,
               invalidateOnRefresh: true,
 
               onUpdate: (self) => {
                 const activeIndex = Math.min(
                   cards.length - 1,
-                  Math.max(
-                    0,
-                    Math.round(self.progress * numberOfTransitions),
-                  ),
+                  Math.max(0, Math.round(self.progress * numberOfTransitions)),
                 );
 
                 setActiveCard(activeIndex);
@@ -177,8 +177,7 @@ export default function StoryGallery() {
           cards.slice(1).forEach((nextCard, index) => {
             const currentCard = cards[index];
 
-            const currentPieces =
-              currentCard.querySelectorAll(".story-piece");
+            const currentPieces = currentCard.querySelectorAll(".story-piece");
 
             const nextPieces = nextCard.querySelectorAll(".story-piece");
 
@@ -222,24 +221,25 @@ export default function StoryGallery() {
       );
 
       /*
-       * MOBILE / TABLET
+       * MOBILE + TABLET
        *
-       * Keep the stories in normal document flow. Each story reveals once as
-       * it enters the viewport rather than pinning several full-screen cards.
+       * Keep each story in document flow instead of pinning
+       * three columns into a narrow viewport.
        */
       mm.add(
-        "(max-width: 767px) and (prefers-reduced-motion: no-preference)",
+        "(max-width: 1023px) and (prefers-reduced-motion: no-preference)",
         () => {
           cards.forEach((card) => {
             gsap.from(card.querySelectorAll(".story-piece"), {
-              y: 40,
+              y: 34,
               autoAlpha: 0,
               duration: 0.7,
               stagger: 0.07,
               ease: "power2.out",
+
               scrollTrigger: {
                 trigger: card,
-                start: "top 82%",
+                start: "top 84%",
                 once: true,
               },
             });
@@ -249,9 +249,6 @@ export default function StoryGallery() {
 
       /*
        * REDUCED MOTION
-       *
-       * CSS changes the desktop section/cards back into normal document flow;
-       * these sets ensure no GSAP transform or opacity state can remain.
        */
       mm.add("(prefers-reduced-motion: reduce)", () => {
         cards.forEach((card) => {
@@ -281,28 +278,21 @@ export default function StoryGallery() {
     if (!video) return;
 
     /*
-     * Only one interview plays at a time.
+     * Only one interview can play at once.
      */
     videoRefs.current.forEach((otherVideo, otherIndex) => {
-      if (
-        otherVideo &&
-        otherIndex !== index &&
-        !otherVideo.paused
-      ) {
+      if (otherVideo && otherIndex !== index && !otherVideo.paused) {
         otherVideo.pause();
       }
     });
 
     if (video.paused) {
       try {
-        /*
-         * Playback follows an explicit user gesture, so audible playback is
-         * permitted by modern browsers.
-         */
         video.muted = false;
         video.volume = 1;
 
         await video.play();
+
         setPlayingVideo(index);
       } catch (error) {
         console.error(`Could not play video ${index}:`, error);
@@ -322,15 +312,17 @@ export default function StoryGallery() {
         bg-[#f7f6f2]
         text-[#151515]
 
-        md:h-[100svh]
-        md:overflow-hidden
+        lg:h-[100svh]
+        lg:overflow-hidden
 
-        motion-reduce:md:h-auto
-        motion-reduce:md:overflow-visible
+        motion-reduce:lg:h-auto
+        motion-reduce:lg:overflow-visible
       "
     >
       {stories.map((story, index) => {
         const isPlaying = playingVideo === index;
+
+        const videoId = `story-video-${story.id}`;
 
         return (
           <article
@@ -338,26 +330,29 @@ export default function StoryGallery() {
             className="
               story-card
               pointer-events-none
+
               relative
-              flex
               w-full
-              items-center
 
-              px-0
-              py-14
+              px-5
+              py-16
 
-              sm:py-16
+              sm:px-8
+              sm:py-20
 
-              md:absolute
-              md:inset-0
-              md:h-[100svh]
-              md:py-0
+              md:px-12
 
-              motion-reduce:md:relative
-              motion-reduce:md:inset-auto
-              motion-reduce:md:h-auto
-              motion-reduce:md:min-h-[100svh]
-              motion-reduce:md:py-16
+              lg:absolute
+              lg:inset-0
+              lg:h-[100svh]
+              lg:px-0
+              lg:py-0
+
+              motion-reduce:lg:relative
+              motion-reduce:lg:inset-auto
+              motion-reduce:lg:h-auto
+              motion-reduce:lg:min-h-[100svh]
+              motion-reduce:lg:py-20
             "
             style={{
               zIndex: index + 1,
@@ -368,44 +363,55 @@ export default function StoryGallery() {
                 mx-auto
                 grid
                 w-full
-                max-w-[1600px]
                 grid-cols-1
                 gap-10
-                px-5
 
-                sm:px-7
-
-                md:h-full
-                md:grid-cols-[minmax(220px,1fr)_minmax(300px,0.95fr)_minmax(220px,0.9fr)]
-                md:items-center
-                md:gap-[3vw]
-                md:px-[5vw]
-
-                xl:grid-cols-[1.05fr_0.9fr_0.85fr]
+                lg:h-full
+                lg:grid-cols-[1.08fr_1fr_0.95fr]
+                lg:items-stretch
+                lg:gap-x-[1.8vw]
+                lg:gap-y-0
+                lg:pl-[7.5vw]
+                lg:pr-[2.4vw]
               "
             >
-              {/* STORY COPY */}
+              {/* =========================================
+                  LEFT COLUMN
+              ========================================== */}
               <div
                 className="
                   story-piece
+
                   flex
                   flex-col
 
-                  md:h-[82svh]
-                  md:justify-between
-                  md:py-8
+                  lg:h-[59svh]
+                  lg:self-end
+                  lg:justify-between
+                  lg:mb-[9svh]
                 "
               >
-                <div>
+                {/* Intro copy */}
+                <div
+                  className="
+                    max-w-[31rem]
+
+                    lg:max-w-[29rem]
+                  "
+                >
                   <p
                     className="
                       mb-2
-                      text-[10px]
-                      font-medium
-                      uppercase
-                      tracking-[0.04em]
 
-                      md:text-xs
+                      text-[11px]
+                      font-central-regular
+                      uppercase
+                      tracking-[0.02em]
+
+                      sm:text-xs
+
+                      lg:mb-2
+                      lg:text-[clamp(14px,1.05vw,18px)]
                     "
                   >
                     {story.eyebrow}
@@ -414,12 +420,13 @@ export default function StoryGallery() {
                   <h2
                     className="
                       font-benton-regular
-                      text-[clamp(2.25rem,10vw,3rem)]
-                      leading-[1]
+
+                      text-[clamp(2.5rem,11vw,3.5rem)]
+                      leading-[0.95]
                       tracking-[-0.035em]
 
-                      md:text-[clamp(2.125rem,3.5vw,3.75rem)]
-                      md:leading-[1.08]
+                      lg:text-[clamp(2.75rem,3.25vw,3.4rem)]
+                      lg:leading-[1]
                     "
                   >
                     {story.name}
@@ -427,60 +434,119 @@ export default function StoryGallery() {
 
                   <p
                     className="
-                      mt-6
+                      mt-7
                       max-w-[31rem]
-                      text-[14px]
-                      leading-[1.6]
 
-                      sm:text-[15px]
+                      text-[15px]
+                      leading-[1.55]
 
-                      md:mt-10
-                      md:text-[clamp(13px,1vw,17px)]
+                      sm:text-[16px]
+
+                      lg:mt-12
+                      lg:max-w-[28rem]
+                      lg:text-[clamp(16px,1.28vw,21px)]
+                      lg:leading-[1.42]
                     "
                   >
                     {story.description}
                   </p>
+
+                  {/* Interview CTA */}
+                  <button
+                    type="button"
+                    aria-controls={videoId}
+                    aria-pressed={isPlaying}
+                    onClick={() => toggleVideo(index)}
+                    className="
+                      pointer-events-auto
+
+                      mt-7
+                      inline-flex
+                      min-h-11
+                      w-fit
+                      items-center
+
+                      border-b
+                      border-black
+
+                      text-[13px]
+                      font-central-regular
+                      uppercase
+                      tracking-[0.01em]
+
+                      transition-opacity
+                      duration-300
+
+                      hover:opacity-55
+
+                      focus-visible:outline
+                      focus-visible:outline-2
+                      focus-visible:outline-offset-4
+                      focus-visible:outline-black
+
+                      sm:text-sm
+
+                      lg:mt-8
+                      lg:min-h-0
+                      lg:pb-1
+                      lg:text-[clamp(15px,1.2vw,20px)]
+                    "
+                  >
+                    {isPlaying ? "Pause Interview" : "Watch Interview"}
+                  </button>
                 </div>
 
+                {/* Quote */}
                 <blockquote
                   className="
-                    mt-9
-                    max-w-[32rem]
-                    font-benton-regular
-                    text-[clamp(1.9rem,8vw,2.4rem)]
-                    italic
-                    leading-[1.1]
-                    tracking-[-0.025em]
+                    mt-12
+                    max-w-[34rem]
 
-                    md:mt-0
-                    md:text-[clamp(1.6rem,2.75vw,3.5rem)]
-                    md:leading-[1.08]
+                    text-center
+                    font-benton-regular
+                    text-[clamp(1.8rem,8vw,2.5rem)]
+                    leading-[1.12]
+                    tracking-[-0.03em]
+
+                    lg:mt-0
+                    lg:max-w-[21rem]
+                    lg:text-[clamp(1.75rem,2vw,2.15rem)]
+                    lg:leading-[1.2]
                   "
                 >
                   {story.quote}
                 </blockquote>
               </div>
 
-              {/* PORTRAIT VIDEO */}
+              {/* =========================================
+                  CENTER — PORTRAIT VIDEO
+              ========================================== */}
               <div
                 className="
                   story-piece
                   pointer-events-auto
+
                   relative
+
                   mx-auto
                   aspect-[0.62]
                   w-full
-                  max-w-[420px]
+                  max-w-[520px]
+
                   overflow-hidden
                   bg-neutral-200
 
-                  md:h-[86svh]
-                  md:max-h-[900px]
-                  md:w-full
-                  md:max-w-none
+                  lg:mx-0
+                  lg:mb-[0.8svh]
+                  lg:h-[94.5svh]
+                  lg:max-h-none
+                  lg:w-full
+                  lg:max-w-none
+                  lg:self-end
                 "
               >
                 <video
+                  id={videoId}
                   ref={(element) => {
                     videoRefs.current[index] = element;
                   }}
@@ -522,21 +588,23 @@ export default function StoryGallery() {
                   )}
                 </video>
 
-                {/* The full portrait is the play/pause target. */}
+                {/* Entire portrait remains clickable */}
                 <button
                   type="button"
                   onClick={() => toggleVideo(index)}
                   aria-label={
                     isPlaying
-                      ? `Pause video featuring ${story.name}`
-                      : `Play video featuring ${story.name}`
+                      ? `Pause interview with ${story.name}`
+                      : `Play interview with ${story.name}`
                   }
+                  aria-controls={videoId}
                   aria-pressed={isPlaying}
                   className="
                     group
                     absolute
                     inset-0
                     z-10
+
                     cursor-pointer
 
                     focus-visible:outline-none
@@ -545,6 +613,7 @@ export default function StoryGallery() {
                     focus-visible:ring-white
                   "
                 >
+                  {/* Play / pause square */}
                   <span
                     aria-hidden="true"
                     className="
@@ -553,8 +622,8 @@ export default function StoryGallery() {
                       right-0
 
                       flex
-                      h-14
-                      w-14
+                      h-16
+                      w-16
                       items-center
                       justify-center
 
@@ -566,8 +635,11 @@ export default function StoryGallery() {
 
                       group-hover:bg-neutral-800
 
-                      md:h-16
-                      md:w-16
+                      sm:h-[72px]
+                      sm:w-[72px]
+
+                      lg:h-[86px]
+                      lg:w-[86px]
                     "
                   >
                     {isPlaying ? <PauseIcon /> : <PlayIcon />}
@@ -575,25 +647,34 @@ export default function StoryGallery() {
                 </button>
               </div>
 
-              {/* SUPPORTING IMAGE */}
+              {/* =========================================
+                  RIGHT — SUPPORTING IMAGE
+              ========================================== */}
               <figure
                 className="
                   story-piece
-                  self-end
 
-                  md:mb-[7svh]
+                  w-full
+
+                  lg:mb-[1.5svh]
+                  lg:self-end
                 "
               >
                 <figcaption
                   className="
                     mb-2
+
                     text-[9px]
-                    font-medium
+                    font-central-regular
                     uppercase
                     leading-[1.2]
-                    tracking-[0.02em]
+                    tracking-[0.01em]
 
-                    md:text-[10px]
+                    sm:text-[10px]
+
+                    lg:mb-2
+                    lg:text-right
+                    lg:text-[clamp(9px,0.75vw,12px)]
                   "
                 >
                   {story.imageCaption}
@@ -601,7 +682,7 @@ export default function StoryGallery() {
 
                 <div
                   className="
-                    aspect-[1.05]
+                    aspect-[1.06]
                     w-full
                     overflow-hidden
                     bg-neutral-200
@@ -610,7 +691,11 @@ export default function StoryGallery() {
                   <img
                     src={story.image}
                     alt={story.imageAlt}
-                    className="h-full w-full object-cover"
+                    className="
+                      h-full
+                      w-full
+                      object-cover
+                    "
                     loading={index === 0 ? "eager" : "lazy"}
                   />
                 </div>
@@ -628,7 +713,13 @@ function PlayIcon() {
     <svg
       viewBox="0 0 24 24"
       aria-hidden="true"
-      className="h-5 w-5"
+      className="
+        h-6
+        w-6
+
+        lg:h-7
+        lg:w-7
+      "
       fill="none"
     >
       <path d="M8 5L19 12L8 19V5Z" fill="currentColor" />
@@ -641,10 +732,17 @@ function PauseIcon() {
     <svg
       viewBox="0 0 24 24"
       aria-hidden="true"
-      className="h-5 w-5"
+      className="
+        h-6
+        w-6
+
+        lg:h-7
+        lg:w-7
+      "
       fill="none"
     >
       <rect x="7" y="5" width="3.5" height="14" fill="currentColor" />
+
       <rect x="13.5" y="5" width="3.5" height="14" fill="currentColor" />
     </svg>
   );

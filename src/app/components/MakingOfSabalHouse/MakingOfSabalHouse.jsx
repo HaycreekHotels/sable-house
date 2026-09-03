@@ -344,7 +344,6 @@ export default function MakingOfSabalHouse() {
                     "
                   >
                     <source src={story.videoUrl} type="video/mp4" />
-
                     {story.captionsUrl && (
                       <track
                         kind="captions"
@@ -354,7 +353,6 @@ export default function MakingOfSabalHouse() {
                         default
                       />
                     )}
-
                     Your browser does not support HTML video.
                   </video>
 
@@ -382,11 +380,7 @@ export default function MakingOfSabalHouse() {
 
                       motion-reduce:transition-none
 
-                      ${
-                        isActive && hasStarted
-                          ? "opacity-0"
-                          : "opacity-100"
-                      }
+                      ${isActive && hasStarted ? "opacity-0" : "opacity-100"}
                     `}
                   />
 
@@ -507,12 +501,7 @@ export default function MakingOfSabalHouse() {
 
 function PlayIcon() {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-      className="size-5"
-      fill="none"
-    >
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="size-5" fill="none">
       <path d="M8 5L19 12L8 19V5Z" fill="currentColor" />
     </svg>
   );
