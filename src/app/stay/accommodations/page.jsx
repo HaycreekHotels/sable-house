@@ -11,8 +11,6 @@ import { rooms } from "@/app/data/accommodations";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const ROOM_PLACEHOLDER_IMAGE =
-  "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Guestroom.jpg";
 
 const filters = [
   {
@@ -419,10 +417,11 @@ function RoomCard({ room }) {
           "
         >
           <Image
-            src={ROOM_PLACEHOLDER_IMAGE}
-            alt=""
+            src={room.image}
+            alt={room.imageAlt}
             fill
             sizes="(min-width: 768px) 50vw, 100vw"
+            style={{ objectPosition: room.imagePosition ?? "center center" }}
             className="
               object-cover
 

@@ -7,6 +7,11 @@ export const rooms = [
     title: ["Classic", "King"],
     name: "Classic King",
 
+    // Replace this URL with the final photography for this specific room.
+    image: "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Guestroom.jpg",
+    imageAlt: "Classic King guest room at Sabal House in Savannah",
+    imagePosition: "center center",
+
     bed: "1 King Bed",
     size: "293 Sq. Ft.",
 
@@ -36,6 +41,11 @@ export const rooms = [
     houseLabel: "Sabal House",
     title: ["Classic", "Double Queen"],
     name: "Classic Double Queen",
+
+    // Replace this URL with the final photography for this specific room.
+    image: "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Guestroom.jpg",
+    imageAlt: "Classic Double Queen guest room at Sabal House in Savannah",
+    imagePosition: "center center",
 
     bed: "2 Queen Beds",
     size: "290 Sq. Ft.",
@@ -67,6 +77,11 @@ export const rooms = [
     title: ["Classic King", "Accessible"],
     name: "Classic King Accessible",
 
+    // Replace this URL with the final photography for this specific room.
+    image: "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Guestroom.jpg",
+    imageAlt: "Classic King Accessible guest room at Sabal House in Savannah",
+    imagePosition: "center center",
+
     bed: "1 King Bed",
     size: "326 Sq. Ft.",
 
@@ -96,6 +111,11 @@ export const rooms = [
     houseLabel: "Sabal House",
     title: ["Deluxe Park", "View King"],
     name: "Deluxe Park View King",
+
+    // Replace this URL with the final photography for this specific room.
+    image: "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Guestroom.jpg",
+    imageAlt: "Deluxe Park View King guest room at Sabal House in Savannah",
+    imagePosition: "center center",
 
     bed: "1 King Bed",
     size: "295 Sq. Ft.",
@@ -127,6 +147,11 @@ export const rooms = [
     title: ["Traditional", "King"],
     name: "Traditional King",
 
+    // Replace this URL with the final photography for this specific room.
+    image: "https://sabal-house.b-cdn.net/ricks-videos/Heritage%20Rooms.png",
+    imageAlt: "Traditional King room in the Heritage Rooms at Sabal House",
+    imagePosition: "center center",
+
     bed: "1 King Bed",
     size: "237 Sq. Ft.",
 
@@ -156,6 +181,11 @@ export const rooms = [
     houseLabel: "The Heritage Rooms",
     title: ["Traditional", "Queen"],
     name: "Traditional Queen",
+
+    // Replace this URL with the final photography for this specific room.
+    image: "https://sabal-house.b-cdn.net/ricks-videos/Heritage%20Rooms.png",
+    imageAlt: "Traditional Queen room in the Heritage Rooms at Sabal House",
+    imagePosition: "center center",
 
     bed: "1 Queen Bed",
     size: "237 Sq. Ft.",
@@ -187,6 +217,11 @@ export const rooms = [
     title: ["Heritage", "King"],
     name: "Heritage King",
 
+    // Replace this URL with the final photography for this specific room.
+    image: "https://sabal-house.b-cdn.net/ricks-videos/Heritage%20Rooms.png",
+    imageAlt: "Heritage King room at Sabal House in Savannah",
+    imagePosition: "center center",
+
     bed: "1 King Bed",
     size: "309 Sq. Ft.",
 
@@ -216,6 +251,11 @@ export const rooms = [
     houseLabel: "The Heritage Rooms",
     title: ["Heritage", "Double Queen"],
     name: "Heritage Double Queen",
+
+    // Replace this URL with the final photography for this specific room.
+    image: "https://sabal-house.b-cdn.net/ricks-videos/Heritage%20Rooms.png",
+    imageAlt: "Heritage Double Queen room at Sabal House in Savannah",
+    imagePosition: "center center",
 
     bed: "2 Queen Beds",
     size: "384 Sq. Ft.",
@@ -247,6 +287,11 @@ export const rooms = [
     title: ["Heritage", "Loft Suite"],
     name: "Heritage Loft Suite",
 
+    // Replace this URL with the final photography for this specific room.
+    image: "https://sabal-house.b-cdn.net/ricks-videos/Heritage%20Rooms.png",
+    imageAlt: "Heritage Loft Suite at Sabal House in Savannah",
+    imagePosition: "center center",
+
     bed: "1 King Bed",
     size: "465 Sq. Ft.",
     layout: "Two Levels",
@@ -277,6 +322,11 @@ export const rooms = [
     houseLabel: "The Heritage Rooms",
     title: ["Heritage King", "Accessible"],
     name: "Heritage King Accessible",
+
+    // Replace this URL with the final photography for this specific room.
+    image: "https://sabal-house.b-cdn.net/ricks-videos/Heritage%20Rooms.png",
+    imageAlt: "Heritage King Accessible room at Sabal House in Savannah",
+    imagePosition: "center center",
 
     bed: "1 King Bed",
     size: "404 Sq. Ft.",

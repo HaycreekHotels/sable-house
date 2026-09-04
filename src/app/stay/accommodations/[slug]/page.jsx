@@ -24,6 +24,16 @@ export async function generateMetadata({ params }) {
   return {
     title: `${room.name} | Sabal House`,
     description: room.shortDescription,
+    openGraph: {
+      title: `${room.name} | Sabal House`,
+      description: room.shortDescription,
+      images: [
+        {
+          url: room.image,
+          alt: room.imageAlt,
+        },
+      ],
+    },
   };
 }
 

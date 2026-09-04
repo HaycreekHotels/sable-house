@@ -11,8 +11,6 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const ROOM_PLACEHOLDER_IMAGE =
-  "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Guestroom.jpg";
 
 export default function RoomDetail({ room }) {
   const pageRef = useRef(null);
@@ -342,10 +340,11 @@ export default function RoomDetail({ room }) {
           "
         >
           <Image
-            src={ROOM_PLACEHOLDER_IMAGE}
-            alt=""
+            src={room.image}
+            alt={room.imageAlt}
             fill
             sizes="100vw"
+            style={{ objectPosition: room.imagePosition ?? "center center" }}
             className="object-cover"
           />
         </div>
