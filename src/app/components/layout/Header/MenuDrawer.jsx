@@ -428,7 +428,7 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
         className="
           absolute
           inset-0
-          bg-black
+          bg-main
         "
       >
         {/* Right-side photograph */}
@@ -485,21 +485,6 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
         "
       />
 
-      {/*
-       * DESKTOP FLOATING HEADER
-       *
-       * This now mirrors NavBar:
-       *
-       * - 72px height
-       * - viewport-wide positioning
-       * - logo centered on viewport
-       * - same logo width
-       * - same horizontal padding
-       * - same Book Your Stay sizing
-       *
-       * It intentionally starts at lg so the viewport center
-       * cannot overlap the 420px drawer on tablet widths.
-       */}
       <div
         ref={desktopHeaderRef}
         className="
