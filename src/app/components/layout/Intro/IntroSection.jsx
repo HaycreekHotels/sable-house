@@ -126,7 +126,7 @@ export default function IntroSection({
                 text-sm
                 leading-[1.65]
                 text-neutral-900
-
+text-justify
                 md:text-[0.95rem]
               "
             >
@@ -163,8 +163,7 @@ export default function IntroSection({
             className="
               text-sm
               leading-[1.65]
-              text-neutral-900
-
+              text-neutral-900 text-justify
               md:text-[0.95rem]
             "
           >

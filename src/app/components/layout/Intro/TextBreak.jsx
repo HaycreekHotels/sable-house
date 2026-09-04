@@ -26,50 +26,51 @@ export default function TextBreak({
       const mm = gsap.matchMedia();
 
       /*
-       * Standard motion.
-       *
-       * Keep the movement smaller on phones so the text feels like it
-       * settles into place rather than sliding a long distance upward.
+       * Reduced motion:
+       * Show the copy immediately with no transform.
        */
-      mm.add(
-        {
-          isMobile: "(max-width: 767px)",
-          reduceMotion: "(prefers-reduced-motion: reduce)",
-        },
-        (context) => {
-          const { isMobile, reduceMotion } = context.conditions;
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        gsap.set(text, {
+          autoAlpha: 1,
+          y: 0,
+          clearProps: "transform",
+        });
+      });
 
-          if (reduceMotion) {
-            gsap.set(text, {
-              autoAlpha: 1,
-              y: 0,
-              clearProps: "transform",
-            });
+      /*
+       * Standard motion:
+       *
+       * A very small vertical shift + opacity change creates
+       * a softer editorial reveal instead of making the text
+       * feel tied directly to the user's scroll position.
+       */
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const animation = gsap.fromTo(
+          text,
+          {
+            autoAlpha: 0,
+            y: 18,
+          },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 1.5,
+            ease: "power2.out",
 
-            return;
-          }
-
-          gsap.fromTo(
-            text,
-            {
-              autoAlpha: 0,
-              y: isMobile ? 28 : 48,
+            scrollTrigger: {
+              trigger: section,
+              start: "top 60%",
+              once: true,
+              invalidateOnRefresh: true,
             },
-            {
-              autoAlpha: 1,
-              y: 0,
-              ease: "none",
-              scrollTrigger: {
-                trigger: section,
-                start: isMobile ? "top 90%" : "top 85%",
-                end: isMobile ? "top 62%" : "top 48%",
-                scrub: 0.8,
-                invalidateOnRefresh: true,
-              },
-            },
-          );
-        },
-      );
+          },
+        );
+
+        return () => {
+          animation.scrollTrigger?.kill();
+          animation.kill();
+        };
+      });
 
       return () => {
         mm.revert();
@@ -104,7 +105,7 @@ export default function TextBreak({
         lg:px-20
         lg:py-28
 
-        xl:px-24
+        xl:px-20
 
         ${className}
       `}
@@ -127,7 +128,7 @@ export default function TextBreak({
           md:text-[clamp(2.5rem,4.2vw,4.25rem)]
           md:leading-[1.18]
 
-          lg:max-w-[54rem]
+          lg:max-w-[72rem]
           lg:text-[clamp(3rem,4vw,4.5rem)]
           lg:leading-[1.2]
 

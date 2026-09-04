@@ -91,10 +91,6 @@ export default function Footer() {
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
-    /*
-     * Already on the homepage:
-     * smoothly scroll directly to the form.
-     */
     if (pathname === "/") {
       const target = document.getElementById("open-letter-form");
 
@@ -110,10 +106,6 @@ export default function Footer() {
       return;
     }
 
-    /*
-     * Tell the homepage that this navigation specifically
-     * wants the OpenLetterForm.
-     */
     sessionStorage.setItem("sabal-scroll-target", "open-letter-form");
 
     if (prefersReducedMotion) {
@@ -136,19 +128,12 @@ export default function Footer() {
       ease: "power2.inOut",
 
       onComplete: () => {
-        /*
-         * Reset the outgoing page before routing so the
-         * homepage starts its GSAP calculations from the top.
-         */
         window.scrollTo({
           top: 0,
           left: 0,
           behavior: "auto",
         });
 
-        /*
-         * Put the hash in the URL immediately.
-         */
         router.push("/#open-letter-form", {
           scroll: false,
         });
@@ -389,9 +374,9 @@ export default function Footer() {
 
           sm:px-7
 
-          lg:min-h-[92px]
+          lg:max-h-[64px]
           lg:px-[3vw]
-          lg:py-4
+          lg:py-0
         "
       >
         <div
@@ -399,12 +384,14 @@ export default function Footer() {
             grid
             grid-cols-1
             items-center
+            
             gap-6
 
             sm:grid-cols-2
 
             lg:grid-cols-[1fr_1.25fr_1.25fr_1fr]
             lg:gap-8
+            
           "
         >
           {/* Privacy */}
@@ -489,7 +476,7 @@ export default function Footer() {
                 h-auto
                 w-[105px]
 
-                lg:w-[125px]
+                lg:w-[80px]
               "
             />
           </div>

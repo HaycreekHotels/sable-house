@@ -468,7 +468,7 @@ export default function ScrollStoryCards({
 
                         sm:text-[11px]
 
-                        lg:mb-4
+                        lg:mb-7
                         lg:text-[15px]
                       "
                     >
@@ -525,7 +525,7 @@ export default function ScrollStoryCards({
                   <p
                     className="
                       max-w-[380px]
-
+text-justify
                       text-[12px]
                       leading-[1.5]
                       text-neutral-800
@@ -655,7 +655,7 @@ export default function ScrollStoryCards({
                   </p>
                 )}
 
-                <p className="mt-5 text-sm leading-6 text-neutral-700">
+                <p className="mt-5 text-sm leading-6 text-justify text-neutral-700">
                   {card.description}
                 </p>
 

@@ -62,7 +62,18 @@ export default function Home() {
         space is an homage to the native Sabal leaf and the enduring,
         atmospheric beauty of the Georgia coast.
       </IntroSection>
-      <FullWidth />
+      <FullWidth
+        images={[
+          {
+            src: "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Guestroom.jpg",
+            alt: "Sabal House guest room with a king bed and contemporary finishes",
+          },
+          {
+            src: "https://sabal-house.b-cdn.net/ricks-videos/Heritage%20Rooms.png",
+            alt: "Seating and interior details inside a Sabal House guest room",
+          },
+        ]}
+      />
       <TextBreak>
         We transform hospitality into an intimate immersion, blending polished
         coastal sophistication with the honest pulse of Savannah.
