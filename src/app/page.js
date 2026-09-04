@@ -66,11 +66,23 @@ export default function Home() {
         images={[
           {
             src: "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Guestroom.jpg",
-            alt: "Sabal House guest room with a king bed and contemporary finishes",
+            alt: "Contemporary guest room at Sabal House",
+            eyebrow: "Stay",
+            title: "Sabal House Rooms",
+            description:
+              "A lighter, more contemporary expression of Sabal House. Refined finishes, thoughtful layouts, and a calm sense of ease within the new building.",
+            ctaLabel: "Explore Your Stay",
+            ctaHref: "/stay/accommodations",
           },
           {
             src: "https://sabal-house.b-cdn.net/ricks-videos/Heritage%20Rooms.png",
             alt: "Seating and interior details inside a Sabal House guest room",
+            eyebrow: "Stay",
+            title: "Heritage Rooms",
+            description:
+              "Set within the former Presidents' Quarters, these rooms retain original hardwood floors, historic details, and the individual character of the building.",
+            ctaLabel: "Discover Heritage Rooms",
+            ctaHref: "/stay/accommodations",
           },
         ]}
       />

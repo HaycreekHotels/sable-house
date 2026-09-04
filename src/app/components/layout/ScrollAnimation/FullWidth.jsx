@@ -16,16 +16,11 @@ const placeHolder =
 export default function FullWidth({
   leftIntroHeading = "Past & Present",
   rightIntroHeading = "Perfected",
-
   title = "Sabal House Rooms",
-
   description = "A lighter, more contemporary expression of Sabal House. Refined finishes, thoughtful layouts, and a calm sense of ease within the new building.",
-
   ctaLabel = "Explore Your Stay",
   ctaHref = "/stay/accommodations",
-
   imageSrc = placeHolder,
-
   images = [],
 }) {
   const sectionRef = useRef(null);
@@ -33,9 +28,9 @@ export default function FullWidth({
   const introRef = useRef(null);
   const contentRef = useRef(null);
   const carouselControlsRef = useRef(null);
+  const slideContentRef = useRef(null);
 
   const [activeImage, setActiveImage] = useState(0);
-
   const [carouselControlsEnabled, setCarouselControlsEnabled] = useState(false);
 
   const suppliedImages =
@@ -47,16 +42,24 @@ export default function FullWidth({
         return {
           src: image,
           alt: `${title} — image ${index + 1}`,
+          eyebrow: "Stay",
+          title,
+          description,
+          ctaLabel,
+          ctaHref,
         };
       }
 
-      if (!image?.src) {
-        return null;
-      }
+      if (!image?.src) return null;
 
       return {
         src: image.src,
         alt: image.alt || `${title} — image ${index + 1}`,
+        eyebrow: image.eyebrow || "Stay",
+        title: image.title || title,
+        description: image.description || description,
+        ctaLabel: image.ctaLabel || ctaLabel,
+        ctaHref: image.ctaHref || ctaHref,
       };
     })
     .filter(Boolean);
@@ -65,12 +68,19 @@ export default function FullWidth({
     carouselImages.push({
       src: placeHolder,
       alt: `${title} guest room`,
+      eyebrow: "Stay",
+      title,
+      description,
+      ctaLabel,
+      ctaHref,
     });
   }
 
   const hasCarousel = carouselImages.length > 1;
 
   const currentImageIndex = Math.min(activeImage, carouselImages.length - 1);
+
+  const activeSlide = carouselImages[currentImageIndex];
 
   function showPreviousImage() {
     setActiveImage((current) =>
@@ -118,9 +128,6 @@ export default function FullWidth({
           y: 0,
         });
 
-        /*
-         * Carousel addition only.
-         */
         if (carouselControls) {
           gsap.set(carouselControls, {
             autoAlpha: 1,
@@ -138,27 +145,16 @@ export default function FullWidth({
         y: 0,
       });
 
-      /*
-       * Starting headings
-       */
       gsap.set(intro, {
         autoAlpha: 1,
         y: 0,
       });
 
-      /*
-       * Expanded image content
-       */
       gsap.set(content, {
         autoAlpha: 0,
         y: 24,
       });
 
-      /*
-       * Carousel controls begin hidden.
-       *
-       * This does not change the existing panel/content animation.
-       */
       if (carouselControls) {
         gsap.set(carouselControls, {
           autoAlpha: 0,
@@ -170,81 +166,49 @@ export default function FullWidth({
       const timeline = gsap.timeline({
         scrollTrigger: {
           trigger: panel,
-
           start: "top 30%",
-
           end: () => `+=${window.innerWidth < 768 ? 650 : 850}`,
-
           scrub: 1,
-
           pin: section,
           pinSpacing: true,
-
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
       });
 
-      /*
-       * Phase 1
-       *
-       * ORIGINAL ANIMATION — unchanged.
-       */
       timeline.to(
         panel,
         {
           width: () => section.clientWidth,
           height: "100svh",
-
           duration: 3,
           ease: "none",
         },
         0,
       );
 
-      /*
-       * Phase 2
-       *
-       * ORIGINAL ANIMATION — unchanged.
-       */
       timeline.to(
         intro,
         {
           autoAlpha: 0,
           y: -12,
-
           duration: 0.6,
           ease: "none",
         },
         0.35,
       );
 
-      /*
-       * Phase 3
-       *
-       * ORIGINAL ANIMATION — unchanged.
-       */
       timeline.to(
         content,
         {
           autoAlpha: 1,
           y: 0,
-
           duration: 0.8,
           ease: "none",
         },
         2.2,
       );
 
-      /*
-       * CAROUSEL ADDITION
-       *
-       * Fade the controls in only near the end of the existing
-       * expansion so they don't appear over the starting image.
-       *
-       * This tween ends at the same timeline position as the
-       * existing animation, so it does not lengthen the animation.
-       */
       if (carouselControls) {
         timeline.to(
           carouselControls,
@@ -252,11 +216,9 @@ export default function FullWidth({
             autoAlpha: 1,
             duration: 0.3,
             ease: "none",
-
             onStart: () => {
               setCarouselControlsEnabled(true);
             },
-
             onReverseComplete: () => {
               setCarouselControlsEnabled(false);
             },
@@ -272,6 +234,46 @@ export default function FullWidth({
     },
     {
       scope: sectionRef,
+    },
+  );
+
+  useGSAP(
+    () => {
+      const slideContent = slideContentRef.current;
+
+      if (!slideContent) return;
+
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      if (prefersReducedMotion) {
+        gsap.set(slideContent, {
+          autoAlpha: 1,
+          y: 0,
+          clearProps: "transform",
+        });
+
+        return;
+      }
+
+      gsap.fromTo(
+        slideContent,
+        {
+          autoAlpha: 0,
+          y: 10,
+        },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.5,
+          ease: "power2.out",
+        },
+      );
+    },
+    {
+      scope: panelRef,
+      dependencies: [currentImageIndex],
     },
   );
 
@@ -292,14 +294,8 @@ export default function FullWidth({
       <div
         ref={introRef}
         aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          z-20
-        "
+        className="pointer-events-none absolute inset-0 z-20"
       >
-        {/* Mobile */}
         <div
           className="
             flex
@@ -307,19 +303,15 @@ export default function FullWidth({
             flex-col
             items-center
             justify-between
-
             px-6
             py-44
-
             text-center
-
             md:hidden
           "
         >
           <p
             className="
               whitespace-nowrap
-
               text-right
               font-benton-regular
               text-[clamp(2.75rem,5vw,5rem)]
@@ -329,7 +321,6 @@ export default function FullWidth({
             {leftIntroHeading}
           </p>
 
-          {/* Spacer mirrors the starting image footprint */}
           <div
             aria-hidden="true"
             className="
@@ -351,21 +342,16 @@ export default function FullWidth({
           </p>
         </div>
 
-        {/* Desktop */}
         <div
           className="
             hidden
             h-full
             items-center
-
             px-8
-
             md:grid
             md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]
             md:gap-36
-
             lg:px-16
-
             xl:px-24
           "
         >
@@ -382,15 +368,7 @@ export default function FullWidth({
             </p>
           </div>
 
-          {/* Spacer column matching original starting square */}
-          <div
-            aria-hidden="true"
-            className="
-              h-[250px]
-              w-[250px]
-              shrink-0
-            "
-          />
+          <div aria-hidden="true" className="h-[250px] w-[250px] shrink-0" />
 
           <div className="flex justify-start">
             <p
@@ -414,24 +392,15 @@ export default function FullWidth({
         aria-label={hasCarousel ? `${title} image gallery` : undefined}
         className="
           relative
-
           h-[min(250px,calc(100vw-2.5rem))]
           w-[min(250px,calc(100vw-2.5rem))]
-
           shrink-0
           overflow-hidden
-
           motion-reduce:h-[100svh]
           motion-reduce:w-full
         "
       >
-        <div
-          aria-live="off"
-          className="
-            absolute
-            inset-0
-          "
-        >
+        <div aria-live="off" className="absolute inset-0">
           {carouselImages.map((image, index) => {
             const isActive = index === currentImageIndex;
 
@@ -449,11 +418,9 @@ export default function FullWidth({
                 className={`
                   absolute
                   inset-0
-
                   transition-opacity
                   duration-700
                   ease-in-out
-
                   ${isActive ? "z-[2] opacity-100" : "z-[1] opacity-0"}
                 `}
               >
@@ -464,16 +431,13 @@ export default function FullWidth({
                   priority={index === 0}
                   loading={index === 0 ? undefined : "lazy"}
                   sizes="100vw"
-                  className="
-                    object-cover
-                  "
+                  className="object-cover"
                 />
               </div>
             );
           })}
         </div>
 
-        {/* Image overlay for text contrast */}
         <div
           aria-hidden="true"
           className="
@@ -492,15 +456,12 @@ export default function FullWidth({
               aria-hidden={!carouselControlsEnabled ? "true" : undefined}
               className="
                 pointer-events-none
-
                 invisible
-
                 absolute
                 inset-0
                 z-30
               "
             >
-              {/* Previous */}
               <button
                 type="button"
                 disabled={!carouselControlsEnabled}
@@ -508,44 +469,33 @@ export default function FullWidth({
                 aria-label="View previous room image"
                 className="
                   pointer-events-auto
-
                   absolute
                   left-3
                   top-1/2
-
                   flex
                   h-12
                   w-12
                   -translate-y-1/2
                   items-center
                   justify-center
-
                   rounded-full
                   border
                   border-white/50
-
                   bg-black/55
                   text-white
-
                   backdrop-blur-[2px]
-
                   transition
                   duration-300
-
-                  hover:bg-black/80
                   hover:border-white
-
+                  hover:bg-black/80
                   disabled:pointer-events-none
-
                   focus-visible:outline
                   focus-visible:outline-2
                   focus-visible:outline-offset-4
                   focus-visible:outline-white
-
                   sm:left-5
                   sm:h-14
                   sm:w-14
-
                   lg:left-8
                   lg:h-16
                   lg:w-16
@@ -554,7 +504,6 @@ export default function FullWidth({
                 <ChevronLeft />
               </button>
 
-              {/* Next */}
               <button
                 type="button"
                 disabled={!carouselControlsEnabled}
@@ -562,44 +511,33 @@ export default function FullWidth({
                 aria-label="View next room image"
                 className="
                   pointer-events-auto
-
                   absolute
                   right-3
                   top-1/2
-
                   flex
                   h-12
                   w-12
                   -translate-y-1/2
                   items-center
                   justify-center
-
                   rounded-full
                   border
                   border-white/50
-
                   bg-black/55
                   text-white
-
                   backdrop-blur-[2px]
-
                   transition
                   duration-300
-
-                  hover:bg-black/80
                   hover:border-white
-
+                  hover:bg-black/80
                   disabled:pointer-events-none
-
                   focus-visible:outline
                   focus-visible:outline-2
                   focus-visible:outline-offset-4
                   focus-visible:outline-white
-
                   sm:right-5
                   sm:h-14
                   sm:w-14
-
                   lg:right-8
                   lg:h-16
                   lg:w-16
@@ -611,7 +549,7 @@ export default function FullWidth({
 
             <p className="sr-only" aria-live="polite" aria-atomic="true">
               Image {currentImageIndex + 1} of {carouselImages.length}:{" "}
-              {carouselImages[currentImageIndex].alt}
+              {activeSlide.alt}
             </p>
           </>
         )}
@@ -620,136 +558,153 @@ export default function FullWidth({
           ref={contentRef}
           className="
             invisible
-
             absolute
             inset-x-0
             bottom-0
             z-20
-
-            grid
-            grid-cols-1
-            gap-7
-
             px-5
             pb-[max(2rem,env(safe-area-inset-bottom))]
-
             text-secondary
-
             sm:px-8
             sm:pb-[max(2.5rem,env(safe-area-inset-bottom))]
-
-            md:grid-cols-2
-            md:gap-12
             md:px-12
             md:pb-12
-
-            lg:gap-16
             lg:px-20
             lg:pb-14
-
             xl:px-28
-
             2xl:px-36
           "
         >
-          {/* Left column */}
           <div
+            ref={slideContentRef}
             className="
-              flex
-              flex-col
-              justify-end
+              grid
+              grid-cols-1
+              gap-7
+              md:grid-cols-2
+              md:gap-12
+              lg:gap-16
             "
           >
-            <p
-              className="
-                mb-3
-                text-xs
-                uppercase
-                tracking-[0.15em]
-              "
-            >
-              Stay
-            </p>
-
+            {/* Left column */}
             <div
               className="
-                flex
-                items-end
-                gap-5
-              "
+    flex
+    flex-col
+    justify-end
+  "
             >
-              <h2
+              <p
                 className="
-                  max-w-[11ch]
+      mb-5
+      text-xs
+      uppercase
+      tracking-[0.08em]
 
-                  font-benton-regular
-                  text-[clamp(2.25rem,10vw,3rem)]
-                  leading-[0.95]
+      sm:text-sm
 
-                  md:max-w-[10ch]
-                  md:text-[clamp(3rem,5vw,4rem)]
+      md:mb-6
+      md:text-base
+    "
+              >
+                {activeSlide.eyebrow}
+              </p>
+
+              <div
+                className="
+      flex
+      flex-col
+      items-start
+    "
+              >
+                {/* Title + arrow */}
+                <div
+                  className="
+        flex
+        w-full
+        items-center
+        gap-4
+
+        sm:gap-5
+
+        md:gap-6
+      "
+                >
+                  <h2
+                    className="
+          font-benton-regular
+          text-[clamp(3rem,12vw,4.5rem)]
+          leading-[0.9]
+          tracking-[-0.04em]
+
+          sm:text-[clamp(3.75rem,10vw,5.5rem)]
+
+          md:text-[clamp(4.25rem,6vw,6.75rem)]
+          md:whitespace-nowrap
+
+          lg:text-[clamp(4.75rem,5.5vw,7rem)]
+        "
+                  >
+                    {activeSlide.title}
+                  </h2>
+                </div>
+
+                {/* Static property label */}
+                <p
+                  className="
+        mt-2
+        self-center
+
+        font-central-regular
+        text-[clamp(1.25rem,5vw,1.75rem)]
+        leading-none
+        tracking-[-0.02em]
+
+        sm:mt-3
+
+        md:mr-[8%]
+        md:self-center
+        md:text-[clamp(1.4rem,1.5vw,1.75rem)]
+
+        lg:mr-[12%]
+      "
+                >
+                  at Sabal House
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-col items-start justify-end gap-5 md:gap-6">
+              <p className="max-w-xl text-sm leading-relaxed md:text-base">
+                {activeSlide.description}
+              </p>
+
+              <Link
+                href={activeSlide.ctaHref}
+                className="
+                  inline-flex
+                  min-h-11
+                  items-center
+                  justify-center
+                  bg-black
+                  px-5
+                  py-3
+                  text-xs
+                  font-bold
+                  uppercase
+                  tracking-wide
+                  text-secondary
+                  motion-safe:transition-opacity
+                  motion-safe:hover:opacity-80
+                  focus-visible:outline
+                  focus-visible:outline-2
+                  focus-visible:outline-offset-4
+                  focus-visible:outline-white
                 "
               >
-                {title}
-              </h2>
+                {activeSlide.ctaLabel}
+              </Link>
             </div>
-          </div>
-
-          {/* Right column */}
-          <div
-            className="
-              flex
-              flex-col
-              items-start
-              justify-end
-              gap-5
-
-              md:gap-6
-            "
-          >
-            <p
-              className="
-                max-w-xl
-
-                text-sm
-                leading-relaxed
-
-                md:text-base
-              "
-            >
-              {description}
-            </p>
-
-            <Link
-              href={ctaHref}
-              className="
-                inline-flex
-                min-h-11
-                items-center
-                justify-center
-
-                bg-black
-
-                px-5
-                py-3
-
-                text-xs
-                font-bold
-                uppercase
-                tracking-wide
-                text-secondary
-
-                motion-safe:transition-opacity
-                motion-safe:hover:opacity-80
-
-                focus-visible:outline
-                focus-visible:outline-2
-                focus-visible:outline-offset-4
-                focus-visible:outline-white
-              "
-            >
-              {ctaLabel}
-            </Link>
           </div>
         </div>
       </div>
