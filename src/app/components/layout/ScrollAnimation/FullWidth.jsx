@@ -599,7 +599,7 @@ export default function FullWidth({
       mb-5
       text-xs
       uppercase
-      tracking-[0.08em]
+      
 
       sm:text-sm
 
@@ -635,7 +635,7 @@ export default function FullWidth({
           font-benton-regular
           text-[clamp(3rem,12vw,4.5rem)]
           
-          tracking-[-0.04em]
+         
 
           sm:text-[clamp(3.75rem,10vw,5.5rem)]
 
@@ -658,7 +658,7 @@ export default function FullWidth({
         font-central-regular
         text-[clamp(1.25rem,5vw,1.75rem)]
         
-        tracking-[-0.02em]
+        
 
         sm:mt-3
 
@@ -692,7 +692,7 @@ export default function FullWidth({
                   text-xs
                   font-bold
                   uppercase
-                  tracking-wide
+                  
                   text-secondary
                   motion-safe:transition-opacity
                   motion-safe:hover:opacity-80

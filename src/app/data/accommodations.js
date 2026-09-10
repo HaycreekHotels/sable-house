@@ -153,7 +153,7 @@ export const rooms = [
 
     // Replace this URL with the final photography for this specific room.
     image:
-      "https://sabal-house.b-cdn.net/heritage/Heritage%20Traditional%20King.png",
+      "https://sabal-house.b-cdn.net/heritage/Heritage%20Traditional%20Queen.png",
     imageAlt: "Traditional King room in the Heritage Rooms at Sabal House",
     imagePosition: "center center",
 
@@ -189,7 +189,7 @@ export const rooms = [
 
     // Replace this URL with the final photography for this specific room.
     image:
-      "https://sabal-house.b-cdn.net/heritage/Heritage%20Traditional%20Queen.png",
+      "https://sabal-house.b-cdn.net/heritage/Heritage%20Traditional%20King.png",
     imageAlt: "Traditional Queen room in the Heritage Rooms at Sabal House",
     imagePosition: "center center",
 
