@@ -304,7 +304,8 @@ export default function FullWidth({
             items-center
             justify-between
             px-6
-            py-44
+            py-24
+            md:py-44
             text-center
             md:hidden
           "
