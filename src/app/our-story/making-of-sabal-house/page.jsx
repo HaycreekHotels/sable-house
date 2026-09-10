@@ -7,8 +7,8 @@ export default function StoryPage() {
   return (
     <main className="min-h-screen overflow-hidden bg-[#f7f6f2] text-black">
       <HeroImage
-        image="https://sabal-house.b-cdn.net/making%20of%20sabal%20house/SabalHouse-57.jpeg"
-        alt="AHHHHH"
+        image="https://sabal-house.b-cdn.net/making%20hero.jpg"
+        alt="The new public space at the Sabal House Hotel with modern furniture and vibrant green plants"
       />
       <ThreeColSection
         label="The"

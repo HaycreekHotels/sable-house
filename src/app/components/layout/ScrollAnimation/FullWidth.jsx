@@ -315,7 +315,7 @@ export default function FullWidth({
               text-right
               font-benton-regular
               text-[clamp(2.75rem,5vw,5rem)]
-              leading-[0.92]
+              
             "
           >
             {leftIntroHeading}
@@ -335,7 +335,7 @@ export default function FullWidth({
             className="
               font-benton-regular
               text-[clamp(2.25rem,10vw,3.5rem)]
-              leading-[0.95]
+              
             "
           >
             {rightIntroHeading}
@@ -361,7 +361,7 @@ export default function FullWidth({
                 text-right
                 font-benton-regular
                 text-[clamp(2.75rem,4vw,3.5rem)]
-                leading-[0.92]
+                
               "
             >
               {leftIntroHeading}
@@ -376,7 +376,7 @@ export default function FullWidth({
                 text-left
                 font-benton-regular
                 text-[clamp(2.75rem,4vw,3.5rem)]
-                leading-[0.92]
+                
               "
             >
               {rightIntroHeading}
@@ -634,7 +634,7 @@ export default function FullWidth({
                     className="
           font-benton-regular
           text-[clamp(3rem,12vw,4.5rem)]
-          leading-[0.9]
+          
           tracking-[-0.04em]
 
           sm:text-[clamp(3.75rem,10vw,5.5rem)]
@@ -657,7 +657,7 @@ export default function FullWidth({
 
         font-central-regular
         text-[clamp(1.25rem,5vw,1.75rem)]
-        leading-none
+        
         tracking-[-0.02em]
 
         sm:mt-3
@@ -675,7 +675,7 @@ export default function FullWidth({
             </div>
 
             <div className="flex flex-col items-start justify-end gap-5 md:gap-6">
-              <p className="max-w-xl text-sm leading-relaxed md:text-base">
+              <p className="max-w-xl text-sm  md:text-base">
                 {activeSlide.description}
               </p>
 

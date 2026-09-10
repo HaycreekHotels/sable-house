@@ -75,7 +75,7 @@ export default function Home() {
             ctaHref: "/stay/accommodations",
           },
           {
-            src: "https://sabal-house.b-cdn.net/ricks-videos/Heritage%20Rooms.png",
+            src: "https://sabal-house.b-cdn.net/Heritage%20Homepage.png",
             alt: "Seating and interior details inside a Sabal House guest room",
             eyebrow: "Stay",
             title: "Heritage Rooms",

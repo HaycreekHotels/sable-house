@@ -8,7 +8,8 @@ export const rooms = [
     name: "Classic King",
 
     // Replace this URL with the final photography for this specific room.
-    image: "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Guestroom.jpg",
+    image:
+      "https://sabal-house.b-cdn.net/sabal/Sabal%20House%20Classic%20King.png",
     imageAlt: "Classic King guest room at Sabal House in Savannah",
     imagePosition: "center center",
 
@@ -43,7 +44,8 @@ export const rooms = [
     name: "Classic Double Queen",
 
     // Replace this URL with the final photography for this specific room.
-    image: "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Guestroom.jpg",
+    image:
+      "https://sabal-house.b-cdn.net/sabal/Sabal%20House%20Classic%20Double%20Queen.png",
     imageAlt: "Classic Double Queen guest room at Sabal House in Savannah",
     imagePosition: "center center",
 
@@ -78,7 +80,8 @@ export const rooms = [
     name: "Classic King Accessible",
 
     // Replace this URL with the final photography for this specific room.
-    image: "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Guestroom.jpg",
+    image:
+      "https://sabal-house.b-cdn.net/sabal/Sabal%20House%20Classic%20King%20Accessible.png",
     imageAlt: "Classic King Accessible guest room at Sabal House in Savannah",
     imagePosition: "center center",
 
@@ -113,7 +116,8 @@ export const rooms = [
     name: "Deluxe Park View King",
 
     // Replace this URL with the final photography for this specific room.
-    image: "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Guestroom.jpg",
+    image:
+      "https://sabal-house.b-cdn.net/sabal/Sabal%20House%20Deluxe%20Park%20View%20King.png",
     imageAlt: "Deluxe Park View King guest room at Sabal House in Savannah",
     imagePosition: "center center",
 
@@ -148,7 +152,8 @@ export const rooms = [
     name: "Traditional King",
 
     // Replace this URL with the final photography for this specific room.
-    image: "https://sabal-house.b-cdn.net/ricks-videos/Heritage%20Rooms.png",
+    image:
+      "https://sabal-house.b-cdn.net/heritage/Heritage%20Traditional%20King.png",
     imageAlt: "Traditional King room in the Heritage Rooms at Sabal House",
     imagePosition: "center center",
 
@@ -183,7 +188,8 @@ export const rooms = [
     name: "Traditional Queen",
 
     // Replace this URL with the final photography for this specific room.
-    image: "https://sabal-house.b-cdn.net/ricks-videos/Heritage%20Rooms.png",
+    image:
+      "https://sabal-house.b-cdn.net/heritage/Heritage%20Traditional%20Queen.png",
     imageAlt: "Traditional Queen room in the Heritage Rooms at Sabal House",
     imagePosition: "center center",
 
@@ -218,7 +224,7 @@ export const rooms = [
     name: "Heritage King",
 
     // Replace this URL with the final photography for this specific room.
-    image: "https://sabal-house.b-cdn.net/ricks-videos/Heritage%20Rooms.png",
+    image: "https://sabal-house.b-cdn.net/heritage/Heritage%20King.png",
     imageAlt: "Heritage King room at Sabal House in Savannah",
     imagePosition: "center center",
 
@@ -253,7 +259,8 @@ export const rooms = [
     name: "Heritage Double Queen",
 
     // Replace this URL with the final photography for this specific room.
-    image: "https://sabal-house.b-cdn.net/ricks-videos/Heritage%20Rooms.png",
+    image:
+      "https://sabal-house.b-cdn.net/heritage/ChatGPT%20Image%20Sep%209%2C%202026%20at%2011_11_41%20AM%20(2).png",
     imageAlt: "Heritage Double Queen room at Sabal House in Savannah",
     imagePosition: "center center",
 
@@ -288,7 +295,7 @@ export const rooms = [
     name: "Heritage Loft Suite",
 
     // Replace this URL with the final photography for this specific room.
-    image: "https://sabal-house.b-cdn.net/ricks-videos/Heritage%20Rooms.png",
+    image: "https://sabal-house.b-cdn.net/heritage/Heritage%20Loft%20Suite.png",
     imageAlt: "Heritage Loft Suite at Sabal House in Savannah",
     imagePosition: "center center",
 
@@ -324,7 +331,8 @@ export const rooms = [
     name: "Heritage King Accessible",
 
     // Replace this URL with the final photography for this specific room.
-    image: "https://sabal-house.b-cdn.net/ricks-videos/Heritage%20Rooms.png",
+    image:
+      "https://sabal-house.b-cdn.net/heritage/Heritage%20King%20Accessible.png",
     imageAlt: "Heritage King Accessible room at Sabal House in Savannah",
     imagePosition: "center center",
 

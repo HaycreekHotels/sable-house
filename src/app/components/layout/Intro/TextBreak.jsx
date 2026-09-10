@@ -37,13 +37,6 @@ export default function TextBreak({
         });
       });
 
-      /*
-       * Standard motion:
-       *
-       * A very small vertical shift + opacity change creates
-       * a softer editorial reveal instead of making the text
-       * feel tied directly to the user's scroll position.
-       */
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         const animation = gsap.fromTo(
           text,
@@ -105,7 +98,7 @@ export default function TextBreak({
         lg:px-20
         lg:py-28
 
-        xl:px-20
+        xl:px-24
 
         ${className}
       `}
@@ -115,10 +108,11 @@ export default function TextBreak({
         className={`
           w-full
           max-w-[46rem]
+          text-center
 
           font-benton-regular
           text-[clamp(1.75rem,7.5vw,2.5rem)]
-          leading-[1.12]
+          
           tracking-[-0.025em]
           text-black
 
@@ -129,8 +123,8 @@ export default function TextBreak({
           md:leading-[1.18]
 
           lg:max-w-[72rem]
-          lg:text-[clamp(3rem,4vw,4.5rem)]
-          lg:leading-[1.2]
+          lg:text-[clamp(3rem,3.75vw,4rem)]
+          
 
           ${textClassName}
         `}
