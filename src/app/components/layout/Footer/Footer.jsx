@@ -60,7 +60,7 @@ const utilityLinkStyles = `
   text-sm
   font-central-regular
   tracking-[-0.02em]
-  text-black
+ text-secondary
 
   transition-opacity
   duration-300
@@ -269,19 +269,19 @@ export default function Footer() {
             <Image
               src={whiteLogo}
               alt=""
-              width={300}
+              width={260}
               height={260}
               className="
                 h-auto
                 w-[180px]
 
-                sm:w-[200px]
-                md:w-[220px]
+                sm:w-[180px]
+                md:w-[200px]
 
-                lg:w-[260px]
+                lg:w-[240px]
 
-                xl:w-[280px]
-                2xl:w-[330px]
+                xl:w-[260px]
+                2xl:w-[300px]
               "
               sizes="
                 (max-width: 640px) 230px,
@@ -366,8 +366,8 @@ export default function Footer() {
       {/* Bottom utility bar */}
       <div
         className="
-          bg-secondary
-          text-black
+          
+          
 
           px-5
           py-5

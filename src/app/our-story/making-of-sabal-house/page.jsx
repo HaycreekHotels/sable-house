@@ -16,7 +16,7 @@ export default function StoryPage() {
         hr="Of Sabal House"
         content="Designed as a thoughtful retreat from the familiar, Sabal House offers a space to arrive, find your footing, and listen to the pulse of Savannah. "
         cr="This philosophy takes form in every material, line, and detail, seamlessly bridging our newly crafted architectural sanctuary with the restored Heritage Rooms."
-        eyebrow="TOLD BY THE PEOPLE SHAPING IT"
+        eyebrow="Told by the people shaping it."
         className="-mb-[80px] bg-[#f7f6f2]"
       />
       <FullWidthSimple />
