@@ -418,7 +418,7 @@ export default function Footer() {
                 whitespace-nowrap
                 text-xs
                 font-central-regular
-                text-black
+                text-secondary
 
                 sm:text-sm
                 lg:text-[16px]
@@ -458,7 +458,7 @@ export default function Footer() {
                 whitespace-nowrap
                 text-xs
                 font-central-regular
-                text-black
+                text-secondary
 
                 sm:text-sm
                 lg:text-[16px]
