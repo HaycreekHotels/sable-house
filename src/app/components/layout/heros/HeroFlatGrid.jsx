@@ -13,7 +13,7 @@ gsap.registerPlugin(ScrollTrigger);
 const VIDEO_SRC =
   "https://sabal-house.b-cdn.net/flat%20hero/Sabal%20House%20-%20Promo.mp4";
 
-const VIDEO_POSTER = "../../../../../public/images/logos/video poster.png";
+const VIDEO_POSTER = "/images/logos/video poster.png";
 
 const GRID_ITEMS = [
   // Row 1

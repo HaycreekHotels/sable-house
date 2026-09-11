@@ -1,6 +1,8 @@
 export const VIDEO_STORIES = [
   {
     id: "angela-king",
+    name: "Angela King",
+    role: "The Steward",
 
     description:
       "Angela King explains the stewardship and vision behind the creation of Sabal House.",
@@ -12,7 +14,8 @@ export const VIDEO_STORIES = [
   },
   {
     id: "pat-shay",
-
+    name: "Pat Shay",
+    role: "The Architect",
     description:
       "Pat Shay discusses the architectural influences, materials, and details that shaped Sabal House.",
     videoUrl:
@@ -23,6 +26,8 @@ export const VIDEO_STORIES = [
   },
   {
     id: "maria-gosset",
+    name: "Maria Gosset",
+    role: "The Designer",
 
     description:
       "Maria Gosset shares the design principles and natural inspirations found throughout Sabal House.",
