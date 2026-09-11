@@ -320,8 +320,8 @@ export const rooms = [
     title: ["Heritage", "Loft Suite"],
     name: "Heritage Loft Suite",
 
-    // Replace this URL with the final photography for this specific room.
-    image: "https://sabal-house.b-cdn.net/heritage/Heritage%20Loft%20Suite.png",
+    image:
+      "https://sabal-house.b-cdn.net/heritage/Heritage%20King%20Accessible.png",
     imageAlt: "Heritage Loft Suite at Sabal House in Savannah",
     imagePosition: "center center",
 
@@ -361,9 +361,7 @@ export const rooms = [
     title: ["Heritage King", "Accessible"],
     name: "Heritage King Accessible",
 
-    // Replace this URL with the final photography for this specific room.
-    image:
-      "https://sabal-house.b-cdn.net/heritage/Heritage%20King%20Accessible.png",
+    image: "https://sabal-house.b-cdn.net/heritage/Heritage%20Loft%20Suite.png",
     imageAlt: "Heritage King Accessible room at Sabal House in Savannah",
     imagePosition: "center center",
 
@@ -391,6 +389,7 @@ export const rooms = [
       "Spacious",
       "Wood Floors",
       "Roll-in Shower",
+      "Fireplace",
     ],
   },
 ];
