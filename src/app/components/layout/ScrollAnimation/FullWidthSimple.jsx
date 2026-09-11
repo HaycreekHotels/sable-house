@@ -18,7 +18,7 @@ export default function FullWidthSimple({
   headingEnd = "experience more.",
   description = `Sabal House believes that slowing down allows you to
     experience more. Through thoughtful design, intuitive
-    hospitality, and a deep connection to Savannah, the house
+    hospitality, and a deep connection to Savannah, our house
     creates space to arrive, feel at ease, and become more
     present to the city around you.`,
   image = placeHolder,
@@ -61,10 +61,6 @@ export default function FullWidthSimple({
 
       /*
        * REDUCED MOTION
-       *
-       * Show the finished, useful state immediately.
-       * The panel fills the entire viewport so no section background
-       * is exposed beneath the image.
        */
       if (prefersReducedMotion) {
         gsap.set(panel, {
@@ -127,11 +123,6 @@ export default function FullWidthSimple({
             autoAlpha: 0,
           });
 
-          /*
-           * autoAlpha also applies visibility:hidden at zero opacity,
-           * keeping the hidden final copy out of the accessibility tree
-           * until it begins to appear.
-           */
           gsap.set(content, {
             autoAlpha: 0,
             y: isMobile ? 20 : 30,
@@ -152,10 +143,6 @@ export default function FullWidthSimple({
 
           /*
            * PHASE 1 — EXPAND TO THE FULL VIEWPORT
-           *
-           * The previous 86svh / 90vh values were the source of the
-           * light-colored bar beneath the image. The pinned section is
-           * 100svh tall, so the final panel needs to be 100svh as well.
            */
           timeline.to(
             panel,

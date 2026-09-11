@@ -116,10 +116,6 @@ export default function MakingOfSabalHouse() {
       resetVideo(video);
     });
 
-    /*
-     * Keep the poster image visible until the browser has actually rendered
-     * playback. This avoids a brief gray/black frame in Safari.
-     */
     setStartedVideoIndex(null);
     setActiveVideoIndex(index);
 
