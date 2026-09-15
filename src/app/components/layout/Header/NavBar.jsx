@@ -90,21 +90,27 @@ export default function NavBar() {
           aria-expanded={isOpen}
           onClick={handleOpenMenu}
           className={`
-            relative
+            group
 
-            flex
-            h-11
-            w-11
+            inline-flex
+            min-h-11
             shrink-0
             cursor-pointer
             items-center
             justify-center
+            gap-3
 
             bg-transparent
+            px-1
+
+            transition-opacity
+            duration-300
+
+            hover:opacity-70
 
             focus-visible:outline
             focus-visible:outline-2
-            focus-visible:outline-offset-2
+            focus-visible:outline-offset-4
 
             ${
               useDarkNav
@@ -113,14 +119,17 @@ export default function NavBar() {
             }
           `}
         >
+          {/* Hamburger */}
           <span
             aria-hidden="true"
             className="
               flex
-              h-5
-              w-8
+              h-[18px]
+              w-7
               flex-col
               justify-between
+
+              sm:w-8
             "
           >
             <span
@@ -164,6 +173,27 @@ export default function NavBar() {
                 ${useDarkNav ? "bg-black" : "bg-white"}
               `}
             />
+          </span>
+
+          {/* Menu label */}
+          <span
+            aria-hidden="true"
+            className={`
+              text-[11px]
+              font-medium
+              uppercase
+              tracking-[0.12em]
+
+              transition-colors
+              duration-500
+              ease-out
+
+              sm:text-xs
+
+              ${useDarkNav ? "text-black" : "text-white"}
+            `}
+          >
+            Menu
           </span>
         </button>
 
@@ -213,7 +243,7 @@ export default function NavBar() {
             items-center
             justify-center
 
-            bg-black
+            bg-main
             px-3
             py-2.5
 
