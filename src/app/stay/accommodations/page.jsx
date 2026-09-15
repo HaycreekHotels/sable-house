@@ -2,15 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { rooms } from "@/app/data/accommodations";
 
-gsap.registerPlugin(ScrollTrigger);
-
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const filters = [
   {
@@ -23,7 +23,7 @@ const filters = [
   },
   {
     value: "heritage",
-    label: "Heritage Rooms @ Sabal House",
+    label: "Heritage Rooms",
   },
 ];
 
@@ -39,198 +39,215 @@ export default function AccommodationsPage() {
       ? rooms
       : rooms.filter((room) => room.house === activeFilter);
 
-  useLayoutEffect(() => {
-    const context = gsap.context(() => {
-      const prefersReducedMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      ).matches;
+  /*
+   * Hero entrance animation
+   */
+  useGSAP(
+    () => {
+      const hero = heroRef.current;
 
-      if (prefersReducedMotion) return;
+      if (!hero) return;
 
-      gsap.fromTo(
-        "[data-hero]",
-        {
-          opacity: 0,
-          y: 40,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          stagger: 0.1,
-          ease: "power3.out",
-        },
-      );
-    }, heroRef);
+      const mm = gsap.matchMedia();
 
-    return () => context.revert();
-  }, []);
-
-  useLayoutEffect(() => {
-    const context = gsap.context(() => {
-      const prefersReducedMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      ).matches;
-
-      if (prefersReducedMotion) return;
-
-      const cards = gsap.utils.toArray("[data-room-card]");
-
-      cards.forEach((card) => {
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
         gsap.fromTo(
-          card,
+          "[data-hero]",
           {
-            opacity: 0,
-            y: 45,
+            autoAlpha: 0,
+            y: 22,
           },
           {
-            opacity: 1,
+            autoAlpha: 1,
             y: 0,
-            duration: 0.8,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 88%",
-              once: true,
-            },
+            duration: 0.9,
+            stagger: 0.1,
+            ease: "power2.out",
           },
         );
       });
 
-      ScrollTrigger.refresh();
-    }, gridRef);
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        gsap.set("[data-hero]", {
+          clearProps: "all",
+        });
+      });
 
-    return () => context.revert();
-  }, [activeFilter]);
+      return () => mm.revert();
+    },
+    {
+      scope: heroRef,
+    },
+  );
+
+  /*
+   * Room card scroll entrances.
+   *
+   * Re-runs when the active filter changes so newly
+   * rendered rooms receive the same entrance treatment.
+   */
+  useGSAP(
+    () => {
+      const grid = gridRef.current;
+
+      if (!grid) return;
+
+      const mm = gsap.matchMedia();
+
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const cards = gsap.utils.toArray("[data-room-card]");
+
+        cards.forEach((card) => {
+          gsap.fromTo(
+            card,
+            {
+              autoAlpha: 0,
+              y: 35,
+            },
+            {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.8,
+              ease: "power2.out",
+
+              scrollTrigger: {
+                trigger: card,
+                start: "top 88%",
+                once: true,
+              },
+            },
+          );
+        });
+
+        ScrollTrigger.refresh();
+      });
+
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        gsap.set("[data-room-card]", {
+          clearProps: "all",
+        });
+      });
+
+      return () => mm.revert();
+    },
+    {
+      scope: gridRef,
+      dependencies: [activeFilter],
+      revertOnUpdate: true,
+    },
+  );
 
   function handleFilterChange(filter) {
     setActiveFilter(filter);
   }
 
   return (
-    <main ref={pageRef} className="min-h-screen bg-[#f7f6f2] text-black">
+    <main
+      ref={pageRef}
+      className="
+        min-h-screen
+        bg-secondary
+        text-black
+      "
+    >
+      {/* =====================================================
+          PAGE INTRO
+      ====================================================== */}
       <section
         ref={heroRef}
         aria-labelledby="accommodations-heading"
         className="
           mx-auto
+          flex
           w-full
-          max-w-[1800px]
+          max-w-[1440px]
+          flex-col
+          items-center
+
           px-5
-          pb-14
-          pt-28
+          pb-20
+          pt-36
 
           sm:px-8
-          sm:pb-16
-          sm:pt-36
+          sm:pb-24
+          sm:pt-40
 
+          md:pt-44
+
+          lg:min-h-[660px]
+          lg:justify-center
           lg:px-12
           lg:pb-20
-          lg:pt-52
+          lg:pt-40
 
+          xl:min-h-[700px]
           xl:px-16
-          xl:pt-56
         "
       >
+        {/* Intro copy */}
         <div
+          data-hero
           className="
-            grid
-            grid-cols-1
-            gap-y-8
-
-            lg:grid-cols-12
-            lg:gap-x-8
-            lg:gap-y-12
+            flex
+            w-full
+            max-w-[620px]
+            flex-col
+            items-center
+            text-center
           "
         >
           <h1
             id="accommodations-heading"
-            data-hero
             className="
-              grid
-              grid-cols-1
-              gap-y-1
-
               font-benton-regular
-              text-[clamp(3.5rem,8vw,5.75rem)]
               font-normal
-              leading-[0.92]
-              tracking-[-0.03em]
 
-              lg:col-span-12
-              lg:grid-cols-12
-              lg:items-end
-              lg:gap-x-8
-              lg:text-[clamp(4.5rem,5vw,6rem)]
+              text-[clamp(3rem,12vw,4.25rem)]
+              leading-[0.95]
+              tracking-[-0.035em]
+
+              sm:text-[clamp(3.5rem,8vw,4.75rem)]
+
+              md:text-[clamp(4rem,5vw,5.25rem)]
             "
           >
-            <span className="block lg:col-span-3">Find</span>
-
-            <span
-              className="
-                block
-                lg:col-span-4
-                lg:col-start-5
-              "
-            >
-              Your Place
-            </span>
-
-            <span
-              className="
-                block
-                whitespace-nowrap
-
-                lg:col-span-4
-                lg:col-start-9
-              "
-            >
-              at Sabal House
-            </span>
+            Find Your Place
           </h1>
 
-          <div
-            data-hero
+          <p
             className="
-              mt-4
-              max-w-md
+              mt-6
+              max-w-[520px]
 
-              lg:col-span-4
-              lg:col-start-9
-              lg:mt-0
-              lg:max-w-[460px]
+              font-central-regular
+              text-[13px]
+              leading-[1.55]
+
+              sm:text-sm
+              sm:leading-[1.6]
+
+              md:mt-7
+              md:text-[15px]
             "
           >
-            <p
-              className="
-                font-central-regular
-                text-[13px]
-                leading-[1.65]
-
-                sm:text-sm
-
-                lg:text-[15px]
-                lg:leading-[1.5]
-              "
-            >
-              Choose between the light-filled rooms of the Sabal House building
-              and The Heritage Rooms, set within the former Presidents&apos;
-              Quarters. Two distinct expressions, each part of the same stay.
-            </p>
-          </div>
+            Choose between the light-filled rooms of the Sabal House building
+            and The Heritage Rooms, set within the former Presidents&apos;
+            Quarters. Two distinct expressions, each part of the same stay.
+          </p>
         </div>
 
+        {/* Filters */}
         <div
           data-hero
           className="
-            mt-14
-            border-t
-            border-black/15
-            pt-6
+            mt-16
+            w-full
 
             sm:mt-20
 
-            lg:mt-24
+            md:mt-24
+
+            lg:mt-28
           "
         >
           <RoomFilter
@@ -240,12 +257,16 @@ export default function AccommodationsPage() {
         </div>
       </section>
 
+      {/* =====================================================
+          ROOMS
+      ====================================================== */}
       <section
         ref={gridRef}
         aria-labelledby="rooms-heading"
         className="
           mx-auto
           max-w-[1600px]
+
           px-2
           pb-24
 
@@ -268,6 +289,7 @@ export default function AccommodationsPage() {
           className="
             grid
             grid-cols-1
+
             gap-x-3
             gap-y-16
 
@@ -287,26 +309,36 @@ export default function AccommodationsPage() {
   );
 }
 
+/* =========================================================
+   ROOM FILTER
+========================================================= */
+
 function RoomFilter({ activeFilter, onFilterChange }) {
   return (
-    <div>
+    <div className="w-full">
       <p id="accommodation-filter-label" className="sr-only">
-        Filter accommodations by house
+        Filter accommodations by room collection
       </p>
 
       <div
         role="group"
         aria-labelledby="accommodation-filter-label"
         className="
+          mx-auto
           flex
+          w-full
+          max-w-[620px]
+
           flex-wrap
           items-center
-          gap-x-7
-          gap-y-3
+          justify-center
+
+          gap-x-6
+          gap-y-2
 
           sm:gap-x-10
 
-          lg:gap-x-14
+          md:gap-x-14
         "
       >
         {filters.map((filter) => {
@@ -320,11 +352,22 @@ function RoomFilter({ activeFilter, onFilterChange }) {
               onClick={() => onFilterChange(filter.value)}
               className="
                 group
-                flex
+                relative
+
+                inline-flex
                 min-h-11
                 items-center
-                gap-2.5
-                text-left
+                justify-center
+
+                px-1
+
+                text-center
+                text-[9px]
+                font-medium
+                uppercase
+                tracking-[0.035em]
+
+                sm:text-[10px]
 
                 focus-visible:outline
                 focus-visible:outline-2
@@ -332,54 +375,33 @@ function RoomFilter({ activeFilter, onFilterChange }) {
                 focus-visible:outline-black
               "
             >
+              <span>{filter.label}</span>
+
+              {/* Underline */}
               <span
                 aria-hidden="true"
                 className={`
-                  flex
-                  h-[14px]
-                  w-[14px]
-                  shrink-0
-                  items-center
-                  justify-center
-                  border
-                  border-black
+                  absolute
+                  bottom-[6px]
+                  left-0
 
-                  transition-colors
+                  h-px
+                  w-full
+
+                  origin-center
+                  bg-black
+
+                  transition-transform
                   duration-300
+                  ease-out
 
                   ${
                     isActive
-                      ? "bg-black"
-                      : "bg-transparent group-hover:bg-black/10"
+                      ? "scale-x-100"
+                      : "scale-x-0 group-hover:scale-x-100"
                   }
                 `}
-              >
-                <span
-                  className={`
-                    h-1
-                    w-1
-                    bg-white
-
-                    transition-opacity
-                    duration-300
-
-                    ${isActive ? "opacity-100" : "opacity-0"}
-                  `}
-                />
-              </span>
-
-              <span
-                className="
-                  text-[9px]
-                  font-medium
-                  uppercase
-                  tracking-[0.03em]
-
-                  sm:text-[10px]
-                "
-              >
-                {filter.label}
-              </span>
+              />
             </button>
           );
         })}
@@ -387,6 +409,10 @@ function RoomFilter({ activeFilter, onFilterChange }) {
     </div>
   );
 }
+
+/* =========================================================
+   ROOM CARD
+========================================================= */
 
 function RoomCard({ room }) {
   return (
@@ -404,6 +430,7 @@ function RoomCard({ room }) {
           focus-visible:outline-black
         "
       >
+        {/* Image */}
         <div
           className="
             relative
@@ -420,8 +447,13 @@ function RoomCard({ room }) {
             src={room.image}
             alt={room.imageAlt}
             fill
-            sizes="(min-width: 768px) 50vw, 100vw"
-            style={{ objectPosition: room.imagePosition ?? "center center" }}
+            sizes="
+              (min-width: 768px) 50vw,
+              100vw
+            "
+            style={{
+              objectPosition: room.imagePosition ?? "center center",
+            }}
             className="
               object-cover
 
@@ -436,6 +468,7 @@ function RoomCard({ room }) {
           />
         </div>
 
+        {/* Room information */}
         <div className="pt-4 sm:pt-5">
           <div
             className="
@@ -477,7 +510,9 @@ function RoomCard({ room }) {
               "
             >
               <span>{room.bed}</span>
+
               <span aria-hidden="true">|</span>
+
               <span>{room.size}</span>
             </div>
           </div>
@@ -486,6 +521,7 @@ function RoomCard({ room }) {
             className="
               mt-3
               max-w-xl
+
               text-[15px]
               leading-[1.65]
 
@@ -515,8 +551,10 @@ function RoomCard({ room }) {
                 absolute
                 bottom-0
                 left-0
+
                 h-px
                 w-full
+
                 origin-left
                 bg-black
 
