@@ -219,25 +219,25 @@ export default function TextBreak({
           -translate-x-1/2
 
           h-[72px]
-          w-[100px]
+          w-[60px]
 
           sm:bottom-10
           sm:h-[82px]
-          sm:w-[110px]
+          sm:w-[60px]
 
           md:bottom-[4.5rem]
           md:h-[92px]
-          md:w-[130px]
+          md:w-[70px]
 
           lg:bottom-20
 
-          xl:bottom-24
+          xl:bottom-26
           xl:h-[100px]
-          xl:w-[140px]
+          xl:w-[80px]
 
-          2xl:bottom-26
+          2xl:bottom-28
           2xl:h-[108px]
-          2xl:w-[150px]
+          2xl:w-[90px]
         "
           >
             <Image
