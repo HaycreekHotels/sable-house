@@ -1,5 +1,6 @@
 import HeroVideo from "./components/layout/heros/HeroVideo";
 import IntroSection from "./components/layout/Intro/IntroSection";
+import ImageBreak from "./components/layout/Decorative/ImageBreak";
 import FullWidth from "./components/layout/ScrollAnimation/FullWidth";
 import TextBreak from "./components/layout/Intro/TextBreak";
 import ScrollStoryCards from "./components/layout/ScrollAnimation/ScrollStoryCards";
@@ -55,13 +56,15 @@ export default function Home() {
         className="bg-[#F7F6F2]"
         label="Begin"
         heading="At Sabal House"
-        leftText="Beyond the famous squares lies a quieter, deeper Savannah. One measured by the shift of the tides, the perfume of night-blooming vines, and secrets kept by ancient moss."
+        leftText="
+Beyond the famous squares lies a quieter, deeper Savannah. One measured by the shift of the tides, the perfume of night-blooming vines, and secrets kept by ancient moss."
       >
         Sabal House anchors itself in this interplay of urban heritage and
         natural landscape. Situated directly across from Oglethorpe Square, our
         space is an homage to the native Sabal leaf and the enduring,
         atmospheric beauty of the Georgia coast.
       </IntroSection>
+      <ImageBreak />
       <FullWidth
         images={[
           {
