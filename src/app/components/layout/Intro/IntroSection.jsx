@@ -8,9 +8,9 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
-
 import Leaf from "../../../../../public/images/decorative/SH_Leaf_Brown.png";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export default function IntroSection({
   label = "Begin at",
@@ -101,6 +101,7 @@ export default function IntroSection({
         overflow-hidden
         bg-secondary
         text-black
+
         ${className}
       `}
     >
@@ -123,25 +124,29 @@ export default function IntroSection({
           className="
             absolute
 
-  -bottom-[55%]
-  -left-[28%]
+            -bottom-[55%]
+            -left-[28%]
 
-  h-[175%]
-  w-[90%]
+            h-[175%]
+            w-[90%]
 
-  -rotate-[10deg]
-  opacity-[0.025]
+            -rotate-[10deg]
+            opacity-[0.025]
 
-  max-md:-bottom-[25%]
-  max-md:-left-[55%]
-  max-md:h-[125%]
-  max-md:w-[150%]
-  max-md:-rotate-[8deg]
+            max-md:-bottom-[25%]
+            max-md:-left-[55%]
+            max-md:h-[125%]
+            max-md:w-[150%]
+            max-md:-rotate-[8deg]
 
-  lg:-bottom-[55%]
-  lg:-left-[50%]
-  lg:h-[180%]
-  lg:w-[92%]
+            lg:-bottom-[55%]
+            lg:-left-[50%]
+            lg:h-[180%]
+            lg:w-[92%]
+
+            xl:-left-[46%]
+
+            2xl:-left-[42%]
           "
         >
           <div
@@ -172,27 +177,31 @@ export default function IntroSection({
         {/* RIGHT LEAF */}
         <div
           className="
-           absolute
+            absolute
 
-  -right-[28%]
-  -bottom-[55%]
+            -right-[28%]
+            -bottom-[55%]
 
-  h-[175%]
-  w-[90%]
+            h-[175%]
+            w-[90%]
 
-  rotate-[10deg]
-  opacity-[0.035]
+            rotate-[10deg]
+            opacity-[0.035]
 
-  max-md:-right-[55%]
-  max-md:-bottom-[25%]
-  max-md:h-[125%]
-  max-md:w-[150%]
-  max-md:rotate-[8deg]
+            max-md:-right-[55%]
+            max-md:-bottom-[25%]
+            max-md:h-[125%]
+            max-md:w-[150%]
+            max-md:rotate-[8deg]
 
-  lg:-right-[50%]
-  lg:-bottom-[55%]
-  lg:h-[180%]
-  lg:w-[92%]
+            lg:-right-[50%]
+            lg:-bottom-[55%]
+            lg:h-[180%]
+            lg:w-[92%]
+
+            xl:-right-[46%]
+
+            2xl:-right-[42%]
           "
         >
           <div
@@ -228,6 +237,7 @@ export default function IntroSection({
       <div
         className="
           mx-auto
+
           flex
           min-h-[560px]
           w-full
@@ -248,6 +258,14 @@ export default function IntroSection({
 
           lg:min-h-[690px]
           lg:px-16
+
+          xl:min-h-[720px]
+          xl:max-w-[1600px]
+          xl:px-20
+
+          2xl:min-h-[760px]
+          2xl:max-w-[1800px]
+          2xl:px-24
         "
       >
         <div
@@ -255,12 +273,18 @@ export default function IntroSection({
           className="
             relative
             z-10
-            text-center
+
             flex
             w-full
             max-w-[550px]
             flex-col
-            items-start
+            items-center
+
+            text-center
+
+            lg:max-w-[620px]
+            xl:max-w-[700px]
+            2xl:max-w-[760px]
           "
         >
           {/* Heading */}
@@ -268,7 +292,6 @@ export default function IntroSection({
             id="intro-section-heading"
             className="
               w-full
-           
 
               font-benton-regular
               text-[2.6rem]
@@ -276,8 +299,14 @@ export default function IntroSection({
               tracking-[-0.025em]
 
               sm:text-[3.2rem]
+
               md:text-[3.6rem]
+
               lg:text-[4rem]
+
+              xl:text-[4.35rem]
+
+              2xl:text-[4.6rem]
             "
           >
             {label} <span className="whitespace-nowrap">{heading}</span>
@@ -289,8 +318,9 @@ export default function IntroSection({
               className="
                 mt-8
                 w-full
-                font-central-regular
+                max-w-[580px]
 
+                font-central-regular
                 text-[0.95rem]
                 leading-[1.55]
                 text-neutral-950
@@ -299,8 +329,14 @@ export default function IntroSection({
                 sm:text-base
 
                 md:text-[1.05rem]
-                
-                md:px-12
+
+                lg:max-w-[600px]
+
+                xl:max-w-[640px]
+                xl:text-[1.1rem]
+                xl:leading-[1.6]
+
+                2xl:max-w-[680px]
               "
             >
               {leftText}
@@ -312,9 +348,10 @@ export default function IntroSection({
             <div
               className="
                 mt-7
-                w-full 
-               font-central-regular
+                w-full
+                max-w-[580px]
 
+                font-central-regular
                 text-[0.95rem]
                 leading-[1.55]
                 text-neutral-950
@@ -323,8 +360,14 @@ export default function IntroSection({
 
                 md:mt-8
                 md:text-[1.05rem]
-              
-                md:px-12
+
+                lg:max-w-[600px]
+
+                xl:max-w-[640px]
+                xl:text-[1.1rem]
+                xl:leading-[1.6]
+
+                2xl:max-w-[680px]
 
                 [&_p+p]:mt-5
               "
@@ -338,11 +381,14 @@ export default function IntroSection({
             <div
               className="
                 mt-10
+
                 flex
                 w-full
                 justify-center
 
                 md:mt-12
+
+                xl:mt-14
               "
             >
               <Link
@@ -353,12 +399,15 @@ export default function IntroSection({
                   items-center
                   justify-center
 
+                  border-2
+                  border-transparent
                   bg-main
+
                   px-5
                   py-3
 
-                  text-xs
                   font-central-regular
+                  text-xs
                   uppercase
                   tracking-[0.03em]
                   text-secondary
@@ -367,10 +416,9 @@ export default function IntroSection({
                   duration-300
                   ease-out
 
-                   hover:bg-transparent
-            hover:border-2
-            hover:border-main
-            hover:text-main
+                  hover:border-main
+                  hover:bg-transparent
+                  hover:text-main
 
                   focus-visible:outline
                   focus-visible:outline-2

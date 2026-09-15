@@ -105,89 +105,104 @@ export default function TextBreak({
       ref={sectionRef}
       style={{
         backgroundImage:
-          "url('/images/decorative/Dark-Green-Background-Grain.jpg')",
+          "url('/images/decorative/Dark-Green-Background-Grain.png')",
       }}
       className={`
-        w-full
-        bg-cover
-        bg-center
-        bg-no-repeat
+    w-full
 
-        p-4
+    border-[16px]
+    border-transparent
 
-        sm:p-5
-        md:p-6
-        lg:p-8
+    bg-cover
+    bg-center
+    bg-no-repeat
+    bg-clip-padding
 
-        ${className}
-      `}
+    sm:border-[20px]
+    md:border-[24px]
+    lg:border-[32px]
+
+    ${className}
+  `}
     >
       <div
         className={`
-          relative
+      relative
 
-          flex
-          min-h-[520px]
-          w-full
-          items-center
-          justify-center
+      flex
+      min-h-[520px]
+      w-full
+      items-center
+      justify-center
 
-          px-6
-          py-20
+      px-6
+      py-20
 
-          sm:min-h-[560px]
-          sm:px-10
-          sm:py-24
+      sm:min-h-[560px]
+      sm:px-10
+      sm:py-24
 
-          md:min-h-[620px]
-          md:px-14
-          md:py-28
+      md:min-h-[620px]
+      md:px-14
+      md:py-28
 
-          lg:min-h-[650px]
-          lg:px-20
-          lg:py-32
+      lg:min-h-[650px]
+      lg:px-20
+      lg:py-32
 
-          ${panelClassName}
-        `}
+      xl:min-h-[740px]
+      xl:px-24
+      xl:py-36
+
+      2xl:min-h-[800px]
+      2xl:px-32
+      2xl:py-40
+
+      ${panelClassName}
+    `}
       >
         {/* Centered quote */}
         <div
           className="
-            flex
-            w-full
-            max-w-[900px]
-            items-center
-            justify-center
+        flex
+        w-full
+        max-w-[900px]
+        items-center
+        justify-center
+        text-center
 
-            text-center
-
-            md:max-w-[750px]
-            lg:max-w-[800px]
-          "
+        md:max-w-[750px]
+        lg:max-w-[850px]
+        xl:max-w-[1000px]
+        2xl:max-w-[1100px]
+      "
         >
           <p
             ref={textRef}
             className={`
-              max-w-[860px]
+          w-full
 
-              font-benton-regular
-              italic
+          font-benton-regular
+          italic
 
-              text-[clamp(2rem,7vw,2.85rem)]
-              leading-[1.18]
-              
+          text-[clamp(2rem,7vw,2.85rem)]
+          leading-[1.18]
+          text-secondary
 
-              text-secondary
+          sm:text-[clamp(2.4rem,5vw,3.4rem)]
 
-              sm:text-[clamp(2.4rem,5vw,3.4rem)]
+          md:text-[clamp(2.75rem,4vw,4rem)]
+          md:leading-[1.16]
 
-              md:text-[clamp(2.75rem,4vw,4rem)]
-              md:leading-[1.16]
+          lg:text-[clamp(3rem,3.25vw,4.25rem)]
 
-              lg:text-[clamp(3rem,3.25vw,4.25rem)]
+          xl:text-[clamp(3.25rem,3vw,4.5rem)]
+          xl:leading-[1.14]
 
-              ${textClassName}
-            `}
+          2xl:text-[clamp(3.5rem,2.75vw,4.75rem)]
+
+          ${textClassName}
+        `}
           >
             {children}
           </p>
@@ -198,31 +213,44 @@ export default function TextBreak({
           <div
             ref={stampRef}
             className="
-              absolute
-              bottom-8
-              left-1/2
+          absolute
+          bottom-8
+          left-1/2
+          -translate-x-1/2
 
-              h-[72px]
-              w-[100px]
+          h-[72px]
+          w-[100px]
 
-              -translate-x-1/2
+          sm:bottom-10
+          sm:h-[82px]
+          sm:w-[120px]
 
-              sm:bottom-10
-              sm:h-[82px]
-              sm:w-[120px]
+          md:bottom-[4.5rem]
+          md:h-[92px]
+          md:w-[140px]
 
-              md:bottom-18
-              md:h-[92px]
-              md:w-[140px]
+          lg:bottom-20
 
-              lg:bottom-24
-            "
+          xl:bottom-20
+          xl:h-[100px]
+          xl:w-[150px]
+
+          2xl:bottom-24
+          2xl:h-[108px]
+          2xl:w-[160px]
+        "
           >
             <Image
               src={stampSrc}
               alt={stampAlt}
               fill
-              sizes="(max-width: 640px) 120px, (max-width: 768px) 140px, 180px"
+              sizes="
+            (max-width: 640px) 100px,
+            (max-width: 768px) 120px,
+            (max-width: 1280px) 140px,
+            (max-width: 1536px) 150px,
+            160px
+          "
               className="object-contain"
             />
           </div>
