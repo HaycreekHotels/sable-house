@@ -452,7 +452,7 @@ export default function ScrollStoryCards({
 
                   sm:pb-5
 
-                  lg:top-[18.5svh]
+                  lg:top-[26svh]
                   lg:bottom-auto
                   lg:overflow-visible
                   lg:pb-0

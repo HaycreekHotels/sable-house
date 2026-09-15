@@ -105,7 +105,7 @@ export default function TextBreak({
       ref={sectionRef}
       style={{
         backgroundImage:
-          "url('/images/decorative/dark-green-background-grain.jpg')",
+          "url('/images/decorative/Dark-Green-Background-Grain.jpg')",
       }}
       className={`
         w-full

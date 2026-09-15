@@ -438,7 +438,7 @@ export default function StoryGallery() {
                       mt-7
                       max-w-[31rem]
 
-                      text-[15px]
+                      text-[14px]
                       leading-[1.55]
                       
                       
@@ -447,7 +447,7 @@ export default function StoryGallery() {
 
                       lg:mt-12
                       lg:max-w-[28rem]
-                      lg:text-[clamp(16px,1.28vw,21px)]
+                      lg:text-[clamp(16px,1.28vw,16px)]
                       lg:leading-[1.42]
                       lg:pr-12
                     "
