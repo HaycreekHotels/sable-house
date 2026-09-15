@@ -276,7 +276,7 @@ export default function ScrollStoryCards({
           h-[100svh]
           w-full
           overflow-hidden
-          bg-[#f7f6f2]
+          bg-secondary
           motion-reduce:hidden
           ${className}
         `}

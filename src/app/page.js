@@ -31,6 +31,14 @@ const storyCards = [
 
     images: [
       {
+        src: "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/SabalHouse-8.jpeg",
+        alt: "Craftsman working on Sabal House",
+      },
+      {
+        src: "https://sabal-house.b-cdn.net/Flower%20next%20to%20Angela.png",
+        alt: "Finished architectural detail",
+      },
+      {
         src: "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Pat.jpeg",
         alt: "Exterior of Sabal House",
       },
@@ -38,21 +46,13 @@ const storyCards = [
         src: "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Sabal%20House%20Construction%20Image.jpeg",
         alt: "Interior details of Sabal House",
       },
-      {
-        src: "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/SabalHouse-8.jpeg",
-        alt: "Craftsman working on Sabal House",
-      },
-      {
-        src: "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/SabalHouse-19.jpeg",
-        alt: "Finished architectural detail",
-      },
     ],
   },
 ];
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#F7F6F2]">
+    <main className="min-h-screen bg-secondary">
       <HeroVideo videoSrc={VIDEO_SRC} />
       <IntroSection
         className="bg-[#F7F6F2]"
