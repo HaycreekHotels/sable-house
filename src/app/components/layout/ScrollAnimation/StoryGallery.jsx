@@ -19,8 +19,7 @@ const stories = [
       "“Savannah, in many ways, is a conversation with history that’s ongoing.”",
     video:
       "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/pat_opcrnn.mp4",
-    poster:
-      "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Pat.jpeg",
+    poster: "https://sabal-house.b-cdn.net/Pat%20Photo%20Option%201.png",
     captions: null,
     image:
       "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Sabal%20House%20Construction%20Image.jpeg",

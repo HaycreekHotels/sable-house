@@ -1,26 +1,40 @@
 import HeroImage from "@/app/components/layout/heros/HeroImage";
-import ThreeColSection from "@/app/components/layout/Intro/ThreeColSection";
+import IntroSection from "@/app/components/layout/Intro/IntroSection";
 import FullWidthSimple from "@/app/components/layout/ScrollAnimation/FullWidthSimple";
 import StoryGallery from "@/app/components/layout/ScrollAnimation/StoryGallery";
+import OpenLetterForm from "@/app/components/layout/forms/OpenLetterForm";
 
 export default function StoryPage() {
   return (
-    <main className="min-h-screen overflow-hidden bg-[#f7f6f2] text-black">
+    <main className="min-h-screen overflow-hidden bg-secondary text-black">
       <HeroImage
         image="https://sabal-house.b-cdn.net/making%20hero.jpg"
         alt="The new public space at the Sabal House Hotel with modern furniture and vibrant green plants"
       />
-      <ThreeColSection
+      <IntroSection
+        className="bg-secondary"
         label="The"
-        heading="Making"
-        hr="Of Sabal House"
-        content="Designed as a thoughtful retreat from the familiar, Sabal House offers a space to arrive, find your footing, and listen to the pulse of Savannah. "
-        cr="This philosophy takes form in every material, line, and detail, seamlessly bridging our newly crafted architectural sanctuary with the restored Heritage Rooms."
-        eyebrow=""
-        className="-mb-[80px] bg-[#f7f6f2]"
-      />
+        heading="Making of Sabal House"
+        ctaHref="#form"
+        ctaLabel="STAY INFORMED"
+        leftText="From the beginning, Sabal House was imagined as a quieter way to experience Savannah, a place to arrive, find your footing, and become more attuned to the city around you."
+      >
+        That idea is taking shape through architecture, material, and the people
+        behind it, bringing together a luxury new building and the restored
+        Heritage Rooms as one Sabal House.
+      </IntroSection>
       <FullWidthSimple />
       <StoryGallery />
+      <div id="form">
+        <OpenLetterForm
+          backgroundImage="https://sabal-house.b-cdn.net/making%20of%20sabal%20house/SabalHouse-86.jpg"
+          stampImage="/images/decorative/SH Wax Seal.png"
+          eyebrow="LETTERS FROM SABAL HOUSE"
+          description="Stay informed as Sabal House takes shape, with occasional notes from Savannah, and a first look at what’s to come."
+          buttonLabel="STAY CLOSE"
+          signature="Until Then."
+        />
+      </div>
     </main>
   );
 }

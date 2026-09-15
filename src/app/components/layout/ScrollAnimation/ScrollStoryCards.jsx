@@ -549,7 +549,7 @@ text-justify
                           items-center
                           justify-center
 
-                          bg-black
+                          bg-main
                           px-5
                           py-3
 
