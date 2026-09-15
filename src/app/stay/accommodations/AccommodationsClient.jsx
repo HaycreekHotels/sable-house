@@ -27,7 +27,7 @@ const filters = [
   },
 ];
 
-export default function AccommodationsPage() {
+export default function AccommodationsClient() {
   const pageRef = useRef(null);
   const heroRef = useRef(null);
   const gridRef = useRef(null);
