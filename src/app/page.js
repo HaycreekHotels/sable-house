@@ -50,6 +50,54 @@ const storyCards = [
   },
 ];
 
+export const metadata = {
+  title: {
+    absolute: "Sabal House | Hotel in Savannah’s Historic District",
+  },
+
+  description:
+    "Discover Sabal House, a new hotel opening December 2026 in Savannah’s Historic District, directly across from Oglethorpe Square. Explore accommodations and the story behind Sabal House.",
+
+  alternates: {
+    canonical: "/",
+  },
+
+  openGraph: {
+    type: "website",
+
+    locale: "en_US",
+
+    url: "/",
+
+    siteName: "Sabal House",
+
+    title: "Sabal House | Hotel in Savannah’s Historic District",
+
+    description:
+      "Discover Sabal House, a new hotel opening December 2026 in Savannah’s Historic District. Explore accommodations and the story behind the hotel.",
+
+    images: [
+      {
+        url: "/images/sabal-house-og.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Sabal House in Savannah, Georgia",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+
+    title: "Sabal House | Hotel in Savannah’s Historic District",
+
+    description:
+      "Discover Sabal House, a new hotel opening December 2026 in Savannah’s Historic District.",
+
+    images: ["/images/sabal-house-og.jpg"],
+  },
+};
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-secondary">

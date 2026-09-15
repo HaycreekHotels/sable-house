@@ -13,76 +13,29 @@ import {
   handwritingErnie,
 } from "./fonts";
 
+export const siteUrl = "https://www.sabalhouse.com";
+
+export const siteDescription =
+  "Sabal House is a hotel opening December 2026 in Savannah’s Historic District, directly across from Oglethorpe Square.";
+
 export const metadata = {
-  metadataBase: new URL("https://www.sabalhouse.com"),
+  metadataBase: new URL(siteUrl),
 
   title: {
-    default: "Sabal House Hotel | Opening December 2026 in Savannah",
+    default: "Sabal House",
     template: "%s | Sabal House",
   },
 
-  description:
-    "Sabal House is a new hotel opening December 2026 in Savannah’s Historic District. Follow the journey, get opening updates, and contact our team.",
+  description: siteDescription,
 
   applicationName: "Sabal House",
 
-  generator: "Next.js",
-
-  authors: [
-    {
-      name: "Michael Mount",
-    },
-  ],
-
-  creator: "Michael Mount",
-
   publisher: "Sabal House",
-
-  keywords: [
-    "Sabal House",
-    "Sabal House Hotel",
-    "Savannah hotel",
-    "Savannah Georgia hotel",
-    "Savannah Historic District hotel",
-    "new hotel in Savannah",
-    "hotel opening December 2026",
-    "Savannah accommodations",
-    "Historic District Savannah",
-  ],
-
-  alternates: {
-    canonical: "/",
-  },
-
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: "/",
-    siteName: "Sabal House",
-    title: "Sabal House Hotel | Opening December 2026 in Savannah",
-    description:
-      "Sabal House is coming to Savannah’s Historic District in December 2026. Follow the hotel’s journey, receive opening updates, and contact our team for more information.",
-    images: [
-      {
-        url: "/images/sabal-house-og.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Sabal House hotel, opening December 2026 in Savannah, Georgia",
-      },
-    ],
-  },
-
-  twitter: {
-    card: "summary_large_image",
-    title: "Sabal House Hotel | Opening December 2026 in Savannah",
-    description:
-      "Sabal House is coming to Savannah’s Historic District in December 2026. Follow along for opening updates and more information.",
-    images: ["/images/sabal-house-og.jpg"],
-  },
 
   robots: {
     index: true,
     follow: true,
+
     googleBot: {
       index: true,
       follow: true,
@@ -95,19 +48,91 @@ export const metadata = {
   category: "travel",
 };
 
+const structuredData = {
+  "@context": "https://schema.org",
+
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+
+      url: `${siteUrl}/`,
+
+      name: "Sabal House",
+
+      description: siteDescription,
+
+      inLanguage: "en-US",
+
+      publisher: {
+        "@id": `${siteUrl}/#hotel`,
+      },
+    },
+
+    {
+      "@type": "Hotel",
+      "@id": `${siteUrl}/#hotel`,
+
+      name: "Sabal House",
+
+      url: `${siteUrl}/`,
+
+      description: siteDescription,
+
+      telephone: "+1-912-233-1600",
+
+      image: `${siteUrl}/images/sabal-house-og.jpg`,
+
+      address: {
+        "@type": "PostalAddress",
+
+        streetAddress: "225 E. President St",
+
+        addressLocality: "Savannah",
+
+        addressRegion: "GA",
+
+        postalCode: "31401",
+
+        addressCountry: "US",
+      },
+
+      sameAs: [
+        "https://www.instagram.com/thesabalhouse/",
+        "https://www.facebook.com/people/The-Sabal-House/61592632106578/",
+      ],
+    },
+  ],
+};
+
 export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={` ${bentonLight.variable}
+      className={`
+        ${bentonLight.variable}
         ${bentonReg.variable}
         ${centralNoLight.variable}
-        ${centralNoReg.variable} ${handwritingErnie.variable} h-full antialiased`}
+        ${centralNoReg.variable}
+        ${handwritingErnie.variable}
+        h-full
+        antialiased
+      `}
     >
       <body className="min-h-full flex flex-col">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+          }}
+        />
+
         <NavBar />
+
         {children}
+
         <Footer />
+
         <SpeedInsights />
       </body>
     </html>

@@ -4,6 +4,35 @@ import FullWidthSimple from "@/app/components/layout/ScrollAnimation/FullWidthSi
 import StoryGallery from "@/app/components/layout/ScrollAnimation/StoryGallery";
 import OpenLetterForm from "@/app/components/layout/forms/OpenLetterForm";
 
+export const metadata = {
+  title: "The Making of Sabal House",
+
+  description:
+    "Discover the making of Sabal House in Savannah, from its architecture and design to the restored Heritage Rooms and the people bringing the hotel to life.",
+
+  alternates: {
+    canonical: "/our-story/making-of-sabal-house",
+  },
+
+  openGraph: {
+    type: "article",
+
+    url: "/our-story/making-of-sabal-house",
+
+    title: "The Making of Sabal House | Sabal House",
+
+    description:
+      "Discover the architecture, design, restoration, and people behind the making of Sabal House in Savannah.",
+
+    images: [
+      {
+        url: "https://sabal-house.b-cdn.net/making%20hero.jpg",
+        alt: "Interior of Sabal House in Savannah",
+      },
+    ],
+  },
+};
+
 export default function StoryPage() {
   return (
     <main className="min-h-screen overflow-hidden bg-secondary text-black">
