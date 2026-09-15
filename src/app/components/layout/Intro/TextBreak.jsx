@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRef } from "react";
 
 import gsap from "gsap";
@@ -10,64 +11,89 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export default function TextBreak({
   children,
+  stampSrc,
+  stampAlt = "",
   className = "",
+  panelClassName = "",
   textClassName = "",
 }) {
   const sectionRef = useRef(null);
   const textRef = useRef(null);
+  const stampRef = useRef(null);
 
   useGSAP(
     () => {
       const section = sectionRef.current;
       const text = textRef.current;
+      const stamp = stampRef.current;
 
       if (!section || !text) return;
 
       const mm = gsap.matchMedia();
 
       /*
-       * Reduced motion:
-       * Show the copy immediately with no transform.
+       * Reduced motion
        */
       mm.add("(prefers-reduced-motion: reduce)", () => {
-        gsap.set(text, {
+        gsap.set([text, stamp].filter(Boolean), {
           autoAlpha: 1,
-          y: 0,
           clearProps: "transform",
         });
       });
 
+      /*
+       * Standard motion
+       */
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        const animation = gsap.fromTo(
+        const timeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: "top 72%",
+            once: true,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        timeline.fromTo(
           text,
           {
             autoAlpha: 0,
-            y: 18,
+            y: 20,
           },
           {
             autoAlpha: 1,
             y: 0,
-            duration: 1.5,
+            duration: 1,
             ease: "power2.out",
-
-            scrollTrigger: {
-              trigger: section,
-              start: "top 60%",
-              once: true,
-              invalidateOnRefresh: true,
-            },
           },
         );
 
+        if (stamp) {
+          timeline.fromTo(
+            stamp,
+            {
+              autoAlpha: 0,
+              y: 10,
+              scale: 0.96,
+            },
+            {
+              autoAlpha: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.8,
+              ease: "power2.out",
+            },
+            "-=0.45",
+          );
+        }
+
         return () => {
-          animation.scrollTrigger?.kill();
-          animation.kill();
+          timeline.scrollTrigger?.kill();
+          timeline.kill();
         };
       });
 
-      return () => {
-        mm.revert();
-      };
+      return () => mm.revert();
     },
     {
       scope: sectionRef,
@@ -78,59 +104,118 @@ export default function TextBreak({
     <div
       ref={sectionRef}
       className={`
-        flex
-        min-h-[50svh]
         w-full
-        items-center
-        justify-center
+        bg-secondary
 
-        px-5
-        py-16
+        p-4
 
-        sm:min-h-[55svh]
-        sm:px-8
-        sm:py-20
-
-        md:min-h-[60svh]
-        md:px-12
-        md:py-24
-
-        lg:px-20
-        lg:py-28
-
-        xl:px-24
+        sm:p-5
+        md:p-6
+        lg:p-8
 
         ${className}
       `}
     >
-      <p
-        ref={textRef}
+      <div
         className={`
+          flex
+          min-h-[520px]
           w-full
-          max-w-[46rem]
-          text-center
+          flex-col
+          items-center
+          justify-center
 
-          font-benton-regular
-          text-[clamp(1.75rem,7.5vw,2.5rem)]
-          
-          tracking-[-0.025em]
-          text-black
+          bg-[#4f5b2d]
 
-          sm:text-[clamp(2rem,5.5vw,3rem)]
-          sm:leading-[1.15]
+          px-6
+          py-16
 
-          md:text-[clamp(2.5rem,4.2vw,4.25rem)]
-          md:leading-[1.18]
+          sm:min-h-[560px]
+          sm:px-10
+          sm:py-20
 
-          lg:max-w-[72rem]
-          lg:text-[clamp(3rem,3.75vw,4rem)]
-          
+          md:min-h-[620px]
+          md:px-14
+          md:py-24
 
-          ${textClassName}
+          lg:min-h-[650px]
+          lg:px-20
+          lg:py-28
+
+          ${panelClassName}
         `}
       >
-        {children}
-      </p>
+        <div
+          className="
+            flex
+            w-full
+            max-w-[900px]
+            flex-col
+            items-center
+            text-center
+          "
+        >
+          {/* Main statement */}
+          <p
+            ref={textRef}
+            className={`
+              max-w-[860px]
+
+              font-benton-regular
+              italic
+
+              text-[clamp(2rem,7vw,2.85rem)]
+              leading-[1.18]
+              tracking-[-0.025em]
+
+              text-secondary
+
+              sm:text-[clamp(2.4rem,5vw,3.4rem)]
+
+              md:text-[clamp(2.75rem,4vw,4rem)]
+              md:leading-[1.16]
+
+              lg:text-[clamp(3rem,3.25vw,4.25rem)]
+
+              ${textClassName}
+            `}
+          >
+            {children}
+          </p>
+
+          {/* Sabal House stamp */}
+          {stampSrc && (
+            <div
+              ref={stampRef}
+              className="
+                relative
+
+                mt-12
+                h-[72px]
+                w-[120px]
+
+                sm:mt-14
+                sm:h-[82px]
+                sm:w-[140px]
+
+                md:mt-16
+                md:h-[92px]
+                md:w-[160px]
+              "
+            >
+              <Image
+                src={stampSrc}
+                alt={stampAlt}
+                fill
+                sizes="160px"
+                className="
+                  object-contain
+                "
+              />
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

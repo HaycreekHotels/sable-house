@@ -6,6 +6,8 @@ import TextBreak from "./components/layout/Intro/TextBreak";
 import ScrollStoryCards from "./components/layout/ScrollAnimation/ScrollStoryCards";
 import OpenLetterForm from "./components/layout/forms/OpenLetterForm";
 
+import Monogram from "../../public/images/decorative/Sabal House Monogram.png";
+
 const VIDEO_SRC =
   "https://sabal-house.b-cdn.net/flat%20hero/Sabal%20House%20-%20Promo.mp4";
 
@@ -89,7 +91,7 @@ Beyond the famous squares lies a quieter, deeper Savannah. One measured by the s
           },
         ]}
       />
-      <TextBreak>
+      <TextBreak stampSrc={Monogram} stampAlt="Sabal House Monogram">
         We transform hospitality into an intimate immersion, blending polished
         coastal sophistication with the honest pulse of Savannah.
       </TextBreak>
