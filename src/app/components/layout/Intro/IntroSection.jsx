@@ -257,15 +257,15 @@ export default function IntroSection({
           md:py-28
 
           lg:min-h-[690px]
-          lg:px-16
+          lg:px-20
 
           xl:min-h-[720px]
           xl:max-w-[1600px]
-          xl:px-20
+          xl:px-24
 
           2xl:min-h-[760px]
           2xl:max-w-[1800px]
-          2xl:px-24
+          2xl:px-28
         "
       >
         <div

@@ -223,21 +223,21 @@ export default function TextBreak({
 
           sm:bottom-10
           sm:h-[82px]
-          sm:w-[120px]
+          sm:w-[110px]
 
           md:bottom-[4.5rem]
           md:h-[92px]
-          md:w-[140px]
+          md:w-[130px]
 
           lg:bottom-20
 
-          xl:bottom-20
+          xl:bottom-24
           xl:h-[100px]
-          xl:w-[150px]
+          xl:w-[140px]
 
-          2xl:bottom-24
+          2xl:bottom-26
           2xl:h-[108px]
-          2xl:w-[160px]
+          2xl:w-[150px]
         "
           >
             <Image

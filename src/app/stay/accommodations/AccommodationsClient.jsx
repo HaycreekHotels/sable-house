@@ -217,7 +217,7 @@ export default function AccommodationsClient() {
           <p
             className="
               mt-6
-              max-w-[520px]
+              max-w-[500px]
 
               font-central-regular
               text-[13px]
