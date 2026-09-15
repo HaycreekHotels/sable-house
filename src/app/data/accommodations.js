@@ -163,7 +163,7 @@ export const rooms = [
 
     // Replace this URL with the final photography for this specific room.
     image:
-      "https://sabal-house.b-cdn.net/heritage/Heritage%20Traditional%20Queen.png",
+      "https://sabal-house.b-cdn.net/PQ%20Heritage%20King%20with%20Fireplace%20(1).png",
     imageAlt: "Traditional King room in the Heritage Rooms at Sabal House",
     imagePosition: "center center",
 

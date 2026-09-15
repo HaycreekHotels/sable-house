@@ -255,7 +255,7 @@ export default function IntroSection({
           className="
             relative
             z-10
-
+            text-center
             flex
             w-full
             max-w-[550px]
@@ -268,7 +268,7 @@ export default function IntroSection({
             id="intro-section-heading"
             className="
               w-full
-              text-center
+           
 
               font-benton-regular
               text-[2.6rem]
@@ -289,6 +289,7 @@ export default function IntroSection({
               className="
                 mt-8
                 w-full
+                font-central-regular
 
                 text-[0.95rem]
                 leading-[1.55]
@@ -298,7 +299,8 @@ export default function IntroSection({
                 sm:text-base
 
                 md:text-[1.05rem]
-                md:leading-[1.6]
+                
+                md:px-12
               "
             >
               {leftText}
@@ -310,7 +312,8 @@ export default function IntroSection({
             <div
               className="
                 mt-7
-                w-full
+                w-full 
+               font-central-regular
 
                 text-[0.95rem]
                 leading-[1.55]
@@ -320,7 +323,8 @@ export default function IntroSection({
 
                 md:mt-8
                 md:text-[1.05rem]
-                md:leading-[1.6]
+              
+                md:px-12
 
                 [&_p+p]:mt-5
               "
@@ -349,21 +353,24 @@ export default function IntroSection({
                   items-center
                   justify-center
 
-                  bg-[#555d31]
+                  bg-main
                   px-5
                   py-3
 
                   text-xs
-                  font-medium
+                  font-central-regular
                   uppercase
                   tracking-[0.03em]
-                  text-white
+                  text-secondary
 
                   transition-colors
                   duration-300
                   ease-out
 
-                  hover:bg-[#444b27]
+                   hover:bg-transparent
+            hover:border-2
+            hover:border-main
+            hover:text-main
 
                   focus-visible:outline
                   focus-visible:outline-2

@@ -180,7 +180,7 @@ export default function NavBar() {
             aria-hidden="true"
             className={`
               text-[11px]
-              font-medium
+              font-central-regular
               uppercase
               tracking-[0.12em]
 
@@ -236,27 +236,28 @@ export default function NavBar() {
         {/* Booking CTA */}
         <Link
           href="/stay/accommodations"
-          className="
+          className={` 
             inline-flex
             min-h-11
             shrink-0
             items-center
             justify-center
 
-            bg-main
+            ${isScrolled ? "bg-secondary text-main" : "bg-main text-secondary"}
             px-3
             py-2.5
 
             text-[10px]
-            font-bold
+            font-central-regular
             uppercase
             tracking-[0.04em]
-            text-secondary
+           
 
             transition-colors
             duration-300
+          
 
-            hover:bg-neutral-800
+           
 
             focus-visible:outline
             focus-visible:outline-2
@@ -266,8 +267,7 @@ export default function NavBar() {
             sm:px-4
             sm:text-xs
 
-            md:text-sm
-          "
+            md:text-sm`}
         >
           <span className="hidden sm:inline">Book Your Stay</span>
           <span className="sm:hidden">Book</span>

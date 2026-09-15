@@ -39,8 +39,7 @@ const stories = [
     poster:
       "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Maria.jpeg",
     captions: null,
-    image:
-      "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Chair.jpeg",
+    image: "https://sabal-house.b-cdn.net/Tabby%20(1).jpg",
     imageAlt: "Interior material details at Sabal House",
     imageCaption: "TABBY · A MATERIAL OF THE LOWCOUNTRY",
   },
@@ -308,7 +307,7 @@ export default function StoryGallery() {
       aria-label="Meet the people behind Sabal House"
       className="
         relative
-        bg-[#f7f6f2]
+        bg-secondary
         text-[#151515]
 
         lg:h-[100svh]
@@ -316,6 +315,8 @@ export default function StoryGallery() {
 
         motion-reduce:lg:h-auto
         motion-reduce:lg:overflow-visible
+
+        
       "
     >
       {stories.map((story, index) => {
@@ -335,6 +336,7 @@ export default function StoryGallery() {
 
               px-5
               py-16
+             
 
               sm:px-8
               sm:py-20
@@ -422,7 +424,7 @@ export default function StoryGallery() {
 
                       text-[clamp(2.5rem,11vw,3.5rem)]
                       leading-[0.95]
-                      tracking-[-0.035em]
+                      
 
                       lg:text-[clamp(2.75rem,3.25vw,3.4rem)]
                       lg:leading-[1]
@@ -438,6 +440,8 @@ export default function StoryGallery() {
 
                       text-[15px]
                       leading-[1.55]
+                      
+                      
 
                       sm:text-[16px]
 
@@ -445,6 +449,7 @@ export default function StoryGallery() {
                       lg:max-w-[28rem]
                       lg:text-[clamp(16px,1.28vw,21px)]
                       lg:leading-[1.42]
+                      lg:pr-12
                     "
                   >
                     {story.description}
@@ -505,12 +510,12 @@ export default function StoryGallery() {
                     font-benton-regular
                     text-[clamp(1.8rem,8vw,2.5rem)]
                     leading-[1.12]
-                    tracking-[-0.03em]
+                    tracking-[-0.01em]
 
                     lg:mt-0
                     lg:max-w-[21rem]
                     lg:text-[clamp(1.75rem,2vw,2.15rem)]
-                    lg:leading-[1.2]
+                    lg:
                   "
                 >
                   {story.quote}
@@ -626,19 +631,19 @@ export default function StoryGallery() {
                       items-center
                       justify-center
 
-                      bg-black
-                      text-white
+                      bg-main
+                      text-secondary
 
                       transition-colors
                       duration-300
 
                       group-hover:bg-neutral-800
 
-                      sm:h-[72px]
-                      sm:w-[72px]
+                      sm:h-[64px]
+                      sm:w-[64px]
 
-                      lg:h-[86px]
-                      lg:w-[86px]
+                      lg:h-[72px]
+                      lg:w-[72px]
                     "
                   >
                     {isPlaying ? <PauseIcon /> : <PlayIcon />}

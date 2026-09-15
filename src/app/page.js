@@ -39,7 +39,7 @@ const storyCards = [
         alt: "Finished architectural detail",
       },
       {
-        src: "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Pat.jpeg",
+        src: "https://sabal-house.b-cdn.net/Pat%20Photo%20Option%201.png",
         alt: "Exterior of Sabal House",
       },
       {

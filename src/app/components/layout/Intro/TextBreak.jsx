@@ -101,11 +101,17 @@ export default function TextBreak({
   );
 
   return (
-    <div
+    <section
       ref={sectionRef}
+      style={{
+        backgroundImage:
+          "url('/images/decorative/dark-green-background-grain.jpg')",
+      }}
       className={`
         w-full
-        bg-secondary
+        bg-cover
+        bg-center
+        bg-no-repeat
 
         p-4
 
@@ -118,44 +124,47 @@ export default function TextBreak({
     >
       <div
         className={`
+          relative
+
           flex
           min-h-[520px]
           w-full
-          flex-col
           items-center
           justify-center
 
-          bg-[#4f5b2d]
-
           px-6
-          py-16
+          py-20
 
           sm:min-h-[560px]
           sm:px-10
-          sm:py-20
+          sm:py-24
 
           md:min-h-[620px]
           md:px-14
-          md:py-24
+          md:py-28
 
           lg:min-h-[650px]
           lg:px-20
-          lg:py-28
+          lg:py-32
 
           ${panelClassName}
         `}
       >
+        {/* Centered quote */}
         <div
           className="
             flex
             w-full
             max-w-[900px]
-            flex-col
             items-center
+            justify-center
+
             text-center
+
+            md:max-w-[750px]
+            lg:max-w-[800px]
           "
         >
-          {/* Main statement */}
           <p
             ref={textRef}
             className={`
@@ -166,7 +175,7 @@ export default function TextBreak({
 
               text-[clamp(2rem,7vw,2.85rem)]
               leading-[1.18]
-              tracking-[-0.025em]
+              
 
               text-secondary
 
@@ -182,40 +191,43 @@ export default function TextBreak({
           >
             {children}
           </p>
-
-          {/* Sabal House stamp */}
-          {stampSrc && (
-            <div
-              ref={stampRef}
-              className="
-                relative
-
-                mt-12
-                h-[72px]
-                w-[120px]
-
-                sm:mt-14
-                sm:h-[82px]
-                sm:w-[140px]
-
-                md:mt-16
-                md:h-[92px]
-                md:w-[160px]
-              "
-            >
-              <Image
-                src={stampSrc}
-                alt={stampAlt}
-                fill
-                sizes="160px"
-                className="
-                  object-contain
-                "
-              />
-            </div>
-          )}
         </div>
+
+        {/* Sabal House stamp */}
+        {stampSrc && (
+          <div
+            ref={stampRef}
+            className="
+              absolute
+              bottom-8
+              left-1/2
+
+              h-[72px]
+              w-[100px]
+
+              -translate-x-1/2
+
+              sm:bottom-10
+              sm:h-[82px]
+              sm:w-[120px]
+
+              md:bottom-18
+              md:h-[92px]
+              md:w-[140px]
+
+              lg:bottom-24
+            "
+          >
+            <Image
+              src={stampSrc}
+              alt={stampAlt}
+              fill
+              sizes="(max-width: 640px) 120px, (max-width: 768px) 140px, 180px"
+              className="object-contain"
+            />
+          </div>
+        )}
       </div>
-    </div>
+    </section>
   );
 }

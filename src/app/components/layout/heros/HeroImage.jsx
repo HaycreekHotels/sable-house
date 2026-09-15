@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function HeroImage({ image, alt }) {
   return (
-    <section className="relative h-[85vh] w-full overflow-hidden">
+    <section className="relative h-[90vh] w-full overflow-hidden">
       <Image
         src={image}
         alt={alt}

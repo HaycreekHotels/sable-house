@@ -10,7 +10,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export default function ImageBreak({
-  src = "https://sabal-house.b-cdn.net/making%20hero.jpg",
+  src = "https://sabal-house.b-cdn.net/Home%20Page%20Rendering.jpeg",
   alt = "Sabal House interior lounge",
   className = "",
 }) {

@@ -333,127 +333,90 @@ export default function RoomDetail({ room }) {
       >
         <div
           className="
-            grid
-            grid-cols-1
-            gap-14
+    grid
+    grid-cols-1
+    gap-14
 
-            lg:grid-cols-2
-            lg:items-end
-            lg:gap-16
+    lg:grid-cols-2
+    lg:items-end
+    lg:gap-16
 
-            xl:gap-24
-          "
+    xl:gap-24
+  "
         >
           {/* =================================================
-              LEFT: SPECS + FLOOR PLAN
-          ================================================= */}
+      LEFT: SPECS + FLOOR PLAN
+  ================================================= */}
           <div
             className="
-              order-2
+      order-2
+      w-full
 
-              lg:order-1
-            "
+      lg:order-1
+      lg:self-start
+    "
           >
-            {/* Room specs */}
             <dl
               data-hero-item
               className="
-                grid
-                grid-cols-2
-                gap-6
+        grid
+        w-full
+        grid-cols-2
+        gap-6
 
-                border-b
-                border-black/15
+      
+       
+        pb-5
 
-                pb-5
+        font-central-regular
+        text-[11px]
+        uppercase
+        tracking-[0.035em]
 
-                text-[11px]
-                font-medium
-                uppercase
-                tracking-[0.035em]
-
-                sm:text-xs
-              "
+        sm:text-xs
+        mt-0
+        md:mt-16
+      "
             >
               <div>
                 <dt className="sr-only">Bed configuration</dt>
-
                 <dd>{room.bed}</dd>
               </div>
 
               <div>
                 <dt className="sr-only">Room size</dt>
-
                 <dd>{room.size}</dd>
               </div>
             </dl>
 
             {/* Floor plan */}
-            <figure
-              data-hero-item
-              className="
-                mt-6
-                w-full
-              "
-            >
-              <div
-                className="
-                  relative
-                  aspect-[1.45/1]
-                  w-full
-                  overflow-hidden
-
-                  bg-[#ede8de]
-                  text-black/45
-
-                  sm:aspect-[1.65/1]
-
-                  lg:aspect-[1.55/1]
-                "
-              >
-                <FloorPlanPlaceholder />
-              </div>
-
-              <figcaption
-                className="
-                  mt-3
-
-                  text-[10px]
-                  uppercase
-                  tracking-[0.04em]
-                  text-black/60
-                "
-              >
-                Floor plan
-              </figcaption>
-            </figure>
           </div>
 
           {/* =================================================
-              RIGHT: ROOM DETAILS
-          ================================================= */}
+      RIGHT: ROOM DETAILS
+  ================================================= */}
           <div
             className="
-              order-1
+      order-1
 
-              flex
-              flex-col
-              items-start
+      flex
+      flex-col
+      items-start
 
-              lg:order-2
-              lg:pb-1
-            "
+      lg:order-2
+      lg:pb-1
+    "
           >
             <p
               data-hero-item
               className="
-                text-[11px]
-                font-medium
-                uppercase
-                tracking-[0.045em]
+        font-central-regular
+        text-[11px]
+        uppercase
+        tracking-[0.045em]
 
-                sm:text-xs
-              "
+        sm:text-xs
+      "
             >
               {room.houseLabel}
             </p>
@@ -462,19 +425,18 @@ export default function RoomDetail({ room }) {
               id="room-title"
               data-hero-item
               className="
-                mt-5
+        mt-5
 
-                font-benton-regular
-                font-normal
+        font-benton-regular
+        text-[clamp(3.5rem,14vw,5rem)]
+        font-normal
+        leading-[0.9]
+        tracking-[-0.01em]
 
-                text-[clamp(3.5rem,14vw,5rem)]
-                leading-[0.9]
-                tracking-[-0.035em]
+        sm:text-[clamp(4rem,10vw,5.5rem)]
 
-                sm:text-[clamp(4rem,10vw,5.5rem)]
-
-                lg:text-[clamp(4.25rem,5vw,6rem)]
-              "
+        lg:text-[clamp(4.25rem,5vw,6rem)]
+      "
             >
               {room.name}
             </h1>
@@ -482,18 +444,17 @@ export default function RoomDetail({ room }) {
             <p
               data-hero-item
               className="
-                mt-7
-                max-w-[520px]
+        mt-7
+        max-w-[520px]
 
-                font-central-regular
+        font-central-regular
+        text-sm
+        leading-[1.6]
 
-                text-sm
-                leading-[1.6]
+        sm:text-[15px]
 
-                sm:text-[15px]
-
-                lg:max-w-[500px]
-              "
+        lg:max-w-[500px]
+      "
             >
               {room.description}
             </p>
@@ -502,36 +463,39 @@ export default function RoomDetail({ room }) {
               data-hero-item
               href="/book"
               className="
-                mt-8
+        mt-8
 
-                inline-flex
-                min-h-11
-                min-w-[150px]
-                items-center
-                justify-center
+        inline-flex
+        min-h-11
+        min-w-[150px]
+        items-center
+        justify-center
 
-                bg-[#555d31]
+        bg-[#555d31]
 
-                px-7
-                py-3
+        px-7
+        py-3
 
-                text-xs
-                font-medium
-                uppercase
-                tracking-[0.035em]
-                text-white
+        font-central-regular
+        text-md
+        uppercase
+        tracking-[0.035em]
+        text-white
 
-                transition-colors
-                duration-300
-                ease-out
+        transition-colors
+                  duration-300
+                  ease-out
 
-                hover:bg-[#454c27]
+                   hover:bg-transparent
+            hover:border-2
+            hover:border-main
+            hover:text-main
 
-                focus-visible:outline
-                focus-visible:outline-2
-                focus-visible:outline-offset-4
-                focus-visible:outline-black
-              "
+        focus-visible:outline
+        focus-visible:outline-2
+        focus-visible:outline-offset-4
+        focus-visible:outline-black
+      "
             >
               Book Now
             </Link>
@@ -627,7 +591,7 @@ export default function RoomDetail({ room }) {
 
               text-[2.5rem]
               leading-none
-              tracking-[-0.03em]
+              tracking-[-0.01em]
 
               sm:text-[3rem]
 
@@ -649,7 +613,7 @@ export default function RoomDetail({ room }) {
 
               font-central-regular
 
-              text-[13px]
+              text-[16px]
               leading-[1.45]
 
               sm:grid-cols-2
@@ -682,65 +646,76 @@ export default function RoomDetail({ room }) {
           <Link
             href="/stay/accommodations"
             className="
-              group
+    group
 
-              inline-flex
-              min-h-11
-              items-center
-              gap-2
+    inline-flex
+    min-h-11
+    items-center
+    gap-3
 
-              text-[11px]
-              font-medium
-              uppercase
-              tracking-[0.035em]
+    font-central-regular
+    text-[14px]
+    uppercase
+    tracking-[0.015em]
 
-              focus-visible:outline
-              focus-visible:outline-2
-              focus-visible:outline-offset-4
-              focus-visible:outline-black
-            "
+    focus-visible:outline
+    focus-visible:outline-2
+    focus-visible:outline-offset-4
+    focus-visible:outline-black
+  "
           >
-            <span
+            <svg
               aria-hidden="true"
+              viewBox="0 0 24 24"
+              fill="none"
               className="
-                transition-transform
-                duration-300
+      h-8
+      w-8
+      shrink-0
 
-                group-hover:-translate-x-1
+      transition-transform
+      duration-300
 
-                motion-reduce:transition-none
-              "
+      group-hover:-translate-x-1
+
+      motion-reduce:transition-none
+    "
             >
-              ‹
-            </span>
+              <path
+                d="M15 5L8 12L15 19"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
 
             <span
               className="
-                relative
-                py-1
-              "
+      relative
+      leading-none
+    "
             >
               Back to accommodations
               <span
                 aria-hidden="true"
                 className="
-                  absolute
-                  inset-x-0
-                  bottom-0
+        absolute
+        inset-x-0
+        -bottom-2
 
-                  h-px
+        h-px
+        origin-left
+        scale-x-0
+        bg-black
 
-                  origin-left
-                  scale-x-0
-                  bg-black
+        transition-transform
+        duration-300
 
-                  transition-transform
-                  duration-300
+        group-hover:scale-x-100
 
-                  group-hover:scale-x-100
-
-                  motion-reduce:transition-none
-                "
+        motion-reduce:transition-none
+      "
               />
             </span>
           </Link>

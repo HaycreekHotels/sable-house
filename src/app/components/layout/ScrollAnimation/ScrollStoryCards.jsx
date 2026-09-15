@@ -287,28 +287,27 @@ export default function ScrollStoryCards({
             grid
             h-full
             w-full
-            max-w-[1600px]
+            max-w-[1720px]
 
-            grid-rows-[44svh_minmax(0,1fr)]
+            grid-rows-[42svh_minmax(0,1fr)]
             gap-5
             px-4
             pb-[max(1.25rem,env(safe-area-inset-bottom))]
             pt-4
 
-            sm:grid-rows-[48svh_minmax(0,1fr)]
+            sm:grid-rows-[47svh_minmax(0,1fr)]
             sm:gap-6
             sm:px-6
             sm:pb-[max(1.5rem,env(safe-area-inset-bottom))]
             sm:pt-6
 
-            lg:grid-cols-[minmax(0,1.6fr)_minmax(300px,0.84fr)]
+            lg:grid-cols-[minmax(0,1.55fr)_minmax(430px,0.9fr)]
             lg:grid-rows-1
-            lg:gap-10
-            lg:px-5
+            lg:gap-[clamp(2.5rem,4vw,5rem)]
+            lg:px-6
             lg:py-0
 
-            xl:gap-14
-            xl:px-6
+            xl:px-8
           "
         >
           {/* IMAGE COMPOSITION */}
@@ -323,7 +322,7 @@ export default function ScrollStoryCards({
               sm:gap-4
 
               lg:self-end
-              lg:gap-4
+              lg:gap-6
               lg:pb-[4.5svh]
             "
           >
@@ -354,6 +353,7 @@ export default function ScrollStoryCards({
                     aria-hidden={stateIndex !== 0}
                     loading={stateIndex === 0 ? "eager" : "lazy"}
                     fetchPriority={stateIndex === 0 ? "high" : "auto"}
+                    decoding="async"
                     draggable="false"
                     className="
                       pointer-events-none
@@ -379,8 +379,8 @@ export default function ScrollStoryCards({
                 overflow-hidden
                 bg-neutral-200
 
-                lg:h-[41.5svh]
-                lg:max-h-[420px]
+                lg:h-[48svh]
+                lg:max-h-[470px]
               "
             >
               {imageStates.map((state, stateIndex) => {
@@ -397,6 +397,7 @@ export default function ScrollStoryCards({
                     aria-hidden={stateIndex !== 0}
                     loading={stateIndex === 0 ? "eager" : "lazy"}
                     fetchPriority={stateIndex === 0 ? "high" : "auto"}
+                    decoding="async"
                     draggable="false"
                     className="
                       pointer-events-none
@@ -422,7 +423,6 @@ export default function ScrollStoryCards({
               overflow-hidden
 
               lg:h-full
-              lg:pl-12
             "
           >
             {usableCards.map((card, cardIndex) => (
@@ -438,81 +438,86 @@ export default function ScrollStoryCards({
                   inset-0
 
                   flex
-                  max-w-[390px]
+                  w-full
+                  max-w-[520px]
                   flex-col
-                  justify-end
+                  items-start
+                  justify-start
 
-                  pb-1
+                  overflow-y-auto
+                  pb-3
+                  pr-2
 
                   will-change-[transform,opacity]
 
-                  lg:inset-x-0
-                  lg:top-[28.5svh]
-                  lg:bottom-[4.5svh]
-                  lg:justify-between
+                  sm:pb-5
+
+                  lg:top-[18.5svh]
+                  lg:bottom-auto
+                  lg:overflow-visible
                   lg:pb-0
+                  lg:pr-0
                 "
               >
-                {/* Heading group */}
-                <div>
-                  {card.eyebrow && (
-                    <p
-                      className="
-                        mb-2
-                        text-[10px]
-                        font-medium
-                        uppercase
-                        leading-none
-                        tracking-[0.04em]
-                        text-neutral-900
-
-                        sm:text-[11px]
-
-                        lg:mb-7
-                        lg:text-[15px]
-                      "
-                    >
-                      {card.eyebrow}
-                    </p>
-                  )}
-
-                  <h2
+                {card.eyebrow && (
+                  <p
                     className="
-                      font-benton-regular
-                      text-[clamp(2rem,8.5vw,3rem)]
+                      font-central-regular
+                      text-[10px]
                       font-normal
-                      leading-[0.95]
-                      tracking-[-0.035em]
-                      text-neutral-950
+                      uppercase
+                      leading-none
+                      tracking-[0.035em]
+                      text-neutral-900
 
-                      sm:text-[clamp(2.25rem,6vw,3.25rem)]
+                      sm:text-[11px]
 
-                      lg:text-[clamp(3rem,4.25vw,4rem)]
-                      lg:leading-[0.95]
+                      lg:text-[15px]
                     "
                   >
-                    {card.title}
-                  </h2>
-                </div>
+                    {card.eyebrow}
+                  </p>
+                )}
 
-                {/* Middle kicker */}
+                <h2
+                  className="
+                    mt-3
+                    font-benton-regular
+                    text-[clamp(2rem,8vw,3rem)]
+                    font-normal
+                    leading-[0.98]
+                    tracking-[-0.03em]
+                    text-neutral-950
+
+                    sm:mt-4
+                    sm:text-[clamp(2.35rem,6vw,3.35rem)]
+
+                    lg:mt-7
+                    lg:text-[clamp(3rem,3.6vw,4rem)]
+                    lg:leading-[0.98]
+                  "
+                >
+                  {card.title}
+                </h2>
+
                 {card.kicker && (
                   <p
                     className="
-                      mt-3
-                      max-w-[340px]
+                      mt-5
+                      max-w-[460px]
 
+                      font-central-regular
                       text-[10px]
-                      font-medium
+                      font-normal
                       uppercase
                       leading-[1.35]
-                      tracking-[0.02em]
+                      tracking-[0.025em]
                       text-neutral-900
 
-                      sm:mt-4
+                      sm:mt-6
                       sm:text-[11px]
 
-                      lg:mt-0
+                      lg:mt-14
                       lg:text-[15px]
                     "
                   >
@@ -520,61 +525,74 @@ export default function ScrollStoryCards({
                   </p>
                 )}
 
-                {/* Bottom copy */}
-                <div className="mt-3 sm:mt-4 lg:mt-0">
-                  <p
+                <p
+                  className="
+                    mt-5
+                    max-w-[500px]
+
+                    text-left
+                    text-[12px]
+                    leading-[1.55]
+                    text-neutral-800
+
+                    sm:mt-6
+                    sm:text-[13px]
+                    sm: pr-12
+
+                    md:pr-36
+
+                    lg:mt-12
+                    lg:text-[16px]
+                    lg:leading-[1.55]
+                  "
+                >
+                  {card.description}
+                </p>
+
+                {card.cta?.href && card.cta?.label && (
+                  <a
+                    href={card.cta.href}
                     className="
-                      max-w-[380px]
-text-justify
-                      text-[12px]
-                      leading-[1.5]
-                      text-neutral-800
+                      mt-6
+                      inline-flex
+                      min-h-11
+                      min-w-[180px]
+                      items-center
+                      justify-center
 
-                      sm:text-[13px]
+                      bg-main
+                      px-6
+                      py-3
 
+                      font-central-regular
+                      text-md
+                      uppercase
+                      
+                      text-white
+
+                       transition-colors
+                  duration-300
+                  ease-out
+
+                   hover:bg-transparent
+            hover:border-2
+            hover:border-main
+            hover:text-main
+
+                      focus-visible:outline
+                      focus-visible:outline-2
+                      focus-visible:outline-offset-4
+                      focus-visible:outline-black
+
+                      lg:mt-9
+                      lg:min-h-[52px]
+                      lg:min-w-[220px]
                       lg:text-[15px]
-                      lg:leading-[1.65]
                     "
                   >
-                    {card.description}
-                  </p>
-
-                  {card.cta?.href && card.cta?.label && (
-                    <div className="mt-4 lg:mt-5">
-                      <a
-                        href={card.cta.href}
-                        className="
-                          inline-flex
-                          min-h-11
-                          items-center
-                          justify-center
-
-                          bg-main
-                          px-5
-                          py-3
-
-                          text-[11px]
-                          font-semibold
-                          uppercase
-                          tracking-[0.04em]
-                          text-white
-
-                          transition-colors
-                          hover:bg-neutral-800
-
-                          focus-visible:outline
-                          focus-visible:outline-2
-                          focus-visible:outline-offset-4
-                          focus-visible:outline-black
-
-                          lg:min-w-[200px]
-                        "
-                      >
-                        {card.cta.label}
-                      </a>
-                    </div>
-                  )}
-                </div>
+                    {card.cta.label}
+                  </a>
+                )}
               </article>
             ))}
           </div>
@@ -584,18 +602,19 @@ text-justify
       {/* Reduced-motion fallback */}
       <section
         aria-label="Featured stories"
-        className="hidden bg-[#f7f6f2] motion-reduce:block"
+        className="hidden bg-secondary motion-reduce:block"
       >
         <div
           className="
             mx-auto
-            max-w-7xl
+            max-w-[1500px]
             space-y-20
             px-4
             py-14
 
             sm:px-6
 
+            lg:space-y-28
             lg:px-8
             lg:py-20
           "
@@ -605,57 +624,59 @@ text-justify
               key={`static-${card.id}`}
               className="
                 grid
-                gap-7
+                gap-8
 
-                lg:grid-cols-[1.5fr_0.8fr]
-                lg:gap-12
+                lg:grid-cols-[minmax(0,1.55fr)_minmax(420px,0.9fr)]
+                lg:items-center
+                lg:gap-[clamp(2.5rem,5vw,6rem)]
               "
             >
-              <div className="grid grid-cols-2 items-end gap-3 sm:gap-4">
-                {card.images.slice(0, 4).map((image, index) => (
+              <div className="grid grid-cols-[1.17fr_1fr] items-end gap-3 sm:gap-5">
+                {card.images.slice(0, 2).map((image, index) => (
                   <img
                     key={`${card.id}-static-${index}`}
                     src={image.src}
                     alt={image.alt || ""}
                     loading="lazy"
-                    className="
+                    decoding="async"
+                    className={`
                       w-full
                       object-cover
-
-                      odd:aspect-[4/5]
-                      even:aspect-[4/3]
-                    "
+                      ${index === 0 ? "aspect-[4/5]" : "aspect-[1.08/1]"}
+                    `}
                   />
                 ))}
               </div>
 
-              <div className="flex max-w-sm flex-col justify-center">
+              <div className="flex max-w-[520px] flex-col items-start">
                 {card.eyebrow && (
-                  <p className="mb-2 text-[10px] font-medium uppercase tracking-[0.04em]">
+                  <p className="font-central-regular text-[11px] uppercase tracking-[0.035em] lg:text-[15px]">
                     {card.eyebrow}
                   </p>
                 )}
 
                 <h2
                   className="
+                    mt-4
                     font-benton-regular
-                    text-[clamp(2.25rem,9vw,3.25rem)]
-                    leading-[0.95]
-                    tracking-[-0.035em]
+                    text-[clamp(2.35rem,9vw,3.35rem)]
+                    leading-[0.98]
+                    tracking-[-0.03em]
 
-                    lg:text-[3.5rem]
+                    lg:mt-7
+                    lg:text-[clamp(3rem,3.6vw,4rem)]
                   "
                 >
                   {card.title}
                 </h2>
 
                 {card.kicker && (
-                  <p className="mt-5 text-[11px] font-medium uppercase leading-snug tracking-[0.02em]">
+                  <p className="mt-7 font-central-regular text-[11px] uppercase leading-snug tracking-[0.025em] lg:mt-12 lg:text-[15px]">
                     {card.kicker}
                   </p>
                 )}
 
-                <p className="mt-5 text-sm leading-6 text-justify text-neutral-700">
+                <p className="mt-6 max-w-[500px] text-left text-sm leading-[1.6] text-neutral-700 lg:mt-10 lg:text-[16px] lg:leading-[1.55]">
                   {card.description}
                 </p>
 
@@ -663,27 +684,36 @@ text-justify
                   <a
                     href={card.cta.href}
                     className="
-                      mt-5
+                      mt-7
                       inline-flex
                       min-h-11
-                      w-fit
+                      min-w-[180px]
                       items-center
                       justify-center
 
-                      bg-black
-                      px-5
+                      bg-main
+                      px-6
                       py-3
 
-                      text-[11px]
-                      font-semibold
+                      font-central-regular
+                      text-[12px]
                       uppercase
-                      tracking-[0.04em]
+                      tracking-[0.035em]
                       text-white
+
+                      transition-colors
+                      duration-200
+                      hover:bg-neutral-800
 
                       focus-visible:outline
                       focus-visible:outline-2
                       focus-visible:outline-offset-4
                       focus-visible:outline-black
+
+                      lg:mt-9
+                      lg:min-h-[52px]
+                      lg:min-w-[220px]
+                      lg:text-[15px]
                     "
                   >
                     {card.cta.label}

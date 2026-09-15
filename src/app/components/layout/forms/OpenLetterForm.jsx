@@ -653,21 +653,25 @@ export default function OpenLetterForm({
                 className="
                   min-w-[150px]
 
-                  bg-black
+                  bg-main
 
                   px-7
                   py-3
 
-                  text-[10px]
-                  font-medium
+                  text-md
+                  font-central-regular
                   uppercase
                   tracking-[0.04em]
-                  text-white
+                  text-secondary
 
-                  transition
+                   transition-colors
                   duration-300
+                  ease-out
 
-                  hover:bg-neutral-800
+                   hover:bg-transparent
+            hover:border-2
+            hover:border-main
+            hover:text-main
 
                   focus-visible:outline
                   focus-visible:outline-2

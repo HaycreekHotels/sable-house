@@ -37,7 +37,7 @@ export default function StoryPage() {
   return (
     <main className="min-h-screen overflow-hidden bg-secondary text-black">
       <HeroImage
-        image="https://sabal-house.b-cdn.net/making%20hero.jpg"
+        image="https://sabal-house.b-cdn.net/Making%20of%20Sabal%20House%20Rendering%20Photo.png"
         alt="The new public space at the Sabal House Hotel with modern furniture and vibrant green plants"
       />
       <IntroSection
@@ -62,6 +62,7 @@ export default function StoryPage() {
           description="Stay informed as Sabal House takes shape, with occasional notes from Savannah, and a first look at what’s to come."
           buttonLabel="STAY CLOSE"
           signature="Until Then."
+          className=" mt-6 md:mt-12"
         />
       </div>
     </main>

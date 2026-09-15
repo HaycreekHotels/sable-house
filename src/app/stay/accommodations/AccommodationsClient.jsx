@@ -204,7 +204,7 @@ export default function AccommodationsClient() {
 
               text-[clamp(3rem,12vw,4.25rem)]
               leading-[0.95]
-              tracking-[-0.035em]
+              tracking-[-0.015em]
 
               sm:text-[clamp(3.5rem,8vw,4.75rem)]
 
@@ -227,7 +227,7 @@ export default function AccommodationsClient() {
               sm:leading-[1.6]
 
               md:mt-7
-              md:text-[15px]
+              md:text-[18px]
             "
           >
             Choose between the light-filled rooms of the Sabal House building
@@ -363,11 +363,11 @@ function RoomFilter({ activeFilter, onFilterChange }) {
 
                 text-center
                 text-[9px]
-                font-medium
+                central-regular
                 uppercase
                 tracking-[0.035em]
 
-                sm:text-[10px]
+                sm:text-[13px]
 
                 focus-visible:outline
                 focus-visible:outline-2
@@ -484,7 +484,7 @@ function RoomCard({ room }) {
             <h3
               className="
                 text-[13px]
-                font-medium
+                font-central-regular
                 uppercase
                 leading-5
                 tracking-[0.025em]
@@ -500,7 +500,7 @@ function RoomCard({ room }) {
                 gap-x-2
 
                 text-[13px]
-                font-medium
+                font-central-regular
                 uppercase
                 leading-5
                 tracking-[0.02em]
@@ -539,7 +539,7 @@ function RoomCard({ room }) {
               pb-1
 
               text-[13px]
-              font-medium
+              font-central-regular
               uppercase
               tracking-[0.025em]
             "

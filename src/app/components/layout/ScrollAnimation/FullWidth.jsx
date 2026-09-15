@@ -18,7 +18,7 @@ export default function FullWidth({
   rightIntroHeading = "Perfected",
 
   introHeading,
-  introDescription = "Set within the former Presidents’ Quarters, these rooms retain original hardwood floors, historic details, and the individual character of the building.",
+  introDescription = "Two distinct expressions, one Sabal House. Contemporary rooms offer a lighter, more refined sense of ease, while The Heritage Rooms, formerly Presidents’ Quarters, carry forward the character, original details, and individuality of the historic building.",
 
   title = "Sabal House Rooms",
   description = "A lighter, more contemporary expression of Sabal House. Refined finishes, thoughtful layouts, and a calm sense of ease within the new building.",
@@ -443,7 +443,7 @@ export default function FullWidth({
             mx-auto
             flex
             w-full
-            max-w-[510px]
+            max-w-[540px]
             flex-col
             items-center
           "
@@ -848,15 +848,24 @@ export default function FullWidth({
                   items-center
                   justify-center
 
-                  bg-black
+                  bg-main
 
                   px-5
                   py-3
 
-                  text-xs
-                  font-bold
+                  text-md
+                  font-central-regular
                   uppercase
                   text-secondary
+
+                   transition-colors
+                  duration-300
+                  ease-out
+
+                   hover:bg-transparent
+            hover:border-2
+            hover:border-secondary
+            hover:text-secondary
 
                   motion-safe:transition-opacity
                   motion-safe:hover:opacity-80

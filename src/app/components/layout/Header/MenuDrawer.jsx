@@ -559,15 +559,15 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
             items-center
             justify-center
 
-            bg-black
+            bg-secondary
             px-3
             py-2.5
 
-            text-[10px]
-            font-bold
+            text-md
+            font-central-regular
             uppercase
             tracking-[0.04em]
-            text-secondary
+            text-main
 
             transition-colors
             duration-300
