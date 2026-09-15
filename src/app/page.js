@@ -111,7 +111,7 @@ Beyond the famous squares lies a quieter, deeper Savannah. One measured by the s
       >
         Sabal House anchors itself in this interplay of urban heritage and
         natural landscape. Situated directly across from Oglethorpe Square, our
-        space is an homage to the native Sabal leaf and the enduring,
+        hotel is an homage to the native Sabal leaf and the enduring,
         atmospheric beauty of the Georgia coast.
       </IntroSection>
       <ImageBreak />
