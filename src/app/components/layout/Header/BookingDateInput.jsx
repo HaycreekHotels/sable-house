@@ -20,17 +20,12 @@ export default function BookingDateInput({
 
     if (!input) return;
 
-    // `showPicker()` is the most reliable way to open the browser's native
-    // date calendar from a custom-styled control. Keep a focus/click fallback
-    // for browsers that do not expose the method.
     try {
       if (typeof input.showPicker === "function") {
         input.showPicker();
         return;
       }
-    } catch {
-      // Fall through to the browser-compatible fallback below.
-    }
+    } catch {}
 
     input.focus({ preventScroll: true });
     input.click();
@@ -53,7 +48,7 @@ export default function BookingDateInput({
 
           <span
             aria-hidden="true"
-            className="mt-1 block whitespace-nowrap text-center font-serif text-xl leading-none text-main sm:text-2xl"
+            className="mt-1 block whitespace-nowrap text-center font-benton-regular text-xl leading-none text-main sm:text-2xl"
           >
             {date.numeric}
           </span>
@@ -97,7 +92,7 @@ export default function BookingDateInput({
 
         <span
           aria-hidden="true"
-          className="my-1 font-serif text-[34px] leading-[0.9]"
+          className="my-1 font-benton-regular text-[34px] leading-[0.9]"
         >
           {date.day}
         </span>

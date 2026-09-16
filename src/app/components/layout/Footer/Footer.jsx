@@ -329,7 +329,7 @@ export default function Footer() {
               lg:text-[18px]
             "
           >
-            225 E. President St,
+            225 E. President St.
             <br />
             Savannah GA, 31401
           </address>

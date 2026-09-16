@@ -127,7 +127,7 @@ export default function RootLayout({ children }) {
           }}
         />
 
-        <NavBar />
+        <NavBar bookingWidgetVariant="banner" />
 
         {children}
 

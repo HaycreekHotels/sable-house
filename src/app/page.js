@@ -133,7 +133,7 @@ Beyond the famous squares lies a quieter, deeper Savannah. One measured by the s
             eyebrow: "Stay",
             title: "Heritage Rooms",
             description:
-              "Set within the former Presidents' Quarters, these rooms retain original hardwood floors, historic details, and the individual character of the building.",
+              "Set within the former Presidents' Quarters Inn, these rooms retain original hardwood floors, historic details, and the individual character of the building.",
             ctaLabel: "Discover Heritage Rooms",
             ctaHref: "/stay/accommodations",
           },

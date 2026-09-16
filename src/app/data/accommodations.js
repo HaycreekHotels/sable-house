@@ -7,7 +7,6 @@ export const rooms = [
     title: ["Classic", "King"],
     name: "Classic King",
 
-    // Replace this URL with the final photography for this specific room.
     image:
       "https://sabal-house.b-cdn.net/sabal/Sabal%20House%20Classic%20King.png",
     imageAlt: "Classic King guest room at Sabal House in Savannah",
@@ -45,7 +44,6 @@ export const rooms = [
     title: ["Classic", "Double Queen"],
     name: "Classic Double Queen",
 
-    // Replace this URL with the final photography for this specific room.
     image:
       "https://sabal-house.b-cdn.net/sabal/Sabal%20House%20Classic%20Double%20Queen.png",
     imageAlt: "Classic Double Queen guest room at Sabal House in Savannah",
@@ -83,7 +81,6 @@ export const rooms = [
     title: ["Classic King", "Accessible"],
     name: "Classic King Accessible",
 
-    // Replace this URL with the final photography for this specific room.
     image:
       "https://sabal-house.b-cdn.net/sabal/Sabal%20House%20Classic%20King%20Accessible.png",
     imageAlt: "Classic King Accessible guest room at Sabal House in Savannah",
@@ -122,7 +119,6 @@ export const rooms = [
     title: ["Deluxe Park", "View King"],
     name: "Deluxe Park View King",
 
-    // Replace this URL with the final photography for this specific room.
     image:
       "https://sabal-house.b-cdn.net/sabal/Sabal%20House%20Deluxe%20Park%20View%20King.png",
     imageAlt: "Deluxe Park View King guest room at Sabal House in Savannah",
@@ -161,9 +157,7 @@ export const rooms = [
     title: ["Traditional", "King"],
     name: "Traditional King",
 
-    // Replace this URL with the final photography for this specific room.
-    image:
-      "https://sabal-house.b-cdn.net/PQ%20Heritage%20King%20with%20Fireplace%20(1).png",
+    image: "https://sabal-house.b-cdn.net/PQ%20Traditional%20King.png",
     imageAlt: "Traditional King room in the Heritage Rooms at Sabal House",
     imagePosition: "center center",
 
@@ -200,7 +194,6 @@ export const rooms = [
     title: ["Traditional", "Queen"],
     name: "Traditional Queen",
 
-    // Replace this URL with the final photography for this specific room.
     image:
       "https://sabal-house.b-cdn.net/heritage/Heritage%20Traditional%20King.png",
     imageAlt: "Traditional Queen room in the Heritage Rooms at Sabal House",
@@ -239,8 +232,8 @@ export const rooms = [
     title: ["Heritage", "King"],
     name: "Heritage King",
 
-    // Replace this URL with the final photography for this specific room.
-    image: "https://sabal-house.b-cdn.net/heritage/Heritage%20King.png",
+    image:
+      "https://sabal-house.b-cdn.net/PQ%20Heritage%20King%20with%20Fireplace.png",
     imageAlt: "Heritage King room at Sabal House in Savannah",
     imagePosition: "center center",
 
@@ -279,9 +272,8 @@ export const rooms = [
     title: ["Heritage", "Double Queen"],
     name: "Heritage Double Queen",
 
-    // Replace this URL with the final photography for this specific room.
     image:
-      "https://sabal-house.b-cdn.net/heritage/ChatGPT%20Image%20Sep%209%2C%202026%20at%2011_11_41%20AM%20(2).png",
+      "https://sabal-house.b-cdn.net/PQ%20Heritage%20Double%20Queen%20with%20Fireplace%20-%20no%20rug.png",
     imageAlt: "Heritage Double Queen room at Sabal House in Savannah",
     imagePosition: "center center",
 
