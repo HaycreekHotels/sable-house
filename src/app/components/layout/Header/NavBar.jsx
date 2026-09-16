@@ -277,7 +277,7 @@ export default function NavBar({ bookingWidgetVariant = "block" }) {
           className={bookingButtonClasses}
         >
           <span className="hidden sm:inline">Book Your Stay</span>
-          <span className="sm:hidden">Book</span>
+          <span className="sm:hidden">Book Your Stay</span>
         </button>
       </nav>
 
