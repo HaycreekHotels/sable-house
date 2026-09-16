@@ -92,7 +92,7 @@ export default function BookingDateInput({
 
         <span
           aria-hidden="true"
-          className="my-1 font-benton-regular text-[34px] leading-[0.9]"
+          className="my-1 font-benton-regular text-[34px] "
         >
           {date.day}
         </span>
