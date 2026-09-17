@@ -232,7 +232,7 @@ export default function AccommodationsClient() {
           >
             Choose between the light-filled rooms of the Sabal House building
             and The Heritage Rooms, set within the former Presidents&apos;
-            Quarters. Two distinct expressions, each part of the same stay.
+            Quarters Inn. Two distinct expressions, each part of the same stay.
           </p>
         </div>
 
