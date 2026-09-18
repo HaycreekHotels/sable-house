@@ -1,5 +1,8 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+
+import BookingCalendarPopover from "./BookingCalendarPopover";
 import BookingDateInput from "./BookingDateInput";
 import useBookingForm from "./useBookingForm";
 
@@ -38,18 +41,42 @@ export default function BookingBanner({
   isVisible = true,
 }) {
   const {
-    today,
+    minimumCheckIn,
     checkIn,
     checkOut,
-    minimumCheckOut,
     rooms,
     guests,
-    setCheckOut,
     setRooms,
     setGuests,
-    handleCheckInChange,
+    handleDateRangeChange,
     handleSubmit,
   } = useBookingForm();
+
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const lastTriggerRef = useRef(null);
+
+  const calendarId = `${id}-calendar`;
+
+  useEffect(() => {
+    if (!isVisible) {
+      setIsCalendarOpen(false);
+    }
+  }, [isVisible]);
+
+  function handleOpenCalendar(event) {
+    lastTriggerRef.current = event.currentTarget;
+    setIsCalendarOpen(true);
+  }
+
+  function handleCloseCalendar(restoreFocus = true) {
+    setIsCalendarOpen(false);
+
+    if (restoreFocus) {
+      window.requestAnimationFrame(() => {
+        lastTriggerRef.current?.focus();
+      });
+    }
+  }
 
   return (
     <aside
@@ -80,14 +107,15 @@ export default function BookingBanner({
     >
       <form
         onSubmit={handleSubmit}
-        className="mx-auto grid w-full max-w-5xl grid-cols-2 items-end gap-x-2 gap-y-1 px-4 py-3 sm:grid-cols-[1.35fr_1.35fr_.7fr_.7fr_auto] sm:gap-5 sm:px-6 md:px-8"
+        className="relative mx-auto grid w-full max-w-5xl grid-cols-2 items-end gap-x-2 gap-y-1 px-4 py-3 sm:grid-cols-[1.35fr_1.35fr_.7fr_.7fr_auto] sm:gap-5 sm:px-6 md:px-8"
       >
         <BookingDateInput
           id="booking-banner-check-in"
           label="Check in"
           value={checkIn}
-          min={today}
-          onChange={handleCheckInChange}
+          onOpen={handleOpenCalendar}
+          calendarId={calendarId}
+          isCalendarOpen={isCalendarOpen}
           variant="line"
         />
 
@@ -95,8 +123,9 @@ export default function BookingBanner({
           id="booking-banner-check-out"
           label="Check out"
           value={checkOut}
-          min={minimumCheckOut}
-          onChange={setCheckOut}
+          onOpen={handleOpenCalendar}
+          calendarId={calendarId}
+          isCalendarOpen={isCalendarOpen}
           variant="line"
         />
 
@@ -123,6 +152,17 @@ export default function BookingBanner({
         >
           Book Your Stay
         </button>
+
+        <BookingCalendarPopover
+          id={calendarId}
+          isOpen={isCalendarOpen}
+          placement="banner"
+          checkIn={checkIn}
+          checkOut={checkOut}
+          minimumCheckIn={minimumCheckIn}
+          onRangeChange={handleDateRangeChange}
+          onRequestClose={handleCloseCalendar}
+        />
       </form>
     </aside>
   );

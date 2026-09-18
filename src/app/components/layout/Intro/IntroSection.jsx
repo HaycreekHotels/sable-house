@@ -14,6 +14,7 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export default function IntroSection({
   label = "Begin at",
+  eyebrow,
   heading = "Sabal House",
   leftText,
   children,
@@ -287,6 +288,15 @@ export default function IntroSection({
             2xl:max-w-[760px]
           "
         >
+          <p
+            className="font-central-regular
+                text-[0.95rem]
+                leading-[1.55]
+                text-neutral-950
+                mb-4"
+          >
+            {eyebrow}
+          </p>
           {/* Heading */}
           <h2
             id="intro-section-heading"

@@ -1,8 +1,10 @@
 const DEFAULT_BOOKING_URL = "/stay/accommodations";
 
 const QUERY_KEYS = {
-  checkIn: process.env.NEXT_PUBLIC_BOOKING_CHECKIN_PARAM || "checkin",
-  checkOut: process.env.NEXT_PUBLIC_BOOKING_CHECKOUT_PARAM || "checkout",
+  checkIn:
+    process.env.NEXT_PUBLIC_BOOKING_CHECKIN_PARAM || "checkin",
+  checkOut:
+    process.env.NEXT_PUBLIC_BOOKING_CHECKOUT_PARAM || "checkout",
   rooms: process.env.NEXT_PUBLIC_BOOKING_ROOMS_PARAM || "rooms",
   guests: process.env.NEXT_PUBLIC_BOOKING_GUESTS_PARAM || "guests",
 };
@@ -58,8 +60,14 @@ export function formatDateParts(dateString) {
   };
 }
 
-export function buildBookingUrl({ checkIn, checkOut, rooms = 1, guests = 2 }) {
-  const baseUrl = process.env.NEXT_PUBLIC_BOOKING_URL || DEFAULT_BOOKING_URL;
+export function buildBookingUrl({
+  checkIn,
+  checkOut,
+  rooms = 1,
+  guests = 2,
+}) {
+  const baseUrl =
+    process.env.NEXT_PUBLIC_BOOKING_URL || DEFAULT_BOOKING_URL;
 
   // This helper is called from client-side form submission only.
   const url = new URL(baseUrl, window.location.origin);

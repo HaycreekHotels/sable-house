@@ -104,6 +104,7 @@ export default function Home() {
       <HeroVideo videoSrc={VIDEO_SRC} />
       <IntroSection
         className="bg-[#F7F6F2]"
+        eyebrow="OPENING DECEMBER 2026"
         label="Begin"
         heading="At Sabal House"
         leftText="

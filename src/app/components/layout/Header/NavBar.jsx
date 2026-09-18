@@ -58,6 +58,12 @@ export default function NavBar({ bookingWidgetVariant = "block" }) {
     };
   }, []);
 
+  // Booking widget behavior:
+  // 1. Auto-open only when entering the homepage.
+  // 2. Start hidden when entering every other route.
+  // 3. The navbar Book button can open it from any route.
+  // 4. Once the visitor scrolls, dismiss it and keep it hidden until Book is
+  //    clicked again. Scrolling back to the top does not reopen it.
   useEffect(() => {
     setIsBookingWidgetVisible(isHomePage);
 
@@ -234,7 +240,7 @@ export default function NavBar({ bookingWidgetVariant = "block" }) {
               ${useDarkNav ? "text-black" : "text-white"}
             `}
           >
-            MENU
+            Menu
           </span>
         </button>
 
@@ -277,7 +283,7 @@ export default function NavBar({ bookingWidgetVariant = "block" }) {
           className={bookingButtonClasses}
         >
           <span className="hidden sm:inline">Book Your Stay</span>
-          <span className="sm:hidden">Book Your Stay</span>
+          <span className="sm:hidden">Book</span>
         </button>
       </nav>
 
