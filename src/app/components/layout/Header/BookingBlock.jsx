@@ -74,10 +74,6 @@ export default function BookingBlock({
       `}
     >
       <form onSubmit={handleSubmit} className="relative w-full shadow-sm">
-        <div className="bg-main px-4 py-3 text-center text-xs font-central-regular uppercase tracking-[0.05em] text-secondary sm:text-sm">
-          Book Your Stay
-        </div>
-
         <div className="grid grid-cols-2">
           <BookingDateInput
             id="booking-block-check-in"

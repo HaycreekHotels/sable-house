@@ -7,7 +7,10 @@ import BookingDateInput from "./BookingDateInput";
 import useBookingForm from "./useBookingForm";
 
 function NumberSelect({ id, label, value, onChange, min = 1, max = 8 }) {
-  const options = Array.from({ length: max - min + 1 }, (_, index) => min + index);
+  const options = Array.from(
+    { length: max - min + 1 },
+    (_, index) => min + index,
+  );
 
   return (
     <label

@@ -2,11 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-import {
-  addDaysISO,
-  buildBookingUrl,
-  getTodayISO,
-} from "./bookingUrl";
+import { addDaysISO, buildBookingUrl, getTodayISO } from "./bookingUrl";
 
 const HOTEL_OPENING_DATE = "2026-12-15";
 
