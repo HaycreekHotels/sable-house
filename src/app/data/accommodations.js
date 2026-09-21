@@ -1,6 +1,7 @@
 export const rooms = [
   {
     id: 1,
+    roomtypeid: "561835",
     slug: "classic-king",
     house: "sabal",
     houseLabel: "Sabal House",
@@ -38,6 +39,7 @@ export const rooms = [
 
   {
     id: 2,
+    roomtypeid: "561836",
     slug: "classic-double-queen",
     house: "sabal",
     houseLabel: "Sabal House",
@@ -75,6 +77,7 @@ export const rooms = [
 
   {
     id: 3,
+    roomtypeid: "561837",
     slug: "classic-king-accessible",
     house: "sabal",
     houseLabel: "Sabal House",
@@ -113,6 +116,7 @@ export const rooms = [
 
   {
     id: 4,
+    roomtypeid: "561840",
     slug: "deluxe-park-view-king",
     house: "sabal",
     houseLabel: "Sabal House",
@@ -151,6 +155,7 @@ export const rooms = [
 
   {
     id: 5,
+    roomtypeid: "561834",
     slug: "traditional-king",
     house: "heritage",
     houseLabel: "The Heritage Rooms",
@@ -188,6 +193,7 @@ export const rooms = [
 
   {
     id: 6,
+    roomtypeid: "561833",
     slug: "traditional-queen",
     house: "heritage",
     houseLabel: "The Heritage Rooms",
@@ -226,6 +232,7 @@ export const rooms = [
 
   {
     id: 7,
+    roomtypeid: "561838",
     slug: "heritage-king",
     house: "heritage",
     houseLabel: "The Heritage Rooms",
@@ -266,6 +273,7 @@ export const rooms = [
 
   {
     id: 8,
+    roomtypeid: "561839",
     slug: "heritage-double-queen",
     house: "heritage",
     houseLabel: "The Heritage Rooms",
@@ -306,6 +314,7 @@ export const rooms = [
 
   {
     id: 9,
+    roomtypeid: "561841",
     slug: "heritage-loft-suite",
     house: "heritage",
     houseLabel: "The Heritage Rooms",
@@ -347,6 +356,7 @@ export const rooms = [
 
   {
     id: 10,
+    roomtypeid: "561842",
     slug: "heritage-king-accessible",
     house: "heritage",
     houseLabel: "The Heritage Rooms",

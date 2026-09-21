@@ -10,13 +10,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-/*
- * Temporary floor-plan artwork.
- *
- * This is intentionally a generic schematic rather than pretending
- * to represent the actual room layout. Replace this component with
- * the real floor-plan Image once those assets are available.
- */
 function FloorPlanPlaceholder() {
   return (
     <svg
@@ -157,9 +150,6 @@ export default function RoomDetail({ room }) {
   const roomImageRef = useRef(null);
   const amenitiesRef = useRef(null);
 
-  /*
-   * Hero entrance
-   */
   useGSAP(
     () => {
       const hero = heroRef.current;
@@ -461,7 +451,7 @@ export default function RoomDetail({ room }) {
 
             <Link
               data-hero-item
-              href="/book"
+              href={`https://bookings.sabalhouse.com/book/dates-of-stay?&roomtypeid=${room.roomtypeid}`}
               className="
         mt-8
 
