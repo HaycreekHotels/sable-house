@@ -12,7 +12,9 @@ export default function HeroVideo({
   className = "",
 }) {
   const videoRef = useRef(null);
+
   const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -38,6 +40,7 @@ export default function HeroVideo({
     };
 
     applyMotionPreference();
+
     motionQuery.addEventListener("change", applyMotionPreference);
 
     return () => {
@@ -66,6 +69,17 @@ export default function HeroVideo({
     setIsPlaying(false);
   }
 
+  function toggleMute() {
+    const video = videoRef.current;
+
+    if (!video) return;
+
+    const nextMutedState = !video.muted;
+
+    video.muted = nextMutedState;
+    setIsMuted(nextMutedState);
+  }
+
   return (
     <section
       aria-labelledby="hero-video-heading"
@@ -84,7 +98,7 @@ export default function HeroVideo({
         src={videoSrc}
         poster={poster}
         autoPlay
-        muted
+        muted={isMuted}
         loop
         playsInline
         preload="metadata"
@@ -92,6 +106,9 @@ export default function HeroVideo({
         tabIndex={-1}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
+        onVolumeChange={(event) => {
+          setIsMuted(event.currentTarget.muted);
+        }}
         className="
           absolute
           inset-0
@@ -168,8 +185,6 @@ export default function HeroVideo({
               font-benton-regular
               text-[clamp(3rem,14vw,5rem)]
               font-normal
-             
-             
               text-secondary
 
               sm:text-[clamp(3.75rem,11vw,6rem)]
@@ -179,7 +194,6 @@ export default function HeroVideo({
               md:items-center
               md:gap-[2.5vw]
               md:text-[clamp(2.75rem,5.2vw,6rem)]
-              
 
               xl:grid-cols-[0.4fr_1fr_0.55fr_1.35fr]
             "
@@ -217,14 +231,8 @@ export default function HeroVideo({
         </div>
       </div>
 
-      {/* Persistent playback control */}
-      <button
-        type="button"
-        onClick={togglePlayback}
-        aria-label={
-          isPlaying ? "Pause background video" : "Play background video"
-        }
-        aria-pressed={isPlaying}
+      {/* Video controls */}
+      <div
         className="
           absolute
           bottom-[max(1.25rem,env(safe-area-inset-bottom))]
@@ -232,36 +240,85 @@ export default function HeroVideo({
           z-20
 
           flex
-          h-12
-          w-12
           items-center
-          justify-center
-
-          bg-black
-          text-white
-
-          transition-colors
-          hover:bg-neutral-800
-
-          focus-visible:outline
-          focus-visible:outline-2
-          focus-visible:outline-offset-4
-          focus-visible:outline-white
+          gap-2
 
           sm:right-8
 
           md:bottom-8
           md:right-12
-          md:h-14
-          md:w-14
 
           lg:right-16
 
           xl:right-20
         "
       >
-        {isPlaying ? <PauseIcon /> : <PlayIcon />}
-      </button>
+        {/* Mute / unmute */}
+        <button
+          type="button"
+          onClick={toggleMute}
+          aria-label={
+            isMuted ? "Unmute background video" : "Mute background video"
+          }
+          aria-pressed={isMuted}
+          className="
+            flex
+            h-12
+            w-12
+            items-center
+            justify-center
+
+            bg-black
+            text-white
+
+            transition-colors
+            hover:bg-neutral-800
+
+            focus-visible:outline
+            focus-visible:outline-2
+            focus-visible:outline-offset-4
+            focus-visible:outline-white
+
+            md:h-14
+            md:w-14
+          "
+        >
+          {isMuted ? <MutedIcon /> : <VolumeIcon />}
+        </button>
+
+        {/* Play / pause */}
+        <button
+          type="button"
+          onClick={togglePlayback}
+          aria-label={
+            isPlaying ? "Pause background video" : "Play background video"
+          }
+          aria-pressed={isPlaying}
+          className="
+            flex
+            h-12
+            w-12
+            items-center
+            justify-center
+
+            bg-black
+            text-white
+
+            transition-colors
+            hover:bg-neutral-800
+
+            focus-visible:outline
+            focus-visible:outline-2
+            focus-visible:outline-offset-4
+            focus-visible:outline-white
+
+            md:h-14
+            md:w-14
+          "
+        >
+          {isPlaying ? <PauseIcon /> : <PlayIcon />}
+        </button>
+      </div>
     </section>
   );
 }
@@ -279,6 +336,50 @@ function PauseIcon() {
     <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="none">
       <rect x="7" y="5" width="3.5" height="14" fill="currentColor" />
       <rect x="13.5" y="5" width="3.5" height="14" fill="currentColor" />
+    </svg>
+  );
+}
+
+function VolumeIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="none">
+      <path d="M4 10V14H8L13 18V6L8 10H4Z" fill="currentColor" />
+
+      <path
+        d="M16 9C17.3 10.5 17.3 13.5 16 15"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+
+      <path
+        d="M18.5 7C21 9.8 21 14.2 18.5 17"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function MutedIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="none">
+      <path d="M4 10V14H8L13 18V6L8 10H4Z" fill="currentColor" />
+
+      <path
+        d="M16 9L21 15"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+
+      <path
+        d="M21 9L16 15"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
