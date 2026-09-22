@@ -31,3 +31,11 @@ export const centralNoReg = localFont({
   display: "swap",
   variable: "--font-central-regular",
 });
+
+export const handwritingErnie = localFont({
+  src: "./fonts/Adobe-Handwriting-Ernie.otf",
+  weight: "400",
+  style: "normal",
+  display: "swap",
+  variable: "--handwriting",
+});

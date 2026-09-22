@@ -1,6 +1,7 @@
 "use client";
 
 import { useLayoutEffect, useMemo, useRef } from "react";
+
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -19,34 +20,38 @@ export default function ScrollStoryCards({
   const textRefs = useRef([]);
 
   /*
-    Each card creates two visual states.
-
-    Card 1:
-      state 0 -> images 1 + 2
-      state 1 -> images 3 + 4
-
-    Card 2:
-      state 2 -> images 5 + 6
-      state 3 -> images 7 + 8
-  */
-  const imageStates = useMemo(() => {
-    return cards.flatMap((card, cardIndex) => {
-      if (!Array.isArray(card.images) || card.images.length < 4) {
-        return [];
-      }
-
-      return [
-        {
-          cardIndex,
-          images: [card.images[0], card.images[1]],
-        },
-        {
-          cardIndex,
-          images: [card.images[2], card.images[3]],
-        },
-      ];
-    });
+   * Only cards with the four images required by this component participate
+   * in the animated story.
+   */
+  const usableCards = useMemo(() => {
+    return cards.filter(
+      (card) => Array.isArray(card.images) && card.images.length >= 4,
+    );
   }, [cards]);
+
+  /*
+   * Every story card creates two visual image states:
+   *
+   * Card 1
+   *   state 0 -> images 1 + 2
+   *   state 1 -> images 3 + 4
+   *
+   * Card 2
+   *   state 2 -> images 1 + 2
+   *   state 3 -> images 3 + 4
+   */
+  const imageStates = useMemo(() => {
+    return usableCards.flatMap((card, cardIndex) => [
+      {
+        cardIndex,
+        images: [card.images[0], card.images[1]],
+      },
+      {
+        cardIndex,
+        images: [card.images[2], card.images[3]],
+      },
+    ]);
+  }, [usableCards]);
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
@@ -60,31 +65,32 @@ export default function ScrollStoryCards({
     }
 
     const context = gsap.context(() => {
-      const firstImages = firstImageRefs.current.filter(Boolean);
-      const secondImages = secondImageRefs.current.filter(Boolean);
-      const textPanels = textRefs.current.filter(Boolean);
+      const firstImages = firstImageRefs.current
+        .slice(0, imageStates.length)
+        .filter(Boolean);
+
+      const secondImages = secondImageRefs.current
+        .slice(0, imageStates.length)
+        .filter(Boolean);
+
+      const textPanels = textRefs.current
+        .slice(0, usableCards.length)
+        .filter(Boolean);
 
       if (
         firstImages.length !== imageStates.length ||
         secondImages.length !== imageStates.length ||
-        textPanels.length !== cards.length
+        textPanels.length !== usableCards.length
       ) {
         return;
       }
 
       const numberOfTransitions = imageStates.length - 1;
+      const safeScrollPerStep = Math.max(0.4, Number(scrollPerStep) || 0.8);
 
       /*
-        GSAP is now the ONLY thing that owns image transforms.
-
-        There are deliberately no inline transform styles on the <img>
-        elements. The previous version had an inline translate3d(0, 100%, 0)
-        AND GSAP yPercent: 100, which could effectively place an image two
-        frame-heights below the viewport.
-
-        State 0 starts visible.
-        Every later state starts exactly one frame below.
-      */
+       * Initial image positions.
+       */
       firstImages.forEach((image, index) => {
         gsap.set(image, {
           yPercent: index === 0 ? 0 : 100,
@@ -102,11 +108,11 @@ export default function ScrollStoryCards({
       });
 
       /*
-        Text panels are stacked in the same position.
-      */
+       * Initial text positions.
+       */
       gsap.set(textPanels, {
         autoAlpha: 0,
-        yPercent: 14,
+        yPercent: 10,
         force3D: true,
       });
 
@@ -115,62 +121,63 @@ export default function ScrollStoryCards({
         yPercent: 0,
       });
 
-      const setAccessibleCard = (cardIndex) => {
+      /*
+       * Keep only the relevant story exposed to assistive technology.
+       */
+      const setAccessibleState = (stateIndex) => {
+        const activeCardIndex = imageStates[stateIndex].cardIndex;
+
+        firstImages.forEach((image, index) => {
+          image.setAttribute(
+            "aria-hidden",
+            index === stateIndex ? "false" : "true",
+          );
+        });
+
+        secondImages.forEach((image, index) => {
+          image.setAttribute(
+            "aria-hidden",
+            index === stateIndex ? "false" : "true",
+          );
+        });
+
         textPanels.forEach((panel, index) => {
-          const isActive = index === cardIndex;
+          const isActive = index === activeCardIndex;
 
           panel.setAttribute("aria-hidden", isActive ? "false" : "true");
-
-          /*
-            `inert` is a boolean DOM property.
-
-            Do not use setAttribute("inert", "") with React 19 / Next 16.
-          */
           panel.inert = !isActive;
         });
       };
 
-      setAccessibleCard(0);
+      setAccessibleState(0);
 
       /*
-        One GSAP timeline unit = one visual scroll step.
-
-        With two cards the sequence is:
-
-        time 0:
-          Card 1 text
-          images 1 + 2
-
-        time 1:
-          Card 1 text
-          images 3 + 4
-
-        time 2:
-          Card 2 text
-          images 5 + 6
-
-        time 3:
-          Card 2 text
-          images 7 + 8
-      */
+       * Main pinned story timeline.
+       */
       const timeline = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           start: "top top",
           end: () =>
-            `+=${window.innerHeight * scrollPerStep * numberOfTransitions}`,
-          pin: true,
+            `+=${window.innerHeight * safeScrollPerStep * numberOfTransitions}`,
+          pin: section,
           pinSpacing: true,
           scrub: 0.5,
           anticipatePin: 1,
           invalidateOnRefresh: true,
 
-          snap: {
-            snapTo: 1 / numberOfTransitions,
-            duration: { min: 0.12, max: 0.3 },
-            delay: 0.04,
-            ease: "power1.inOut",
-          },
+          snap:
+            numberOfTransitions > 0
+              ? {
+                  snapTo: 1 / numberOfTransitions,
+                  duration: {
+                    min: 0.12,
+                    max: 0.3,
+                  },
+                  delay: 0.04,
+                  ease: "power1.inOut",
+                }
+              : false,
 
           onUpdate: (self) => {
             const stateIndex = Math.min(
@@ -178,7 +185,7 @@ export default function ScrollStoryCards({
               Math.max(0, Math.round(self.progress * numberOfTransitions)),
             );
 
-            setAccessibleCard(imageStates[stateIndex].cardIndex);
+            setAccessibleState(stateIndex);
           },
         },
       });
@@ -192,12 +199,8 @@ export default function ScrollStoryCards({
         const stepStart = index;
 
         /*
-          Only the incoming image pair moves.
-
-          The previous image remains underneath, so when scrolling forward
-          the new pair rises over it. When scrolling backward, the new pair
-          moves back down and reveals the previous pair again.
-        */
+         * Incoming image pair scrolls upward over the current pair.
+         */
         timeline.to(
           [firstImages[nextIndex], secondImages[nextIndex]],
           {
@@ -209,13 +212,13 @@ export default function ScrollStoryCards({
         );
 
         /*
-          Change text only when crossing from one card to another.
-        */
+         * Change text only when moving into a new story card.
+         */
         if (currentState.cardIndex !== nextState.cardIndex) {
           timeline.to(
             textPanels[currentState.cardIndex],
             {
-              yPercent: -14,
+              yPercent: -10,
               autoAlpha: 0,
               duration: 0.42,
               ease: "power2.in",
@@ -226,7 +229,7 @@ export default function ScrollStoryCards({
           timeline.fromTo(
             textPanels[nextState.cardIndex],
             {
-              yPercent: 14,
+              yPercent: 10,
               autoAlpha: 0,
             },
             {
@@ -242,130 +245,356 @@ export default function ScrollStoryCards({
         timeline.addLabel(`state-${nextIndex}`, nextIndex);
       }
 
-      requestAnimationFrame(() => {
+      const refreshFrame = window.requestAnimationFrame(() => {
         ScrollTrigger.refresh();
       });
+
+      return () => {
+        window.cancelAnimationFrame(refreshFrame);
+        timeline.scrollTrigger?.kill();
+        timeline.kill();
+      };
     }, section);
 
     return () => {
       context.revert();
     };
-  }, [cards, imageStates, scrollPerStep]);
+  }, [imageStates, scrollPerStep, usableCards]);
 
-  if (!cards.length || !imageStates.length) {
+  if (!usableCards.length || !imageStates.length) {
     return null;
   }
 
   return (
     <>
-      {/* Animated version */}
+      {/* Animated experience */}
       <section
         ref={sectionRef}
         aria-label="Featured stories"
-        className={`relative  motion-reduce:hidden ${className}`}
+        className={`
+          relative
+          h-[100svh]
+          w-full
+          overflow-hidden
+          bg-secondary
+          motion-reduce:hidden
+          ${className}
+        `}
       >
-        <div className="mx-auto flex min-h-[100svh] max-w-[1600px] items-center px-4 py-4 sm:px-6 lg:px-3 lg:py-2 xl:px-5">
-          <div className="grid w-full gap-7 lg:grid-cols-[minmax(0,1.6fr)_minmax(300px,0.84fr)] lg:gap-10 xl:gap-14">
-            {/* IMAGE COMPOSITION */}
-            <div className="grid grid-cols-[1.17fr_1fr] items-end gap-3 sm:gap-4 lg:gap-5">
-              {/* Tall image */}
-              <div className="relative h-[40svh] min-h-[270px] overflow-hidden bg-neutral-200 sm:h-[50svh] lg:h-[calc(100svh-1rem)] lg:max-h-[900px]">
-                {imageStates.map((state, stateIndex) => {
-                  const image = state.images[0];
+        <div
+          className="
+            mx-auto
+            grid
+            h-full
+            w-full
+            max-w-[1720px]
 
-                  return (
-                    <img
-                      key={`large-${state.cardIndex}-${stateIndex}`}
-                      ref={(element) => {
-                        firstImageRefs.current[stateIndex] = element;
-                      }}
-                      src={image.src}
-                      alt={image.alt}
-                      loading="eager"
-                      fetchPriority={stateIndex < 2 ? "high" : "auto"}
-                      draggable="false"
-                      onError={() => {
-                        console.error(
-                          `ScrollStoryCards: failed to load image: ${image.src}`,
-                        );
-                      }}
-                      className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover will-change-transform"
-                    />
-                  );
-                })}
-              </div>
+            grid-rows-[42svh_minmax(0,1fr)]
+            gap-5
+            px-4
+            pb-[max(1.25rem,env(safe-area-inset-bottom))]
+            pt-4
 
-              {/* Short image */}
-              <div className="relative h-[26svh] min-h-[175px] overflow-hidden bg-neutral-200 sm:h-[32svh] lg:h-[46svh] lg:max-h-[460px]">
-                {imageStates.map((state, stateIndex) => {
-                  const image = state.images[1];
+            sm:grid-rows-[47svh_minmax(0,1fr)]
+            sm:gap-6
+            sm:px-6
+            sm:pb-[max(1.5rem,env(safe-area-inset-bottom))]
+            sm:pt-6
 
-                  return (
-                    <img
-                      key={`small-${state.cardIndex}-${stateIndex}`}
-                      ref={(element) => {
-                        secondImageRefs.current[stateIndex] = element;
-                      }}
-                      src={image.src}
-                      alt={image.alt}
-                      loading="eager"
-                      fetchPriority={stateIndex < 2 ? "high" : "auto"}
-                      draggable="false"
-                      onError={() => {
-                        console.error(
-                          `ScrollStoryCards: failed to load image: ${image.src}`,
-                        );
-                      }}
-                      className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover will-change-transform"
-                    />
-                  );
-                })}
-              </div>
+            lg:grid-cols-[minmax(0,1.55fr)_minmax(430px,0.9fr)]
+            lg:grid-rows-1
+            lg:gap-[clamp(2.5rem,4vw,5rem)]
+            lg:px-6
+            lg:py-0
+
+            xl:px-8
+          "
+        >
+          {/* IMAGE COMPOSITION */}
+          <div
+            className="
+              grid
+              min-h-0
+              grid-cols-[1.17fr_1fr]
+              items-end
+              gap-3
+
+              sm:gap-4
+
+              lg:self-end
+              lg:gap-6
+              lg:pb-[4.5svh]
+            "
+          >
+            {/* Tall image */}
+            <div
+              className="
+                relative
+                h-full
+                min-h-0
+                overflow-hidden
+                bg-neutral-200
+
+                lg:h-[86.5svh]
+                lg:max-h-[850px]
+              "
+            >
+              {imageStates.map((state, stateIndex) => {
+                const image = state.images[0];
+
+                return (
+                  <img
+                    key={`large-${state.cardIndex}-${stateIndex}`}
+                    ref={(element) => {
+                      firstImageRefs.current[stateIndex] = element;
+                    }}
+                    src={image.src}
+                    alt={image.alt || ""}
+                    aria-hidden={stateIndex !== 0}
+                    loading={stateIndex === 0 ? "eager" : "lazy"}
+                    fetchPriority={stateIndex === 0 ? "high" : "auto"}
+                    decoding="async"
+                    draggable="false"
+                    className="
+                      pointer-events-none
+                      absolute
+                      inset-0
+                      h-full
+                      w-full
+                      select-none
+                      object-cover
+                      will-change-transform
+                    "
+                  />
+                );
+              })}
             </div>
 
-            {/* TEXT COMPOSITION */}
-            <div className="relative min-h-[300px] overflow-hidden lg:min-h-0">
-              {cards.map((card, cardIndex) => (
-                <article
-                  key={card.id}
-                  ref={(element) => {
-                    textRefs.current[cardIndex] = element;
-                  }}
-                  aria-hidden={cardIndex !== 0}
-                  inert={cardIndex !== 0}
-                  className="absolute inset-0 flex max-w-[390px] flex-col justify-start pt-5 will-change-[transform,opacity] lg:pt-[22svh]"
-                >
-                  {card.eyebrow && (
-                    <p className="mb-2 text-[10px] font-medium uppercase leading-none tracking-[0.02em] text-neutral-900 lg:text-[11px]">
-                      {card.eyebrow}
-                    </p>
-                  )}
+            {/* Short image */}
+            <div
+              className="
+                relative
+                h-[64%]
+                min-h-0
+                overflow-hidden
+                bg-neutral-200
 
-                  <h2 className="font-serif text-[2rem] leading-[1.03] tracking-[-0.025em] text-neutral-950 sm:text-[2.25rem] lg:text-[2.2rem] xl:text-[2.55rem]">
-                    {card.title}
-                  </h2>
+                lg:h-[48svh]
+                lg:max-h-[470px]
+              "
+            >
+              {imageStates.map((state, stateIndex) => {
+                const image = state.images[1];
 
-                  {card.kicker && (
-                    <p className="mt-7 max-w-[320px] text-[10px] font-medium uppercase leading-[1.25] tracking-[0.01em] text-neutral-900 lg:mt-8 lg:text-[11px]">
-                      {card.kicker}
-                    </p>
-                  )}
+                return (
+                  <img
+                    key={`small-${state.cardIndex}-${stateIndex}`}
+                    ref={(element) => {
+                      secondImageRefs.current[stateIndex] = element;
+                    }}
+                    src={image.src}
+                    alt={image.alt || ""}
+                    aria-hidden={stateIndex !== 0}
+                    loading={stateIndex === 0 ? "eager" : "lazy"}
+                    fetchPriority={stateIndex === 0 ? "high" : "auto"}
+                    decoding="async"
+                    draggable="false"
+                    className="
+                      pointer-events-none
+                      absolute
+                      inset-0
+                      h-full
+                      w-full
+                      select-none
+                      object-cover
+                      will-change-transform
+                    "
+                  />
+                );
+              })}
+            </div>
+          </div>
 
-                  <p className="mt-7 max-w-[340px] text-[12px] leading-[1.5] text-neutral-800 lg:mt-8 lg:text-[12px]">
-                    {card.description}
+          {/* TEXT COMPOSITION */}
+          <div
+            className="
+              relative
+              min-h-0
+              overflow-hidden
+
+              lg:h-full
+            "
+          >
+            {usableCards.map((card, cardIndex) => (
+              <article
+                key={card.id}
+                ref={(element) => {
+                  textRefs.current[cardIndex] = element;
+                }}
+                aria-hidden={cardIndex !== 0}
+                inert={cardIndex !== 0}
+                className="
+                  absolute
+                  inset-0
+
+                  flex
+                  w-full
+                  max-w-[520px]
+                  flex-col
+                  items-start
+                  justify-start
+
+                  overflow-y-auto
+                  pb-3
+                  pr-2
+
+                  will-change-[transform,opacity]
+
+                  sm:pb-5
+
+                  lg:top-[26svh]
+                  lg:bottom-auto
+                  lg:overflow-visible
+                  lg:pb-0
+                  lg:pr-0
+                "
+              >
+                {card.eyebrow && (
+                  <p
+                    className="
+                      font-central-regular
+                      text-[10px]
+                      font-normal
+                      uppercase
+                      leading-none
+                      tracking-[0.035em]
+                      text-neutral-900
+
+                      sm:text-[11px]
+
+                      lg:text-[15px]
+                    "
+                  >
+                    {card.eyebrow}
                   </p>
+                )}
 
-                  <div className="mt-5 lg:mt-6">
-                    <a
-                      href={card.cta.href}
-                      className="inline-flex min-h-8 items-center justify-center bg-black px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.02em] text-white transition-colors hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-4"
-                    >
-                      {card.cta.label}
-                    </a>
-                  </div>
-                </article>
-              ))}
-            </div>
+                <h2
+                  className="
+                    mt-3
+                    font-benton-regular
+                    text-[clamp(2rem,8vw,3rem)]
+                    font-normal
+                    leading-[0.98]
+                    tracking-[-0.03em]
+                    text-neutral-950
+
+                    sm:mt-4
+                    sm:text-[clamp(2.35rem,6vw,3.35rem)]
+
+                    lg:mt-7
+                    lg:text-[clamp(3rem,3.6vw,4rem)]
+                    lg:leading-[0.98]
+                  "
+                >
+                  {card.title}
+                </h2>
+
+                {card.kicker && (
+                  <p
+                    className="
+                      mt-5
+                      max-w-[460px]
+
+                      font-central-regular
+                      text-[10px]
+                      font-normal
+                      uppercase
+                      leading-[1.35]
+                      tracking-[0.025em]
+                      text-neutral-900
+
+                      sm:mt-6
+                      sm:text-[11px]
+
+                      lg:mt-14
+                      lg:text-[15px]
+                    "
+                  >
+                    {card.kicker}
+                  </p>
+                )}
+
+                <p
+                  className="
+                    mt-5
+                    max-w-[500px]
+
+                    text-left
+                    text-[12px]
+                    leading-[1.55]
+                    text-neutral-800
+
+                    sm:mt-6
+                    sm:text-[13px]
+                    sm: pr-12
+
+                    md:pr-36
+
+                    lg:mt-12
+                    lg:text-[16px]
+                    lg:leading-[1.55]
+                  "
+                >
+                  {card.description}
+                </p>
+
+                {card.cta?.href && card.cta?.label && (
+                  <a
+                    href={card.cta.href}
+                    className="
+                      mt-6
+                      inline-flex
+                      min-h-11
+                      min-w-[180px]
+                      items-center
+                      justify-center
+
+                      bg-main
+                      px-6
+                      py-3
+
+                      font-central-regular
+                      text-md
+                      uppercase
+                      
+                      text-white
+
+                       transition-colors
+                  duration-300
+                  ease-out
+
+                   hover:bg-transparent
+            hover:border-2
+            hover:border-main
+            hover:text-main
+
+                      focus-visible:outline
+                      focus-visible:outline-2
+                      focus-visible:outline-offset-4
+                      focus-visible:outline-black
+
+                      lg:mt-9
+                      lg:min-h-[52px]
+                      lg:min-w-[220px]
+                      lg:text-[15px]
+                    "
+                  >
+                    {card.cta.label}
+                  </a>
+                )}
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -373,53 +602,123 @@ export default function ScrollStoryCards({
       {/* Reduced-motion fallback */}
       <section
         aria-label="Featured stories"
-        className="hidden motion-reduce:block"
+        className="hidden bg-secondary motion-reduce:block"
       >
-        <div className="mx-auto max-w-7xl space-y-20 px-4 py-14 sm:px-6 lg:px-8">
-          {cards.map((card) => (
+        <div
+          className="
+            mx-auto
+            max-w-[1500px]
+            space-y-20
+            px-4
+            py-14
+
+            sm:px-6
+
+            lg:space-y-28
+            lg:px-8
+            lg:py-20
+          "
+        >
+          {usableCards.map((card) => (
             <article
               key={`static-${card.id}`}
-              className="grid gap-8 lg:grid-cols-[1.5fr_0.8fr] lg:gap-12"
+              className="
+                grid
+                gap-8
+
+                lg:grid-cols-[minmax(0,1.55fr)_minmax(420px,0.9fr)]
+                lg:items-center
+                lg:gap-[clamp(2.5rem,5vw,6rem)]
+              "
             >
-              <div className="grid grid-cols-2 items-end gap-3 sm:gap-4">
-                {card.images.map((image, index) => (
+              <div className="grid grid-cols-[1.17fr_1fr] items-end gap-3 sm:gap-5">
+                {card.images.slice(0, 2).map((image, index) => (
                   <img
                     key={`${card.id}-static-${index}`}
                     src={image.src}
-                    alt={image.alt}
+                    alt={image.alt || ""}
                     loading="lazy"
-                    className="aspect-[4/5] w-full object-cover"
+                    decoding="async"
+                    className={`
+                      w-full
+                      object-cover
+                      ${index === 0 ? "aspect-[4/5]" : "aspect-[1.08/1]"}
+                    `}
                   />
                 ))}
               </div>
 
-              <div className="flex max-w-sm flex-col justify-center">
+              <div className="flex max-w-[520px] flex-col items-start">
                 {card.eyebrow && (
-                  <p className="mb-2 text-[10px] font-medium uppercase">
+                  <p className="font-central-regular text-[11px] uppercase tracking-[0.035em] lg:text-[15px]">
                     {card.eyebrow}
                   </p>
                 )}
 
-                <h2 className="font-serif text-3xl leading-tight">
+                <h2
+                  className="
+                    mt-4
+                    font-benton-regular
+                    text-[clamp(2.35rem,9vw,3.35rem)]
+                    leading-[0.98]
+                    tracking-[-0.03em]
+
+                    lg:mt-7
+                    lg:text-[clamp(3rem,3.6vw,4rem)]
+                  "
+                >
                   {card.title}
                 </h2>
 
                 {card.kicker && (
-                  <p className="mt-7 text-[10px] font-medium uppercase leading-snug">
+                  <p className="mt-7 font-central-regular text-[11px] uppercase leading-snug tracking-[0.025em] lg:mt-12 lg:text-[15px]">
                     {card.kicker}
                   </p>
                 )}
 
-                <p className="mt-7 text-sm leading-6 text-neutral-700">
+                <p className="mt-6 max-w-[500px] text-left text-sm leading-[1.6] text-neutral-700 lg:mt-10 lg:text-[16px] lg:leading-[1.55]">
                   {card.description}
                 </p>
 
-                <a
-                  href={card.cta.href}
-                  className="mt-5 inline-flex min-h-8 w-fit items-center justify-center bg-black px-5 py-2 text-[10px] font-semibold uppercase text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-4"
-                >
-                  {card.cta.label}
-                </a>
+                {card.cta?.href && card.cta?.label && (
+                  <a
+                    href={card.cta.href}
+                    className="
+                      mt-7
+                      inline-flex
+                      min-h-11
+                      min-w-[180px]
+                      items-center
+                      justify-center
+
+                      bg-main
+                      px-6
+                      py-3
+
+                      font-central-regular
+                      text-[12px]
+                      uppercase
+                      tracking-[0.035em]
+                      text-white
+
+                      transition-colors
+                      duration-200
+                      hover:bg-neutral-800
+
+                      focus-visible:outline
+                      focus-visible:outline-2
+                      focus-visible:outline-offset-4
+                      focus-visible:outline-black
+
+                      lg:mt-9
+                      lg:min-h-[52px]
+                      lg:min-w-[220px]
+                      lg:text-[15px]
+                    "
+                  >
+                    {card.cta.label}
+                  </a>
+                )}
               </div>
             </article>
           ))}

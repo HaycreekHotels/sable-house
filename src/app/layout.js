@@ -2,14 +2,21 @@ import "./globals.css";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
+import NavBar from "./components/layout/Header/NavBar";
 import Footer from "./components/layout/Footer/Footer";
 
-import { bentonLight, bentonReg, centralNoLight, centralNoReg } from "./fonts";
+import {
+  bentonLight,
+  bentonReg,
+  centralNoLight,
+  centralNoReg,
+  handwritingErnie,
+} from "./fonts";
 
 export const siteUrl = "https://www.sabalhouse.com";
 
 export const siteDescription =
-  "Sabal House is a new hotel opening December 2026 in Savannah’s Historic District. Follow the journey, get opening updates, and contact our team.";
+  "Sabal House is a hotel opening December 2026 in Savannah’s Historic District, directly across from Oglethorpe Square.";
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
@@ -107,6 +114,7 @@ export default function RootLayout({ children }) {
         ${bentonReg.variable}
         ${centralNoLight.variable}
         ${centralNoReg.variable}
+        ${handwritingErnie.variable}
         h-full
         antialiased
       `}
@@ -118,6 +126,8 @@ export default function RootLayout({ children }) {
             __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
           }}
         />
+
+        <NavBar />
 
         {children}
 

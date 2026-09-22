@@ -1,67 +1,501 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+
+import gsap from "gsap";
 
 import whiteLogo from "../../../../../public/images/logos/SH_Primary Logo Offwhite.png";
 
-const LEAF_INTRO_ID = "leaf-intro";
-const LEAF_INTRO_HEADING_ID = `${LEAF_INTRO_ID}-heading`;
+import hayCreekLogo from "../../../../../public/images/logos/HC_Logotype.png";
+import tenAndFiveLogo from "../../../../../public/images/logos/Final_Logo Black.png";
+
+const footerLinks = [
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/thesabalhouse/?utm_source=ig_web_button_share_sheet",
+    external: true,
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/profile.php?id=61592632106578",
+    external: true,
+  },
+  {
+    label: "Stay Informed",
+    href: "/#open-letter-form",
+    external: false,
+    scrollTarget: "open-letter-form",
+  },
+];
+
+const footerLinkStyles = `
+  inline-block
+  text-[15px]
+  font-central-regular
+  tracking-[-0.02em]
+  text-secondary
+
+  transition-opacity
+  duration-300
+
+  hover:opacity-60
+
+  focus-visible:outline-none
+  focus-visible:ring-2
+  focus-visible:ring-secondary
+  focus-visible:ring-offset-4
+  focus-visible:ring-offset-main
+
+  sm:text-base
+  lg:text-[18px]
+`;
+
+const utilityLinkStyles = `
+  inline-flex
+  min-h-11
+  items-center
+
+  text-sm
+  font-central-regular
+  tracking-[-0.02em]
+ text-secondary
+
+  transition-opacity
+  duration-300
+
+  hover:opacity-60
+
+  focus-visible:outline-none
+  focus-visible:ring-2
+  focus-visible:ring-black
+  focus-visible:ring-offset-4
+  focus-visible:ring-offset-secondary
+
+  lg:text-[18px]
+`;
 
 export default function Footer() {
-  function handleBackToIntro() {
-    const introSection = document.getElementById(LEAF_INTRO_ID);
-    const introHeading = document.getElementById(LEAF_INTRO_HEADING_ID);
+  const pathname = usePathname();
+  const router = useRouter();
 
-    if (!introSection) {
+  function handleStayInformed(event) {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
       return;
     }
+
+    event.preventDefault();
 
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
-    introSection.scrollIntoView({
-      behavior: prefersReducedMotion ? "auto" : "smooth",
-      block: "start",
+    if (pathname === "/") {
+      const target = document.getElementById("open-letter-form");
+
+      if (!target) return;
+
+      target.scrollIntoView({
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+        block: "start",
+      });
+
+      window.history.replaceState(null, "", "/#open-letter-form");
+
+      return;
+    }
+
+    sessionStorage.setItem("sabal-scroll-target", "open-letter-form");
+
+    if (prefersReducedMotion) {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "auto",
+      });
+
+      router.push("/#open-letter-form", {
+        scroll: false,
+      });
+
+      return;
+    }
+
+    gsap.to(document.body, {
+      opacity: 0,
+      duration: 0.35,
+      ease: "power2.inOut",
+
+      onComplete: () => {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "auto",
+        });
+
+        router.push("/#open-letter-form", {
+          scroll: false,
+        });
+      },
     });
 
-    introHeading?.focus({
-      preventScroll: true,
-    });
+    window.setTimeout(() => {
+      if (document.body.style.opacity === "0") {
+        gsap.to(document.body, {
+          opacity: 1,
+          duration: 0.25,
+          clearProps: "opacity",
+        });
+      }
+    }, 3000);
   }
 
   return (
-    <footer className="bg-main px-5 py-4 text-white sm:px-8">
-      <div className="mx-auto grid max-w-7xl items-center gap-4 md:grid-cols-[1fr_auto_1fr]">
-        <address className="text-center text-xs leading-5 font-normal tracking-[0.08em] uppercase not-italic md:text-left">
-          225 E. President St
-          <span className="hidden lg:inline">, </span>
-          <span className="block lg:inline">Savannah GA 31401</span>
-        </address>
+    <footer
+      className="
+        bg-main
+        px-4
+        pb-4
+        pt-12
+        text-secondary
 
-        <Image
-          src={whiteLogo}
-          alt="Sabal House"
-          className="mx-auto h-auto w-32"
-          sizes="8rem"
-        />
+        sm:px-6
+        sm:pb-6
+        sm:pt-14
 
-        <button
-          type="button"
-          onClick={handleBackToIntro}
-          className="mx-auto inline-flex min-h-11 cursor-pointer items-center gap-2 border-b border-white px-2 py-2 text-xs font-medium tracking-[0.1em] uppercase transition-colors duration-200 hover:border-white/65 hover:text-white/65 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--color-main)] motion-reduce:transition-none md:mx-0 md:justify-self-end"
+        md:px-8
+
+        lg:px-6
+        lg:pb-5
+        lg:pt-14
+      "
+    >
+      {/* Main footer area */}
+      <div
+        className="
+          mx-auto
+          grid
+          w-full
+          grid-cols-1
+          gap-12
+
+          pb-14
+
+          md:grid-cols-2
+          md:gap-x-12
+          md:gap-y-14
+
+          lg:min-h-[30px]
+          lg:grid-cols-[1fr_auto_1fr]
+          lg:items-start
+          lg:gap-12
+          lg:pb-12
+        "
+      >
+        {/* Footer links */}
+        <nav
+          aria-label="Footer links"
+          className="
+            flex
+            flex-col
+            gap-2
+
+            md:self-start
+
+            lg:pl-[3vw]
+            lg:pt-7
+          "
         >
-          Contact Us
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 24 24"
-            fill="none"
-            className="size-4 stroke-current"
-            strokeWidth="2"
+          {footerLinks.map((link) =>
+            link.external ? (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${link.label} (opens in a new tab)`}
+                className={footerLinkStyles}
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link
+                key={link.label}
+                href={link.href}
+                onClick={link.scrollTarget ? handleStayInformed : undefined}
+                className={footerLinkStyles}
+              >
+                {link.label}
+              </Link>
+            ),
+          )}
+        </nav>
+
+        {/* Main Sabal House logo */}
+        <div
+          className="
+            flex
+            items-start
+            justify-start
+
+            md:col-span-2
+            md:row-start-1
+            md:justify-center
+
+            lg:col-span-1
+            lg:col-start-2
+            lg:row-start-1
+          "
+        >
+          <Link
+            href="/"
+            aria-label="Sabal House home"
+            className="
+              inline-block
+
+              transition-opacity
+              duration-300
+
+              hover:opacity-80
+
+              focus-visible:outline-none
+              focus-visible:ring-2
+              focus-visible:ring-secondary
+              focus-visible:ring-offset-4
+              focus-visible:ring-offset-main
+            "
           >
-            <path d="M12 19V5M6 11l6-6 6 6" />
-          </svg>
-        </button>
+            <Image
+              src={whiteLogo}
+              alt=""
+              width={260}
+              height={260}
+              className="
+                h-auto
+                w-[180px]
+
+                sm:w-[180px]
+                md:w-[200px]
+
+                lg:w-[240px]
+
+                xl:w-[260px]
+                2xl:w-[300px]
+              "
+              sizes="
+                (max-width: 640px) 230px,
+                (max-width: 768px) 280px,
+                (max-width: 1024px) 340px,
+                (max-width: 1280px) 360px,
+                (max-width: 1536px) 430px,
+                470px
+              "
+              priority={false}
+            />
+          </Link>
+        </div>
+
+        {/* Contact information */}
+        <div
+          className="
+            flex
+            flex-col
+            gap-7
+
+            md:col-start-2
+            md:row-start-2
+            md:items-end
+            md:text-right
+
+            lg:col-start-3
+            lg:row-start-1
+            lg:justify-self-end
+            lg:pr-[3vw]
+            lg:pt-6
+          "
+        >
+          <address
+            className="
+              max-w-[260px]
+
+              text-[15px]
+              font-central-regular
+              not-italic
+              leading-[1.35]
+              tracking-[-0.02em]
+
+              sm:text-base
+              lg:text-[18px]
+            "
+          >
+            225 E. President St.
+            <br />
+            Savannah GA, 31401
+          </address>
+
+          <a
+            href="tel:+19122331600"
+            className="
+              w-fit
+
+              text-[15px]
+              font-central-regular
+              tracking-[-0.02em]
+
+              transition-opacity
+              duration-300
+
+              hover:opacity-60
+
+              focus-visible:outline-none
+              focus-visible:ring-2
+              focus-visible:ring-secondary
+              focus-visible:ring-offset-4
+              focus-visible:ring-offset-main
+
+              sm:text-base
+              lg:text-[18px]
+            "
+          >
+            912-233-1600
+          </a>
+        </div>
+      </div>
+
+      {/* Bottom utility bar */}
+      <div
+        className="
+          
+          
+
+          px-5
+          py-5
+
+          sm:px-7
+
+          lg:max-h-[64px]
+          lg:px-[3vw]
+          lg:py-0
+        "
+      >
+        <div
+          className="
+            grid
+            grid-cols-1
+            items-center
+            
+            gap-6
+
+            sm:grid-cols-2
+
+            lg:grid-cols-[1fr_1.25fr_1.25fr_1fr]
+            lg:gap-8
+            
+          "
+        >
+          {/* Privacy */}
+          <div className="flex sm:justify-start">
+            <Link href="/privacy" className={utilityLinkStyles}>
+              Privacy
+            </Link>
+          </div>
+
+          {/* Hay Creek */}
+          <div
+            className="
+              flex
+              items-center
+              gap-3
+
+              sm:justify-end
+
+              lg:justify-center
+            "
+          >
+            <span
+              className="
+                whitespace-nowrap
+                text-xs
+                font-central-regular
+                text-secondary
+
+                sm:text-sm
+                lg:text-[16px]
+              "
+            >
+              Managed by
+            </span>
+
+            <Image
+              src={hayCreekLogo}
+              alt="Hay Creek"
+              width={180}
+              height={60}
+              className="
+                h-auto
+                w-[130px]
+
+                lg:w-[150px]
+              "
+            />
+          </div>
+
+          {/* 10and5 Creative */}
+          <div
+            className="
+              flex
+              items-center
+              gap-3
+
+              sm:justify-start
+
+              lg:justify-center
+            "
+          >
+            <span
+              className="
+                whitespace-nowrap
+                text-xs
+                font-central-regular
+                text-secondary
+
+                sm:text-sm
+                lg:text-[16px]
+              "
+            >
+              Designed by
+            </span>
+
+            <Image
+              src={tenAndFiveLogo}
+              alt="10and5 Creative"
+              width={160}
+              height={70}
+              className="
+                h-auto
+                w-[105px]
+
+                lg:w-[80px]
+              "
+            />
+          </div>
+
+          {/* Accessibility */}
+          <div
+            className="
+              flex
+
+              sm:justify-end
+
+              lg:justify-end
+            "
+          >
+            <Link href="/accessibility" className={utilityLinkStyles}>
+              Accessibility
+            </Link>
+          </div>
+        </div>
       </div>
     </footer>
   );

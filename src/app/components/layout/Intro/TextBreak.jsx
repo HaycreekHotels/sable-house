@@ -1,6 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { useRef } from "react";
+
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -9,46 +11,89 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export default function TextBreak({
   children,
+  stampSrc,
+  stampAlt = "",
   className = "",
+  panelClassName = "",
   textClassName = "",
 }) {
   const sectionRef = useRef(null);
   const textRef = useRef(null);
+  const stampRef = useRef(null);
 
   useGSAP(
     () => {
-      const prefersReducedMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      ).matches;
+      const section = sectionRef.current;
+      const text = textRef.current;
+      const stamp = stampRef.current;
 
-      if (prefersReducedMotion) {
-        gsap.set(textRef.current, {
-          opacity: 1,
-          y: 0,
+      if (!section || !text) return;
+
+      const mm = gsap.matchMedia();
+
+      /*
+       * Reduced motion
+       */
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        gsap.set([text, stamp].filter(Boolean), {
+          autoAlpha: 1,
+          clearProps: "transform",
+        });
+      });
+
+      /*
+       * Standard motion
+       */
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const timeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: "top 72%",
+            once: true,
+            invalidateOnRefresh: true,
+          },
         });
 
-        return;
-      }
-
-      gsap.fromTo(
-        textRef.current,
-        {
-          opacity: 0,
-          y: 60,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          ease: "none",
-
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 85%",
-            end: "top 45%",
-            scrub: 1,
+        timeline.fromTo(
+          text,
+          {
+            autoAlpha: 0,
+            y: 20,
           },
-        },
-      );
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 1,
+            ease: "power2.out",
+          },
+        );
+
+        if (stamp) {
+          timeline.fromTo(
+            stamp,
+            {
+              autoAlpha: 0,
+              y: 10,
+              scale: 0.96,
+            },
+            {
+              autoAlpha: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.8,
+              ease: "power2.out",
+            },
+            "-=0.45",
+          );
+        }
+
+        return () => {
+          timeline.scrollTrigger?.kill();
+          timeline.kill();
+        };
+      });
+
+      return () => mm.revert();
     },
     {
       scope: sectionRef,
@@ -58,35 +103,159 @@ export default function TextBreak({
   return (
     <section
       ref={sectionRef}
+      style={{
+        backgroundImage:
+          "url('/images/decorative/Dark-Green-Background-Grain.png')",
+      }}
       className={`
-    flex
-    min-h-[60vh]
-    items-center
-    justify-center
+    w-full
 
-    px-6
-    py-20
-    sm:px-10
-    md:px-16
-    lg:px-24
+    border-[16px]
+    border-transparent
+
+    bg-cover
+    bg-center
+    bg-no-repeat
+    bg-clip-padding
+
+    sm:border-[20px]
+    md:border-[24px]
+    lg:border-[32px]
+
     ${className}
   `}
     >
-      <p
-        ref={textRef}
+      <div
         className={`
-    w-full
-    max-w-[700px]
-    font-serif
-    text-[clamp(1.75rem,3.2vw,3.25rem)]
-    leading-[1.25]
-    tracking-[-0.025em]
-    text-black
-    ${textClassName}
-  `}
+      relative
+
+      flex
+      min-h-[520px]
+      w-full
+      items-center
+      justify-center
+
+      px-6
+      py-20
+
+      sm:min-h-[560px]
+      sm:px-10
+      sm:py-24
+
+      md:min-h-[620px]
+      md:px-14
+      md:py-28
+
+      lg:min-h-[650px]
+      lg:px-20
+      lg:py-32
+
+      xl:min-h-[740px]
+      xl:px-24
+      xl:py-36
+
+      2xl:min-h-[800px]
+      2xl:px-32
+      2xl:py-40
+
+      ${panelClassName}
+    `}
       >
-        {children}
-      </p>
+        {/* Centered quote */}
+        <div
+          className="
+        flex
+        w-full
+        max-w-[900px]
+        items-center
+        justify-center
+        text-center
+
+        md:max-w-[750px]
+        lg:max-w-[850px]
+        xl:max-w-[1000px]
+        2xl:max-w-[1100px]
+      "
+        >
+          <p
+            ref={textRef}
+            className={`
+          w-full
+
+          font-benton-regular
+          italic
+
+          text-[clamp(2rem,7vw,2.85rem)]
+          leading-[1.18]
+          text-secondary
+
+          sm:text-[clamp(2.4rem,5vw,3.4rem)]
+
+          md:text-[clamp(2.75rem,4vw,4rem)]
+          md:leading-[1.16]
+
+          lg:text-[clamp(3rem,3.25vw,4.25rem)]
+
+          xl:text-[clamp(3.25rem,3vw,4.5rem)]
+          xl:leading-[1.14]
+
+          2xl:text-[clamp(3.5rem,2.75vw,4.75rem)]
+
+          ${textClassName}
+        `}
+          >
+            {children}
+          </p>
+        </div>
+
+        {/* Sabal House stamp */}
+        {stampSrc && (
+          <div
+            ref={stampRef}
+            className="
+          absolute
+          bottom-8
+          left-1/2
+          -translate-x-1/2
+
+          h-[72px]
+          w-[60px]
+
+          sm:bottom-10
+          sm:h-[82px]
+          sm:w-[60px]
+
+          md:bottom-[4.5rem]
+          md:h-[92px]
+          md:w-[70px]
+
+          lg:bottom-20
+
+          xl:bottom-26
+          xl:h-[100px]
+          xl:w-[80px]
+
+          2xl:bottom-28
+          2xl:h-[108px]
+          2xl:w-[90px]
+        "
+          >
+            <Image
+              src={stampSrc}
+              alt={stampAlt}
+              fill
+              sizes="
+            (max-width: 640px) 100px,
+            (max-width: 768px) 120px,
+            (max-width: 1280px) 140px,
+            (max-width: 1536px) 150px,
+            160px
+          "
+              className="object-contain"
+            />
+          </div>
+        )}
+      </div>
     </section>
   );
 }
