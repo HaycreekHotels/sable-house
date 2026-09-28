@@ -23,6 +23,10 @@ export default function sitemap() {
     ...roomPages,
 
     {
+      url: `${siteUrl}/dine/oak-steakhouse`,
+    },
+
+    {
       url: `${siteUrl}/accessibility`,
     },
 

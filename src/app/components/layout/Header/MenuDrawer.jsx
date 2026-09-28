@@ -35,6 +35,15 @@ const menuSections = [
       },
     ],
   },
+  {
+    title: "Dine",
+    links: [
+      {
+        label: "Oak Steakhouse",
+        href: "/dine/oak-steakhouse",
+      },
+    ],
+  },
 ];
 
 const menuFooterSections = [
