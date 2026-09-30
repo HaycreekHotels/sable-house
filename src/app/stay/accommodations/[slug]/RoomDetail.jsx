@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { trackEvent } from "@/app/lib/analytics";
 import { useRef } from "react";
 
 import gsap from "gsap";
@@ -452,6 +453,14 @@ export default function RoomDetail({ room }) {
             <Link
               data-hero-item
               href={`https://bookings.sabalhouse.com/book/dates-of-stay?&roomtypeid=${room.roomtypeid}`}
+              onClick={() => {
+                trackEvent("room_booking_click", {
+                  room_name: room.name,
+                  room_type_id: room.roomtypeid,
+                  room_category: room.house,
+                  source: "room_detail",
+                });
+              }}
               className="
         mt-8
 

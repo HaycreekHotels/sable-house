@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+
+import { trackEvent } from "@/app/lib/analytics";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -24,6 +26,9 @@ export default function OpenLetterForm({
   const letterRef = useRef(null);
   const stampRef = useRef(null);
 
+  const [submitStatus, setSubmitStatus] = useState("idle");
+  const [submitMessage, setSubmitMessage] = useState("");
+
   useEffect(() => {
     const storedTarget = sessionStorage.getItem("sabal-scroll-target");
 
@@ -42,30 +47,18 @@ export default function OpenLetterForm({
     let cancelled = false;
 
     async function positionForm() {
-      /*
-       * Wait for fonts because font loading can change the
-       * heights of sections above this component.
-       */
       if (document.fonts?.ready) {
         await document.fonts.ready;
       }
 
       if (cancelled) return;
 
-      /*
-       * Give React and the homepage GSAP components time
-       * to establish their initial layout.
-       */
       window.requestAnimationFrame(() => {
         window.requestAnimationFrame(() => {
           if (cancelled || !sectionRef.current) {
             return;
           }
 
-          /*
-           * Recalculate all pin spacing before locating
-           * OpenLetterForm.
-           */
           ScrollTrigger.refresh();
 
           window.requestAnimationFrame(() => {
@@ -73,30 +66,13 @@ export default function OpenLetterForm({
               return;
             }
 
-            /*
-             * Now that the final homepage layout exists,
-             * move directly to the form.
-             *
-             * scroll-mt-20 on the section handles the
-             * fixed navbar offset.
-             */
             sectionRef.current.scrollIntoView({
               behavior: "auto",
               block: "start",
             });
 
-            /*
-             * IMPORTANT:
-             *
-             * Do not remove this before the async work.
-             * Waiting until the scroll succeeds makes this
-             * safe with React Strict Mode in development.
-             */
             sessionStorage.removeItem("sabal-scroll-target");
 
-            /*
-             * Ensure the final URL includes the anchor.
-             */
             if (window.location.hash !== "#open-letter-form") {
               window.history.replaceState(null, "", "/#open-letter-form");
             }
@@ -128,18 +104,60 @@ export default function OpenLetterForm({
     };
   }, []);
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
-    if (onSubmit) {
-      const formData = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const formData = new FormData(form);
 
-      onSubmit({
-        firstName: formData.get("firstName"),
-        lastName: formData.get("lastName"),
-        email: formData.get("email"),
-        zipCode: formData.get("zipCode"),
+    const submission = {
+      firstName: String(formData.get("firstName") || "").trim(),
+      lastName: String(formData.get("lastName") || "").trim(),
+      email: String(formData.get("email") || "").trim(),
+      zipCode: String(formData.get("zipCode") || "").trim(),
+    };
+
+    setSubmitStatus("submitting");
+    setSubmitMessage("");
+
+    try {
+      if (onSubmit) {
+        await onSubmit(submission);
+      } else {
+        const response = await fetch("/api/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(submission),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(
+            result.error || "We could not submit your information.",
+          );
+        }
+      }
+
+      trackEvent("newsletter_signup", {
+        source: "open_letter_form",
       });
+
+      setSubmitStatus("success");
+      setSubmitMessage("Thank you for joining the list.");
+
+      form.reset();
+    } catch (error) {
+      console.error("Newsletter signup failed:", error);
+
+      setSubmitStatus("error");
+      setSubmitMessage(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
+      );
     }
   }
 
@@ -148,9 +166,6 @@ export default function OpenLetterForm({
       const mm = gsap.matchMedia();
 
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        /*
-         * Entire letter entrance
-         */
         gsap.from(letterRef.current, {
           opacity: 0,
           y: 45,
@@ -165,9 +180,6 @@ export default function OpenLetterForm({
           },
         });
 
-        /*
-         * Stamp entrance
-         */
         gsap.from(stampRef.current, {
           opacity: 0,
           y: -18,
@@ -184,9 +196,6 @@ export default function OpenLetterForm({
           },
         });
 
-        /*
-         * Header copy
-         */
         gsap.from("[data-letter-copy]", {
           opacity: 0,
           y: 12,
@@ -201,9 +210,6 @@ export default function OpenLetterForm({
           },
         });
 
-        /*
-         * Form fields fade in one at a time.
-         */
         gsap.from("[data-form-field]", {
           opacity: 0,
           y: 18,
@@ -219,9 +225,6 @@ export default function OpenLetterForm({
           },
         });
 
-        /*
-         * CTA + signature
-         */
         gsap.from("[data-letter-footer]", {
           opacity: 0,
           y: 12,
@@ -463,6 +466,7 @@ export default function OpenLetterForm({
                     focus:border-neutral-950
                     focus:ring-0
                   "
+                  required
                 />
               </div>
 
@@ -513,6 +517,7 @@ export default function OpenLetterForm({
                     focus:border-neutral-950
                     focus:ring-0
                   "
+                  required
                 />
               </div>
             </div>
@@ -541,6 +546,7 @@ export default function OpenLetterForm({
 
                   sm:text-xs
                 "
+                required
               >
                 Email Address
               </label>
@@ -650,6 +656,7 @@ export default function OpenLetterForm({
             >
               <button
                 type="submit"
+                disabled={submitStatus === "submitting"}
                 className="
                   min-w-[150px]
 
@@ -683,8 +690,14 @@ export default function OpenLetterForm({
                   sm:text-xs
                 "
               >
-                {buttonLabel}
+                {submitStatus === "submitting" ? "SENDING..." : buttonLabel}
               </button>
+            </div>
+            <div
+              aria-live="polite"
+              className="mt-4 min-h-5 text-center text-xs text-neutral-800"
+            >
+              {submitMessage}
             </div>
 
             {/* Signature */}

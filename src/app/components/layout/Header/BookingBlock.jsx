@@ -16,7 +16,9 @@ export default function BookingBlock({
     checkOut,
     handleDateRangeChange,
     handleSubmit,
-  } = useBookingForm();
+  } = useBookingForm({
+    source: "booking_block",
+  });
 
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const lastTriggerRef = useRef(null);

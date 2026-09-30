@@ -53,8 +53,9 @@ export default function BookingBanner({
     setGuests,
     handleDateRangeChange,
     handleSubmit,
-  } = useBookingForm();
-
+  } = useBookingForm({
+    source: "booking_block",
+  });
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const lastTriggerRef = useRef(null);
 

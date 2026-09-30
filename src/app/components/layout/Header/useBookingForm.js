@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 
+import { trackEvent } from "@/app/lib/analytics";
+
 import { addDaysISO, buildBookingUrl, getTodayISO } from "./bookingUrl";
 
 const HOTEL_OPENING_DATE = "2026-12-15";
@@ -9,11 +11,10 @@ const HOTEL_OPENING_DATE = "2026-12-15";
 function getMinimumCheckInDate() {
   const today = getTodayISO();
 
-  // ISO dates in YYYY-MM-DD format sort chronologically.
   return today < HOTEL_OPENING_DATE ? HOTEL_OPENING_DATE : today;
 }
 
-export default function useBookingForm() {
+export default function useBookingForm({ source = "booking_widget" } = {}) {
   const [minimumCheckIn, setMinimumCheckIn] = useState("");
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
@@ -61,6 +62,14 @@ export default function useBookingForm() {
     const bookingUrl = buildBookingUrl({
       checkIn,
       checkOut,
+      rooms,
+      guests,
+    });
+
+    trackEvent("begin_booking", {
+      source,
+      check_in: checkIn,
+      check_out: checkOut,
       rooms,
       guests,
     });

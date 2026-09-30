@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { trackEvent } from "@/app/lib/analytics";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
@@ -58,12 +59,6 @@ export default function NavBar({ bookingWidgetVariant = "block" }) {
     };
   }, []);
 
-  // Booking widget behavior:
-  // 1. Auto-open only when entering the homepage.
-  // 2. Start hidden when entering every other route.
-  // 3. The navbar Book button can open it from any route.
-  // 4. Once the visitor scrolls, dismiss it and keep it hidden until Book is
-  //    clicked again. Scrolling back to the top does not reopen it.
   useEffect(() => {
     setIsBookingWidgetVisible(isHomePage);
 
@@ -100,6 +95,12 @@ export default function NavBar({ bookingWidgetVariant = "block" }) {
 
   function handleBookingButtonClick() {
     setIsBookingWidgetVisible(true);
+
+    trackEvent("booking_widget_open", {
+      source: "navbar",
+      page_path: pathname,
+      widget_variant: bookingWidgetVariant,
+    });
   }
 
   const bookingButtonClasses = `
