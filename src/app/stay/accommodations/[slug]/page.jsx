@@ -4,6 +4,8 @@ import RoomDetail from "./RoomDetail";
 
 import { getRoomBySlug, rooms } from "@/app/data/accommodations";
 
+const siteUrl = "https://www.sabalhouse.com";
+
 export function generateStaticParams() {
   return rooms.map((room) => ({
     slug: room.slug,
@@ -75,5 +77,49 @@ export default async function RoomPage({ params }) {
     notFound();
   }
 
-  return <RoomDetail room={room} />;
+  const canonicalUrl = `${siteUrl}/stay/accommodations/${room.slug}`;
+
+  const breadcrumbStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: `${siteUrl}/`,
+      },
+
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Accommodations",
+        item: `${siteUrl}/stay/accommodations`,
+      },
+
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: room.name,
+        item: canonicalUrl,
+      },
+    ],
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbStructuredData).replace(
+            /</g,
+            "\\u003c",
+          ),
+        }}
+      />
+
+      <RoomDetail room={room} />
+    </>
+  );
 }

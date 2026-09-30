@@ -10,26 +10,22 @@ export const metadata = {
   title: "Oak Steakhouse",
 
   description:
-    "Prepare your appetiate as the newly built Steakhouse is coming to Savannah, Gegoria and housed at the newly renavated Sabal House Inn!",
+    "Discover Oak Steakhouse at Sabal House, opening in early 2027 in Savannah’s Historic District with classic American fare, exceptional steaks, and a curated wine program.",
 
   alternates: {
     canonical: "/dine/oak-steakhouse",
   },
 
   openGraph: {
-    type: "article",
-
+    type: "website",
     url: "/dine/oak-steakhouse",
-
-    title: "Oak Steakhouse| Sabal House",
-
+    title: "Oak Steakhouse | Sabal House",
     description:
-      "Learn more about the newly built resturaunt coming to Savannah, Gegoria.",
-
+      "Discover Oak Steakhouse at Sabal House, bringing classic American fare, exceptional steaks, thoughtful hospitality, and a curated wine program to Savannah’s Historic District.",
     images: [
       {
         url: "https://sabal-house.b-cdn.net/Oak%20Steakhous/oak_hero.jpg",
-        alt: "A dinning table stacked high with a fresh seafood tower and surround by steak plates.",
+        alt: "Oak Steakhouse dining experience at Sabal House in Savannah",
       },
     ],
   },
