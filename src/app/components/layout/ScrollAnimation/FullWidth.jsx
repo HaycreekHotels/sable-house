@@ -122,10 +122,6 @@ export default function FullWidth({
         "(prefers-reduced-motion: reduce)",
       ).matches;
 
-      /*
-       * Starting image is now substantially wider on desktop
-       * to match the redesign.
-       */
       const getStartWidthSize = () => {
         if (window.innerWidth < 768) {
           return Math.min(window.innerWidth - 32, 520);
@@ -288,10 +284,6 @@ export default function FullWidth({
         0.35,
       );
 
-      /*
-       * Dark treatment comes in only once the image
-       * begins becoming immersive.
-       */
       if (overlay) {
         timeline.to(
           overlay,
@@ -454,8 +446,7 @@ export default function FullWidth({
               font-benton-regular
 
               text-[clamp(2.6rem,10vw,3.75rem)]
-              leading-[0.98]
-              tracking-[-0.025em]
+             
               text-black
 
               md:text-[clamp(3.5rem,4.75vw,5rem)]

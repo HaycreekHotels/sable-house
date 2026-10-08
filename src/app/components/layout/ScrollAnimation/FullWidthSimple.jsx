@@ -22,7 +22,7 @@ export default function FullWidthSimple({
     creates space to arrive, feel at ease, and become more
     present to the city around you.`,
   image = placeHolder,
-  imageAlt = "",
+  imageAlt = "Extior of the boutque Sabal House hotel with a Savannah Trolley tour driving by",
   priority = false,
 }) {
   const sectionRef = useRef(null);
@@ -78,9 +78,6 @@ export default function FullWidthSimple({
         });
       });
 
-      /*
-       * Standard motion.
-       */
       mm.add(
         {
           isMobile: "(max-width: 767px)",
@@ -92,12 +89,6 @@ export default function FullWidthSimple({
 
           if (reduceMotion) return;
 
-          /*
-           * Starting image width.
-           *
-           * Desktop is intentionally much wider than the
-           * previous square layout.
-           */
           const getStartWidth = () => {
             if (isMobile) {
               return Math.min(window.innerWidth - 32, 520);
@@ -106,9 +97,6 @@ export default function FullWidthSimple({
             return Math.min(window.innerWidth * 0.62, 900);
           };
 
-          /*
-           * Wide editorial image ratio.
-           */
           const getStartHeight = () => {
             const width = getStartWidth();
 

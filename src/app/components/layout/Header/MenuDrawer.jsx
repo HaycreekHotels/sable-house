@@ -581,7 +581,7 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
             transition-colors
             duration-300
 
-            hover:bg-neutral-800
+            hover:bg-main
 
             focus-visible:outline
             focus-visible:outline-2

@@ -10,7 +10,8 @@ export const rooms = [
 
     image:
       "https://sabal-house.b-cdn.net/sabal/Sabal%20House%20Classic%20King.png",
-    imageAlt: "Classic King guest room at Sabal House in Savannah",
+    imageAlt:
+      "Contemporary Classic King guest room at Sabal House Inn in Savannah, Georgia, featuring a king-size bed, warm wood finishes, and modern furnishings.",
     imagePosition: "center center",
 
     bed: "1 King Bed",
@@ -48,7 +49,8 @@ export const rooms = [
 
     image:
       "https://sabal-house.b-cdn.net/sabal/Sabal%20House%20Classic%20Double%20Queen.png",
-    imageAlt: "Classic Double Queen guest room at Sabal House in Savannah",
+    imageAlt:
+      "Classic Double Queen room with two queen beds and contemporary decor at Sabal House Inn, a boutique hotel in Savannah's Historic District near Oglethorpe Park.",
     imagePosition: "center center",
 
     bed: "2 Queen Beds",
@@ -86,7 +88,8 @@ export const rooms = [
 
     image:
       "https://sabal-house.b-cdn.net/sabal/Sabal%20House%20Classic%20King%20Accessible.png",
-    imageAlt: "Classic King Accessible guest room at Sabal House in Savannah",
+    imageAlt:
+      "Accessible Classic King guest room at Sabal House Inn in historic Savannah, featuring a king-size bed, spacious layout, and contemporary furnishings.",
     imagePosition: "center center",
 
     bed: "1 King Bed",
@@ -125,7 +128,8 @@ export const rooms = [
 
     image:
       "https://sabal-house.b-cdn.net/sabal/Sabal%20House%20Deluxe%20Park%20View%20King.png",
-    imageAlt: "Deluxe Park View King guest room at Sabal House in Savannah",
+    imageAlt:
+      "Deluxe Park View King room at Sabal House Inn in Savannah, Georgia, featuring a king-size bed, elegant seating area, and large windows overlooking a leafy historic green space.",
     imagePosition: "center center",
 
     bed: "1 King Bed",
@@ -163,7 +167,8 @@ export const rooms = [
     name: "Traditional King",
 
     image: "https://sabal-house.b-cdn.net/PQ%20Traditional%20King.png",
-    imageAlt: "Traditional King room in the Heritage Rooms at Sabal House",
+    imageAlt:
+      "Traditional King room at Sabal House Inn in Savannah's Historic District, featuring a king-size bed, hardwood floors, classic furnishings, and warm ambient lighting.",
     imagePosition: "center center",
 
     bed: "1 King Bed",
@@ -202,7 +207,8 @@ export const rooms = [
 
     image:
       "https://sabal-house.b-cdn.net/heritage/Heritage%20Traditional%20King.png",
-    imageAlt: "Traditional Queen room in the Heritage Rooms at Sabal House",
+    imageAlt:
+      "Traditional Queen guest room at Sabal House Inn, a boutique Savannah hotel within walking distance of Oglethorpe Park, featuring historic charm and elegant furnishings.",
     imagePosition: "center center",
 
     bed: "1 Queen Bed",
@@ -241,7 +247,8 @@ export const rooms = [
 
     image:
       "https://sabal-house.b-cdn.net/PQ%20Heritage%20King%20with%20Fireplace.png",
-    imageAlt: "Heritage King room at Sabal House in Savannah",
+    imageAlt:
+      "Heritage King room at Sabal House Inn in historic Savannah, featuring a king-size bed, exposed brick fireplace, hardwood floors, and preserved architectural details.",
     imagePosition: "center center",
 
     bed: "1 King Bed",
@@ -282,7 +289,8 @@ export const rooms = [
 
     image:
       "https://sabal-house.b-cdn.net/PQ%20Heritage%20Double%20Queen%20with%20Fireplace%20-%20no%20rug.png",
-    imageAlt: "Heritage Double Queen room at Sabal House in Savannah",
+    imageAlt:
+      "Heritage Double Queen room at Sabal House Inn in Savannah's Historic District, featuring two queen beds, hardwood floors, and an original exposed brick fireplace.",
     imagePosition: "center center",
 
     bed: "2 Queen Beds",
@@ -323,7 +331,8 @@ export const rooms = [
 
     image:
       "https://sabal-house.b-cdn.net/heritage/Heritage%20King%20Accessible.png",
-    imageAlt: "Heritage Loft Suite at Sabal House in Savannah",
+    imageAlt:
+      "Heritage Loft Suite at Sabal House Inn in Savannah's Historic District, featuring a king-size bed, warm wood furnishings, and elegant details in a spacious two-level suite.",
     imagePosition: "center center",
 
     bed: "1 King Bed",
@@ -364,7 +373,8 @@ export const rooms = [
     name: "Heritage King Accessible",
 
     image: "https://sabal-house.b-cdn.net/heritage/Heritage%20Loft%20Suite.png",
-    imageAlt: "Heritage King Accessible room at Sabal House in Savannah",
+    imageAlt:
+      "Heritage King Accessible guest room at Sabal House Inn in historic Savannah, featuring a comfortable sitting area, classic tufted sofa, original fireplace, and natural light.",
     imagePosition: "center center",
 
     bed: "1 King Bed",

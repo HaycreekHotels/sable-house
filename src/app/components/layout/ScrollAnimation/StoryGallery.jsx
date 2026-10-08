@@ -23,7 +23,8 @@ const stories = [
     captions: null,
     image:
       "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Sabal%20House%20Construction%20Image.jpeg",
-    imageAlt: "Mass timber construction at Sabal House",
+    imageAlt:
+      "Mass timber construction featuring Georgia yellow pine structural beams during the development of Sabal House Inn in historic Savannah, Georgia.",
     imageCaption: "MASS TIMBER · GEORGIA YELLOW PINE",
   },
   {
@@ -40,7 +41,8 @@ const stories = [
       "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Maria.jpeg",
     captions: null,
     image: "https://sabal-house.b-cdn.net/Tabby%20(1).jpg",
-    imageAlt: "Interior material details at Sabal House",
+    imageAlt:
+      "Close-up of traditional oyster shell tabby material, reflecting Savannah's Lowcountry heritage and the natural textures used in Sabal House Inn's interior design.",
     imageCaption: "TABBY · A MATERIAL OF THE LOWCOUNTRY",
   },
   {
@@ -58,7 +60,8 @@ const stories = [
     captions: null,
     image:
       "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/SabalHouse-19.jpeg",
-    imageAlt: "Spanish moss hanging from a tree in Savannah",
+    imageAlt:
+      "Spanish moss hanging from oak tree branches in Savannah, Georgia, capturing the natural beauty and Southern charm that inspired Sabal House Inn.",
     imageCaption: "SPANISH MOSS · SAVANNAH’S LIVING LANDSCAPE",
   },
 ];

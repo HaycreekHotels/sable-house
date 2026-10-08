@@ -120,7 +120,7 @@ Beyond the famous squares lies a quieter, deeper Savannah. One measured by the s
         images={[
           {
             src: "https://sabal-house.b-cdn.net/making%20of%20sabal%20house/Guestroom.jpg",
-            alt: "Contemporary guest room at Sabal House",
+            alt: "Contemporary guest room at Sabal House within walking distance of Chippewa Square.",
             eyebrow: "Stay",
             title: "Sabal House Rooms",
             description:
@@ -130,7 +130,7 @@ Beyond the famous squares lies a quieter, deeper Savannah. One measured by the s
           },
           {
             src: "https://sabal-house.b-cdn.net/Heritage%20Homepage.png",
-            alt: "Seating and interior details inside a Sabal House guest room",
+            alt: "Newly renovated historic guest room from the Presidents' Quarters Inn now with modern furnishings and fireplace.",
             eyebrow: "Stay",
             title: "Heritage Rooms",
             description:

@@ -38,7 +38,7 @@ export default function StoryPage() {
     <main className="min-h-screen overflow-hidden bg-secondary text-black">
       <HeroImage
         image="https://sabal-house.b-cdn.net/Making%20of%20Sabal%20House%20Rendering%20Photo.png"
-        alt="The new public space at the Sabal House Hotel with modern furniture and vibrant green plants"
+        alt="Elegant guest lobby at Sabal House Inn in Savannah's Historic District, featuring coastal-inspired decor, a textured oyster shell wall, and luxurious lounge seating."
       />
       <IntroSection
         className="bg-secondary"

@@ -11,7 +11,7 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export default function ImageBreak({
   src = "https://sabal-house.b-cdn.net/Home%20Page%20Rendering.jpeg",
-  alt = "Sabal House interior lounge",
+  alt = "The Sabal House interior lounge with views the historic distric in Savannah Georiga.",
   className = "",
 }) {
   const sectionRef = useRef(null);

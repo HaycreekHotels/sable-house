@@ -34,15 +34,15 @@ export const metadata = {
 const columnImages = [
   {
     src: "https://sabal-house.b-cdn.net/Oak%20Steakhous/oak_cola.jpg",
-    alt: "A dark cocktail beneath a glass cloche on a wooden serving board.",
+    alt: "Craft cocktail served under a glass dome at Oak Steakhouse, a fine dining steakhouse and seafood restaurant in historic Savannah, Georgia.",
   },
   {
     src: "https://sabal-house.b-cdn.net/Oak%20Steakhous/oak_steak.jpg",
-    alt: "A sliced T-bone steak served on a wooden board with grilled onions.",
+    alt: "Sliced grilled steak served on a wooden board with fresh herbs at Oak Steakhouse, a fine dining restaurant in Savannah's Historic District.",
   },
   {
     src: "https://sabal-house.b-cdn.net/Oak%20Steakhous/oak_oyster.jpg",
-    alt: "Baked oysters topped with herbs and a golden, savory crust.",
+    alt: "Baked oysters topped with herbs and golden cheese on a bed of ice, showcasing the upscale seafood dining experience at Oak Steakhouse in Savannah, Georgia.",
   },
 ];
 
@@ -51,7 +51,7 @@ export default function OakPage() {
     <main className="min-h-screen overflow-hidden bg-secondary text-black">
       <HeroImage
         image="https://sabal-house.b-cdn.net/Oak%20Steakhous/oak_hero.jpg"
-        alt="High end dishes of steak, lobster, salmon, and more stacked on a surf and turf tower paired with red wine"
+        alt="Fine dining spread featuring grilled steaks, fresh oysters, lobster, and gourmet sides at Oak Steakhouse in Savannah's Historic District, Georgia."
       />
 
       <LogoIntro
