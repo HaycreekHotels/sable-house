@@ -416,7 +416,7 @@ export default function FullWidth({
           inset-x-0
           top-[8svh]
           z-20
-
+        
           px-6
 
           text-center
@@ -749,7 +749,7 @@ export default function FullWidth({
 
                   sm:text-sm
 
-                  md:mb-6
+                  md:mb-0
                   md:text-base
                 "
               >

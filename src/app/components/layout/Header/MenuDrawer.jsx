@@ -582,6 +582,7 @@ export default function MenuDrawer({ onClose, returnFocusRef }) {
             duration-300
 
             hover:bg-main
+            hover:text-secondary
 
             focus-visible:outline
             focus-visible:outline-2
