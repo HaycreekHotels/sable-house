@@ -268,18 +268,18 @@ export default function AccessibilityClient() {
                   <p className="font-central-regular">Michael Mount</p>
                   <p>
                     <a
-                      href="tel:1234567890"
+                      href="tel:9122331600"
                       className="transition-opacity hover:opacity-60"
                     >
-                      123.456.8790
+                      912.233.1600
                     </a>
                   </p>
                   <p>
                     <a
-                      href="mailto:info@sabalhouse.com"
+                      href="mailto:stay@sabalhouse.com"
                       className="break-all transition-opacity hover:opacity-60"
                     >
-                      info@sabalhouse.com
+                      stay@sabalhouse.com
                     </a>
                   </p>
                 </address>

@@ -268,18 +268,18 @@ export default function PrivacyClient() {
                   <p className="font-benton-regular">The Sabal House</p>
                   <p>
                     <a
-                      href="tel:1234567890"
+                      href="tel:9122331600"
                       className=" font-central-regular transition-opacity hover:opacity-60"
                     >
-                      123.456.8790
+                      912.233.1600
                     </a>
                   </p>
                   <p>
                     <a
-                      href="mailto:info@sabalhouse.com"
+                      href="mailto:stay@sabalhouse.com"
                       className=" font-central-regular break-all transition-opacity hover:opacity-60"
                     >
-                      info@sabalhouse.com
+                      stay@sabalhouse.com
                     </a>
                   </p>
                 </address>

@@ -15,7 +15,7 @@ export const metadata = {
 
     url: "/stay/accommodations",
 
-    title: "Accommodations | Sabal House",
+    title: "Rooms & Suites in Savannah, GA | Sabal House",
 
     description:
       "Explore Sabal House Rooms and Heritage Rooms at Sabal House in Savannah.",

@@ -52,7 +52,7 @@ const storyCards = [
 
 export const metadata = {
   title: {
-    absolute: "Sabal House | Hotel in Savannah’s Historic District",
+    absolute: "Sabal House | Boutique Hotel in Savannah's Historic District",
   },
 
   description:
