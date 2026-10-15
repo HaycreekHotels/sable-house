@@ -1,6 +1,7 @@
 "use client";
 
 import { useLayoutEffect, useMemo, useRef } from "react";
+import Image from "next/image";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -19,27 +20,12 @@ export default function ScrollStoryCards({
   const secondImageRefs = useRef([]);
   const textRefs = useRef([]);
 
-  /*
-   * Only cards with the four images required by this component participate
-   * in the animated story.
-   */
   const usableCards = useMemo(() => {
     return cards.filter(
       (card) => Array.isArray(card.images) && card.images.length >= 4,
     );
   }, [cards]);
 
-  /*
-   * Every story card creates two visual image states:
-   *
-   * Card 1
-   *   state 0 -> images 1 + 2
-   *   state 1 -> images 3 + 4
-   *
-   * Card 2
-   *   state 2 -> images 1 + 2
-   *   state 3 -> images 3 + 4
-   */
   const imageStates = useMemo(() => {
     return usableCards.flatMap((card, cardIndex) => [
       {
@@ -121,9 +107,6 @@ export default function ScrollStoryCards({
         yPercent: 0,
       });
 
-      /*
-       * Keep only the relevant story exposed to assistive technology.
-       */
       const setAccessibleState = (stateIndex) => {
         const activeCardIndex = imageStates[stateIndex].cardIndex;
 
@@ -343,13 +326,15 @@ export default function ScrollStoryCards({
                 const image = state.images[0];
 
                 return (
-                  <img
+                  <Image
                     key={`large-${state.cardIndex}-${stateIndex}`}
                     ref={(element) => {
                       firstImageRefs.current[stateIndex] = element;
                     }}
                     src={image.src}
                     alt={image.alt || ""}
+                    fill
+                    sizes="(min-width: 1024px) 34vw, 54vw"
                     aria-hidden={stateIndex !== 0}
                     loading={stateIndex === 0 ? "eager" : "lazy"}
                     fetchPriority={stateIndex === 0 ? "high" : "auto"}
@@ -387,13 +372,15 @@ export default function ScrollStoryCards({
                 const image = state.images[1];
 
                 return (
-                  <img
+                  <Image
                     key={`small-${state.cardIndex}-${stateIndex}`}
                     ref={(element) => {
                       secondImageRefs.current[stateIndex] = element;
                     }}
                     src={image.src}
                     alt={image.alt || ""}
+                    fill
+                    sizes="(min-width: 1024px) 29vw, 45vw"
                     aria-hidden={stateIndex !== 0}
                     loading={stateIndex === 0 ? "eager" : "lazy"}
                     fetchPriority={stateIndex === 0 ? "high" : "auto"}
@@ -633,10 +620,13 @@ export default function ScrollStoryCards({
             >
               <div className="grid grid-cols-[1.17fr_1fr] items-end gap-3 sm:gap-5">
                 {card.images.slice(0, 2).map((image, index) => (
-                  <img
+                  <Image
                     key={`${card.id}-static-${index}`}
                     src={image.src}
                     alt={image.alt || ""}
+                    width={800}
+                    height={index === 0 ? 1000 : 740}
+                    sizes="(min-width: 1024px) 29vw, 45vw"
                     loading="lazy"
                     decoding="async"
                     className={`

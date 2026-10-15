@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import Image from "next/image";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -689,15 +690,18 @@ export default function StoryGallery() {
 
                 <div
                   className="
+                    relative
                     aspect-[1.06]
                     w-full
                     overflow-hidden
                     bg-neutral-200
                   "
                 >
-                  <img
+                  <Image
                     src={story.image}
                     alt={story.imageAlt}
+                    fill
+                    sizes="(min-width: 1024px) 28vw, (min-width: 768px) 80vw, 90vw"
                     className="
                       h-full
                       w-full
