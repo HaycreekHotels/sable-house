@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 import { trackEvent } from "@/app/lib/analytics";
 
@@ -338,9 +339,11 @@ export default function OpenLetterForm({
             "
             aria-hidden="true"
           >
-            <img
+            <Image
               src={stampImage}
               alt=""
+              fill
+              sizes="(min-width: 640px) 120px, 80px"
               className="
                 h-full
                 w-full
