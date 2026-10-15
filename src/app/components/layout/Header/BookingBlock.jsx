@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 
 import BookingCalendarPopover from "./BookingCalendarPopover";
 import BookingDateInput from "./BookingDateInput";
@@ -9,6 +9,8 @@ import useBookingForm from "./useBookingForm";
 export default function BookingBlock({
   id = "site-booking-block",
   isVisible = true,
+  isCalendarOpen = false,
+  onCalendarOpenChange,
 }) {
   const {
     minimumCheckIn,
@@ -20,24 +22,17 @@ export default function BookingBlock({
     source: "booking_block",
   });
 
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const lastTriggerRef = useRef(null);
 
   const calendarId = `${id}-calendar`;
 
-  useEffect(() => {
-    if (!isVisible) {
-      setIsCalendarOpen(false);
-    }
-  }, [isVisible]);
-
   function handleOpenCalendar(event) {
     lastTriggerRef.current = event.currentTarget;
-    setIsCalendarOpen(true);
+    onCalendarOpenChange(true);
   }
 
   function handleCloseCalendar(restoreFocus = true) {
-    setIsCalendarOpen(false);
+    onCalendarOpenChange(false);
 
     if (restoreFocus) {
       window.requestAnimationFrame(() => {

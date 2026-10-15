@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import { trackEvent } from "@/app/lib/analytics";
 
@@ -15,19 +15,19 @@ function getMinimumCheckInDate() {
 }
 
 export default function useBookingForm({ source = "booking_widget" } = {}) {
-  const [minimumCheckIn, setMinimumCheckIn] = useState("");
-  const [checkIn, setCheckIn] = useState("");
-  const [checkOut, setCheckOut] = useState("");
+  // Initialize once instead of triggering another render after mount.
+  const [initialDates] = useState(() => {
+    const minimum = getMinimumCheckInDate();
+    return {
+      minimumCheckIn: minimum,
+      checkOut: addDaysISO(minimum, 1),
+    };
+  });
+  const minimumCheckIn = initialDates.minimumCheckIn;
+  const [checkIn, setCheckIn] = useState(initialDates.minimumCheckIn);
+  const [checkOut, setCheckOut] = useState(initialDates.checkOut);
   const [rooms, setRooms] = useState(1);
   const [guests, setGuests] = useState(2);
-
-  useEffect(() => {
-    const firstAvailableCheckIn = getMinimumCheckInDate();
-
-    setMinimumCheckIn(firstAvailableCheckIn);
-    setCheckIn(firstAvailableCheckIn);
-    setCheckOut(addDaysISO(firstAvailableCheckIn, 1));
-  }, []);
 
   const minimumCheckOut = useMemo(() => {
     if (!checkIn) return minimumCheckIn;

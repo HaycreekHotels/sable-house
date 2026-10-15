@@ -265,7 +265,6 @@ export default function AccessibilityClient() {
                   Contact
                 </p>
                 <address className="mt-4 space-y-3 text-base text-[#1e1e1a] not-italic">
-                  <p className="font-central-regular">Michael Mount</p>
                   <p>
                     <a
                       href="tel:9122331600"

@@ -21,13 +21,26 @@ const BOOKING_WIDGET_VARIANTS = {
 export default function NavBar({ bookingWidgetVariant = "block" }) {
   const pathname = usePathname();
 
+  // Reset widget/menu state on client-side route changes without an effect.
+  return (
+    <NavBarForRoute
+      key={pathname}
+      pathname={pathname}
+      bookingWidgetVariant={bookingWidgetVariant}
+    />
+  );
+}
+
+function NavBarForRoute({ pathname, bookingWidgetVariant }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isBookingWidgetVisible, setIsBookingWidgetVisible] = useState(false);
+  const [isBookingWidgetVisible, setIsBookingWidgetVisible] = useState(
+    () => pathname === "/",
+  );
+  const [isBookingCalendarOpen, setIsBookingCalendarOpen] = useState(false);
 
   const menuButtonRef = useRef(null);
 
-  const isHomePage = pathname === "/";
   const isStayPage = pathname === "/stay" || pathname.startsWith("/stay/");
   const useDarkNav = isStayPage && !isScrolled && !isOpen;
 
@@ -60,8 +73,6 @@ export default function NavBar({ bookingWidgetVariant = "block" }) {
   }, []);
 
   useEffect(() => {
-    setIsBookingWidgetVisible(isHomePage);
-
     let lastScrollY = window.scrollY;
 
     function dismissBookingWidgetOnScroll() {
@@ -72,6 +83,7 @@ export default function NavBar({ bookingWidgetVariant = "block" }) {
 
       if (hasActuallyMoved) {
         setIsBookingWidgetVisible(false);
+        setIsBookingCalendarOpen(false);
       }
     }
 
@@ -82,10 +94,11 @@ export default function NavBar({ bookingWidgetVariant = "block" }) {
     return () => {
       window.removeEventListener("scroll", dismissBookingWidgetOnScroll);
     };
-  }, [isHomePage, pathname]);
+  }, []);
 
   function handleOpenMenu() {
     setIsBookingWidgetVisible(false);
+    setIsBookingCalendarOpen(false);
     setIsOpen(true);
   }
 
@@ -94,6 +107,7 @@ export default function NavBar({ bookingWidgetVariant = "block" }) {
   }
 
   function handleBookingButtonClick() {
+    setIsBookingCalendarOpen(false);
     setIsBookingWidgetVisible(true);
 
     trackEvent("booking_widget_open", {
@@ -291,6 +305,8 @@ export default function NavBar({ bookingWidgetVariant = "block" }) {
       <BookingWidget
         id={bookingWidgetId}
         isVisible={isBookingWidgetVisible && !isOpen}
+        isCalendarOpen={isBookingCalendarOpen}
+        onCalendarOpenChange={setIsBookingCalendarOpen}
       />
 
       {isOpen && (
