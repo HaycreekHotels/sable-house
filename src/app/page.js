@@ -4,6 +4,7 @@ import ImageBreak from "./components/layout/Decorative/ImageBreak";
 import FullWidth from "./components/layout/ScrollAnimation/FullWidth";
 import TextBreak from "./components/layout/Intro/TextBreak";
 import ScrollStoryCards from "./components/layout/ScrollAnimation/ScrollStoryCards";
+import FAQAccordion from "./components/layout/FAQ/FAQAccordion";
 import OpenLetterForm from "./components/layout/forms/OpenLetterForm";
 
 import Monogram from "../../public/images/decorative/Sabal House Monogram.png";
@@ -145,6 +146,7 @@ Beyond the famous squares lies a quieter, deeper Savannah. One measured by the s
         coastal sophistication with the honest pulse of Savannah.
       </TextBreak>
       <ScrollStoryCards cards={storyCards} />
+      <FAQAccordion />
       <OpenLetterForm
         backgroundImage="https://sabal-house.b-cdn.net/making%20of%20sabal%20house/SabalHouse-86.jpg"
         stampImage="/images/decorative/SH Wax Seal.png"
