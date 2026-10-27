@@ -12,12 +12,13 @@ export const faqCategories = [
 export const featuredFaqIds = [
   "where-located",
   "check-in",
-  "check-out",
   "destination-fee",
+  "credit-card-fee",
   "parking",
   "pets-allowed",
   "standard-cancellation",
   "accessible-rooms",
+  "smoking",
 ];
 
 export const faqs = [
@@ -92,7 +93,7 @@ export const faqs = [
     category: "arrival",
     question: "Does Sabal House offer parking?",
     answer:
-      "Valet parking is available 24 hours a day for $50 per night per vehicle. Hourly valet parking is available for restaurant guests.",
+      "Valet parking is available 24 hours a day for $50 per night per vehicle. Hourly valet parking is available for restaurant guests. There is limited public street parking around the Sabal House Hotel, but there is an overnight parking garage with a daily parking fee close by.",
   },
   {
     id: "ev-charging",
@@ -111,14 +112,8 @@ export const faqs = [
   {
     id: "check-in",
     category: "arrival",
-    question: "What time is check-in at Sabal House?",
-    answer: "Check-in begins at 4:00 PM.",
-  },
-  {
-    id: "check-out",
-    category: "arrival",
-    question: "What time is check-out at Sabal House?",
-    answer: "Check-out is at 11:00 AM.",
+    question: "What time is check-in and check-out at Sabal House?",
+    answer: "Check-in begins at 4:00 PM and Check-out is at 11:00 AM.",
   },
   {
     id: "early-check-in",
@@ -155,7 +150,7 @@ export const faqs = [
     category: "pets",
     question: "Is Sabal House pet-friendly?",
     answer:
-      "Yes. Sabal House welcomes well-behaved dogs in designated Heritage Pet-Friendly Rooms. Pet-friendly accommodations are limited and subject to availability.",
+      "Yes. Sabal House welcomes well-behaved dogs in designated Heritage Pet-Friendly Rooms. Pet-friendly accommodations are limited and subject to availability. Sabal House allows one dog up to 50 pounds, or two dogs with a combined weight of up to 75 pounds. Service animals are always welcome in accordance with the Americans with Disabilities Act.",
   },
   {
     id: "pet-policy",
@@ -223,7 +218,7 @@ export const faqs = [
     category: "rooms",
     question: "Does Sabal House offer accessible rooms?",
     answer:
-      "Yes. Accessible rooms are available. Please contact the hotel directly before arrival so our team can help ensure your needs are met.",
+      "Yes. Accessible rooms are available. Please contact the hotel directly before arrival so our team can help ensure your needs are met. Unfortunately we don't offer ADA suites as all our suites are currently loft with stairs as the main access to the upper levels.",
   },
   {
     id: "elevators",

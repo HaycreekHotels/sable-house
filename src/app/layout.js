@@ -24,7 +24,7 @@ export const metadata = {
 
   title: {
     default: "Sabal House | Luxury Hotel in Savannah, Georgia",
-    template: "%s | Sabal House",
+    template: " | Savannah",
   },
 
   description: siteDescription,
