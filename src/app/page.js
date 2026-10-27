@@ -57,7 +57,7 @@ export const metadata = {
   },
 
   description:
-    "Discover Sabal House, a new hotel opening December 2026 in Savannah’s Historic District, directly across from Oglethorpe Square. Explore accommodations and the story behind Sabal House.",
+    "Boutique hotel in Savannah's Historic District overlooking Oglethorpe Square, with timeless architecture, local experiences, and Southern hospitality.",
 
   alternates: {
     canonical: "/",

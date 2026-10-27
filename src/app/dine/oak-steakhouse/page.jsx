@@ -7,10 +7,10 @@ import ThreeImageColumn from "@/app/components/layout/Decorative/ThreeImageColum
 import OakLogo from "../../../../public/images/logos/oak_logo.png";
 
 export const metadata = {
-  title: "Oak Steakhouse",
+  title: "Oak Steakhouse at Sabal House",
 
   description:
-    "Discover Oak Steakhouse at Sabal House, opening in early 2027 in Savannah’s Historic District with classic American fare, exceptional steaks, and a curated wine program.",
+    "Discover Oak Steakhouse at Sabal House in Savannah’s Historic District, opening February 2027 near Oglethorpe Square.",
 
   alternates: {
     canonical: "/dine/oak-steakhouse",
@@ -28,6 +28,32 @@ export const metadata = {
         alt: "Oak Steakhouse dining experience at Sabal House in Savannah",
       },
     ],
+  },
+};
+
+// Keep restaurant-specific facts here, separate from the shared Hotel schema.
+const restaurantUrl = "https://www.sabalhouse.com/dine/oak-steakhouse";
+
+const restaurantStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "@id": `${restaurantUrl}#restaurant`,
+  name: "Oak Steakhouse",
+  url: restaurantUrl,
+  description:
+    "Opening in early 2027, Oak Steakhouse at Sabal House will bring classic American fare, exceptional steaks, and a curated wine program to Savannah’s Historic District.",
+  image: "https://sabal-house.b-cdn.net/Oak%20Steakhous/oak_hero.jpg",
+  servesCuisine: ["American", "Steakhouse"],
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "225 E. President St",
+    addressLocality: "Savannah",
+    addressRegion: "GA",
+    postalCode: "31401",
+    addressCountry: "US",
+  },
+  containedInPlace: {
+    "@id": "https://www.sabalhouse.com/#hotel",
   },
 };
 
@@ -49,6 +75,15 @@ const columnImages = [
 export default function OakPage() {
   return (
     <main className="min-h-screen overflow-hidden bg-secondary text-black">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(restaurantStructuredData).replace(
+            /</g,
+            "\\u003c",
+          ),
+        }}
+      />
       <HeroImage
         image="https://sabal-house.b-cdn.net/Oak%20Steakhous/oak_hero.jpg"
         alt="Fine dining spread featuring grilled steaks, fresh oysters, lobster, and gourmet sides at Oak Steakhouse in Savannah's Historic District, Georgia."

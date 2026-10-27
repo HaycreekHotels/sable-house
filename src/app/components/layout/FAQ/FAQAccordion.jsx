@@ -1,10 +1,5 @@
 import { faqCategories, faqs, featuredFaqIds } from "@/app/data/faqs";
 
-/**
- * Native HTML disclosure: semantic, keyboard operable, server-rendered, and
- * zero client JS. The native `name` attribute keeps only one question open
- * in each accordion group on modern browsers.
- */
 function FAQItem({ item, groupName, headingLevel = 3 }) {
   const Heading = `h${headingLevel}`;
 
