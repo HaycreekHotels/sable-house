@@ -2,7 +2,7 @@ import FAQPageClient from "../components/layout/FAQ/FAQPageClient";
 import { faqCategories } from "../data/faq";
 
 export const metadata = {
-  title: "Frequently Asked Questions | Sabal House Savannah",
+  title: "Frequently Asked Questions",
   description:
     "Find answers about Sabal House Savannah reservations, cancellation policies, rates, check-in, amenities, pets, parking, and guest services.",
   alternates: { canonical: "/faq" },
