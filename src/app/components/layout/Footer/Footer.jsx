@@ -28,6 +28,11 @@ const footerLinks = [
     external: false,
     scrollTarget: "open-letter-form",
   },
+  {
+    label: "FAQ",
+    href: "/faq",
+    external: false,
+  },
 ];
 
 const footerLinkStyles = `
