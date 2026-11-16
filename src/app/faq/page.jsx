@@ -39,7 +39,7 @@ const faqSchema = {
     })),
   ),
 };
-
+//faq page
 export default function FAQPage() {
   return (
     <>
