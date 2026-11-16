@@ -42,5 +42,9 @@ export default function sitemap() {
       url: `${siteUrl}/privacy`,
       lastModified,
     },
+    {
+      url: `${siteUrl}/faq`,
+      lastModified,
+    },
   ];
 }

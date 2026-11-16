@@ -63,6 +63,10 @@ const menuFooterSections = [
     label: "Privacy",
     href: "/privacy",
   },
+  {
+    label: "FAQs",
+    href: "/faq",
+  },
 ];
 
 function animateDrawerClose(drawer, backdrop, desktopHeader, onComplete) {

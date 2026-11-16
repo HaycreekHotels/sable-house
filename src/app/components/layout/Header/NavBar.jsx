@@ -42,7 +42,8 @@ function NavBarForRoute({ pathname, bookingWidgetVariant }) {
   const menuButtonRef = useRef(null);
 
   const isStayPage = pathname === "/stay" || pathname.startsWith("/stay/");
-  const useDarkNav = isStayPage && !isScrolled && !isOpen;
+  const isFaqPage = pathname === "/faq";
+  const useDarkNav = isStayPage || (isFaqPage && !isScrolled && !isOpen);
 
   const BookingWidget =
     BOOKING_WIDGET_VARIANTS[bookingWidgetVariant] || BookingBlock;
