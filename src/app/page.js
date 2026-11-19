@@ -1,4 +1,5 @@
 import HeroVideo from "./components/layout/heros/HeroVideo";
+import BlackFridayPopup from "./components/home/BlackFridayPopup";
 import IntroSection from "./components/layout/Intro/IntroSection";
 import ImageBreak from "./components/layout/Decorative/ImageBreak";
 import FullWidth from "./components/layout/ScrollAnimation/FullWidth";
@@ -7,6 +8,9 @@ import ScrollStoryCards from "./components/layout/ScrollAnimation/ScrollStoryCar
 import OpenLetterForm from "./components/layout/forms/OpenLetterForm";
 
 import Monogram from "../../public/images/decorative/Sabal House Monogram.png";
+
+const BEDROOM_SRC =
+  "https://sabal-house.b-cdn.net/PQ%20Heritage%20Double%20Queen%20with%20Fireplace%20-%20no%20rug.png";
 
 const VIDEO_SRC =
   "https://sabal-house.b-cdn.net/flat%20hero/Sabal%20House%20-%20Promo.mp4";
@@ -102,6 +106,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-secondary">
       <HeroVideo videoSrc={VIDEO_SRC} />
+      <BlackFridayPopup bedroomSrc={BEDROOM_SRC} />
       <IntroSection
         className="bg-[#F7F6F2]"
         eyebrow="OPENING DECEMBER 2026"
