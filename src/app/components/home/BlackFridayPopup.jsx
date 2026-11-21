@@ -9,7 +9,7 @@ import bgleafs from "../../../../public/images/decorative/SH_Leaf_Brown.png";
 const BOOKING_URL =
   "https://bookings.sabalhouse.com/book/dates-of-stay?pl=l54q58756h55o58o51a50f51o50950855358v50100&RatePlanId=11780260";
 
-export default function BlackFridayPopup({ bedroomSrc, leafSrc, onDismiss }) {
+export default function BlackFridayPopup({ bedroomSrc, onDismiss, onShown }) {
   const dialogRef = useRef(null);
   const panelRef = useRef(null);
   const closeButtonRef = useRef(null);
@@ -29,7 +29,26 @@ export default function BlackFridayPopup({ bedroomSrc, leafSrc, onDismiss }) {
 
     closingRef.current = false;
 
-    dialog.addEventListener("close", onDismiss);
+    const handleDialogClose = () => {
+      if (dialog.open) {
+        return;
+      }
+
+      document.body.style.overflow = originalBodyOverflow;
+
+      onDismiss?.();
+    };
+
+    dialog.addEventListener("close", handleDialogClose);
+
+    dialog.showModal();
+
+    document.body.style.overflow = "hidden";
+
+    onShown?.();
+
+    dialog.addEventListener("close", handleDialogClose);
+
     dialog.showModal();
 
     document.body.style.overflow = "hidden";
@@ -84,7 +103,7 @@ export default function BlackFridayPopup({ bedroomSrc, leafSrc, onDismiss }) {
       exitTweenRef.current?.kill();
       context?.revert();
 
-      dialog.removeEventListener("close", onDismiss);
+      dialog.removeEventListener("close", handleDialogClose);
 
       if (dialog.open) {
         dialog.close();
@@ -101,7 +120,7 @@ export default function BlackFridayPopup({ bedroomSrc, leafSrc, onDismiss }) {
         });
       }
     };
-  }, [onDismiss]);
+  }, [onDismiss, onShown]);
 
   function requestClose() {
     const dialog = dialogRef.current;
