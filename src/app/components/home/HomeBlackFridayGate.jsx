@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const BlackFridayPopup = dynamic(() => import("./BlackFridayPopup"), {
   ssr: false,
@@ -12,10 +12,7 @@ const STORAGE_KEY = "sabal-house:black-friday:v1:last-shown";
 
 const OPEN_DELAY_MS = 1500;
 
-// Replace with your actual existing image paths.
-const BEDROOM_SRC = "/images/your-existing-bedroom-image.webp";
-
-const LEAF_SRC = "/images/your-existing-leaf-image.png";
+const IS_DEVELOPMENT = process.env.NODE_ENV === "development";
 
 function localDayKey() {
   const date = new Date();
@@ -27,40 +24,54 @@ function localDayKey() {
   return `${year}-${month}-${day}`;
 }
 
-function wasShownToday(day) {
-  for (const name of ["localStorage", "sessionStorage"]) {
+function wasShownToday() {
+  const today = localDayKey();
+
+  for (const storageName of ["localStorage", "sessionStorage"]) {
     try {
-      if (window[name].getItem(STORAGE_KEY) === day) {
+      if (window[storageName].getItem(STORAGE_KEY) === today) {
         return true;
       }
     } catch {
-      // Browser storage may be restricted.
+      // Storage might be unavailable.
     }
   }
 
   return false;
 }
 
-function rememberShown(day) {
+function rememberShown() {
+  const today = localDayKey();
+
   try {
-    window.localStorage.setItem(STORAGE_KEY, day);
+    window.localStorage.setItem(STORAGE_KEY, today);
     return;
   } catch {
-    // Fall back to session storage.
+    // Fall back to sessionStorage.
   }
 
   try {
-    window.sessionStorage.setItem(STORAGE_KEY, day);
+    window.sessionStorage.setItem(STORAGE_KEY, today);
   } catch {
-    // Persistent tracking requires browser storage.
+    // Storage is unavailable.
   }
 }
 
-export default function HomeBlackFridayGate() {
+export default function HomeBlackFridayGate({ bedroomSrc }) {
   const [visible, setVisible] = useState(false);
+
+  // Prevent reopening after dismissal during this page visit.
+  const attemptedRef = useRef(false);
 
   const dismiss = useCallback(() => {
     setVisible(false);
+  }, []);
+
+  const handleShown = useCallback(() => {
+    // Record only after the dialog opens successfully.
+    if (!IS_DEVELOPMENT) {
+      rememberShown();
+    }
   }, []);
 
   useEffect(() => {
@@ -69,40 +80,45 @@ export default function HomeBlackFridayGate() {
         return;
       }
 
-      const today = localDayKey();
-
-      if (wasShownToday(today)) {
+      if (attemptedRef.current) {
         return;
       }
 
-      rememberShown(today);
+      // Enforce the daily limit in production.
+      if (!IS_DEVELOPMENT && wasShownToday()) {
+        return;
+      }
+
+      attemptedRef.current = true;
       setVisible(true);
     };
 
     const timer = window.setTimeout(maybeShow, OPEN_DELAY_MS);
 
-    const onVisibilityChange = () => {
+    const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
         maybeShow();
       }
     };
 
-    document.addEventListener("visibilitychange", onVisibilityChange);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
       window.clearTimeout(timer);
 
-      document.removeEventListener("visibilitychange", onVisibilityChange);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
 
-  if (!visible) return null;
+  if (!visible) {
+    return null;
+  }
 
   return (
     <BlackFridayPopup
-      bedroomSrc={BEDROOM_SRC}
-      leafSrc={LEAF_SRC}
+      bedroomSrc={bedroomSrc}
       onDismiss={dismiss}
+      onShown={handleShown}
     />
   );
 }

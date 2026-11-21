@@ -1,5 +1,5 @@
 import HeroVideo from "./components/layout/heros/HeroVideo";
-import BlackFridayPopup from "./components/home/BlackFridayPopup";
+import HomeBlackFridayGate from "./components/home/HomeBlackFridayGate";
 import IntroSection from "./components/layout/Intro/IntroSection";
 import ImageBreak from "./components/layout/Decorative/ImageBreak";
 import FullWidth from "./components/layout/ScrollAnimation/FullWidth";
@@ -106,7 +106,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-secondary">
       <HeroVideo videoSrc={VIDEO_SRC} />
-      <BlackFridayPopup bedroomSrc={BEDROOM_SRC} />
+      <HomeBlackFridayGate bedroomSrc={BEDROOM_SRC} />
       <IntroSection
         className="bg-[#F7F6F2]"
         eyebrow="OPENING DECEMBER 2026"
