@@ -33,6 +33,10 @@ const menuSections = [
         label: "Accommodations",
         href: "/stay/accommodations",
       },
+      {
+        label: "Savannah on the Calendar",
+        href: "/savannah-year-round",
+      },
     ],
   },
   {
