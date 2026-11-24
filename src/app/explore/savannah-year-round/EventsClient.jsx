@@ -12,14 +12,14 @@ import {
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import EditorialDetailGrid from "../components/layout/cards/EditorialDetailGrid";
-import { SAVANNAH_EVENT_CATEGORIES } from "../data/savannahEvents";
+import EditorialDetailGrid from "@/app/components/layout/cards/EditorialDetailGrid";
+import { SAVANNAH_EVENT_CATEGORIES } from "@/app/data/savannahEvents";
 import {
   formatEventDate,
   formatISODate,
   savannahToday,
   visibleEvents,
-} from "../lib/savannahEventDates";
+} from "@/app/lib/savannahEventDates";
 import EventDateFilter from "./EventDateFilter";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);

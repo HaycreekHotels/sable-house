@@ -46,5 +46,17 @@ export default function sitemap() {
       url: `${siteUrl}/faq`,
       lastModified,
     },
+    {
+      url: `${siteUrl}/explore/beyond-the-square`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${siteUrl}/explore/events`,
+      lastModified,
+      changeFrequency: "daily",
+      priority: 0.8,
+    },
   ];
 }

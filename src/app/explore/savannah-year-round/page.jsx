@@ -1,10 +1,10 @@
 import EventsClient from "./EventsClient";
-import { SAVANNAH_EVENTS } from "../data/savannahEvents";
+import { SAVANNAH_EVENTS } from "@/app/data/savannahEvents";
 import {
   savannahOffsetForDate,
   savannahToday,
   visibleEvents,
-} from "../lib/savannahEventDates";
+} from "@/app/lib/savannahEventDates";
 
 export const revalidate = 1800;
 
