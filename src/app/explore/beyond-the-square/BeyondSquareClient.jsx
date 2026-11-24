@@ -9,7 +9,6 @@ import EditorialPlaceCard from "@/app/components/layout/cards/EditorialPlaceCard
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-/** Content and layout remain visible in SSR even before JS or GSAP initialize. */
 export default function BeyondSquareClient({ hero, sections }) {
   const rootRef = useRef(null);
 
@@ -41,7 +40,7 @@ export default function BeyondSquareClient({ hero, sections }) {
           );
         });
       });
-      // Don't parallax the product photography: keep it sharp and calm.
+
       return () => media.revert();
     },
     { scope: rootRef },
@@ -62,7 +61,7 @@ export default function BeyondSquareClient({ hero, sections }) {
 
       <section
         aria-label="Explore Savannah and the coast"
-        className="relative h-[52svh] min-h-[340px] max-h-[740px] w-full overflow-hidden bg-[#d9d9d9] sm:h-[62svh] lg:h-[65svh]"
+        className="relative h-[52svh] min-h-[340px] max-h-[740px] w-full overflow-hidden bg-[#d9d9d9] sm:h-[62svh] lg:h-[92svh]"
       >
         {hero.image && (
           <Image
@@ -94,7 +93,7 @@ export default function BeyondSquareClient({ hero, sections }) {
         >
           <h1
             id="beyond-the-square-title"
-            className="font-benton-light text-[clamp(2.6rem,4vw,4.4rem)] leading-[1.06] tracking-[-0.055em]"
+            className="font-benton-regular text-[clamp(2.6rem,4vw,4.4rem)] leading-[1.06] tracking-[-0.025em]"
           >
             Beyond the Square
           </h1>
@@ -141,7 +140,7 @@ export default function BeyondSquareClient({ hero, sections }) {
           >
             <h2
               id={`${section.id}-heading`}
-              className="font-benton-light text-[clamp(2.1rem,4vw,3.4rem)] leading-[1.1] tracking-[-0.052em]"
+              className="font-benton-regular text-[clamp(2.1rem,4vw,3.4rem)] leading-[1.1] tracking-[-0.052em]"
             >
               {section.title}
             </h2>

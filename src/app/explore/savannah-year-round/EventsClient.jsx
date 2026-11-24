@@ -175,7 +175,7 @@ function EventRow({ item }) {
               aria-expanded={expanded}
               aria-controls={panelId}
               onClick={() => setExpanded((old) => !old)}
-              className="group flex min-h-12 w-full items-center justify-between gap-4 text-left font-benton-light text-[clamp(1.75rem,3.2vw,2.65rem)] leading-[1.07] tracking-[-0.055em] transition-colors hover:text-main focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-main"
+              className="group flex min-h-12 w-full items-center justify-between gap-4 text-left font-benton-regular text-[clamp(1.75rem,3.2vw,2.65rem)] leading-[1.07] tracking-[-0.025em] transition-colors hover:text-main focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-main"
             >
               <span>{event.title}</span>
               <Chevron expanded={expanded} />
@@ -330,7 +330,7 @@ export default function EventsClient({ events, serverToday }) {
       </a>
       <section
         aria-label="Savannah streets"
-        className="relative h-[52vh] min-h-[330px] max-h-[650px] overflow-hidden bg-main"
+        className="relative h-[92vh] min-h-[330px] max-h-[650px] overflow-hidden bg-main"
       >
         <Image
           src="https://sabal-house.b-cdn.net/savannah-year-round/savannah-year-round-header.png"
@@ -356,7 +356,7 @@ export default function EventsClient({ events, serverToday }) {
         <h1
           data-events-reveal
           id="events-page-title"
-          className="mt-5 font-benton-light text-[clamp(2.5rem,5vw,4rem)] leading-[1.1] tracking-[-0.05em]"
+          className="mt-5 font-benton-regular text-[clamp(2.5rem,5vw,4rem)] leading-[1.1] tracking-[-0.05em]"
         >
           Savannah on the Calendar
         </h1>

@@ -45,7 +45,9 @@ function NavBarForRoute({ pathname, bookingWidgetVariant }) {
   const isFaqPage = pathname === "/faq";
   const isUnmarkedPage = pathname === "/the-unmarked-door";
   const useDarkNav =
-    isStayPage || isUnmarkedPage || (isFaqPage && !isScrolled && !isOpen);
+    (isStayPage && !isScrolled && !isOpen) ||
+    (isUnmarkedPage && !isScrolled && !isOpen) ||
+    (isFaqPage && !isScrolled && !isOpen);
 
   const BookingWidget =
     BOOKING_WIDGET_VARIANTS[bookingWidgetVariant] || BookingBlock;

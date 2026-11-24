@@ -37,8 +37,8 @@ export default function FAQPageClient({ categories }) {
 
   return (
     <main className="min-h-screen bg-secondary text-foreground mt-5 md:mt-12">
-      <div className="mx-auto w-full max-w-[1180px] px-5 pb-20 pt-12 sm:px-8 sm:pb-28 lg:pt-[52px]">
-        <header className="mx-auto max-w-[520px] text-center">
+      <div className="mx-auto w-full max-w-[1180px] px-5 pb-20 pt-12 sm:px-8 sm:pb-28 lg:pt-[52px] lg:mt-25">
+        <header className="mx-auto max-w-[520px] text-center ">
           <h1 className="font-benton-regular text-[clamp(2.25rem,3.6vw,2.75rem)] leading-[1.14] tracking-[-0.025em]">
             Frequently Asked Questions
           </h1>

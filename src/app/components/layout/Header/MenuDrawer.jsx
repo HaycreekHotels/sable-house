@@ -33,6 +33,10 @@ const menuSections = [
         label: "Accommodations",
         href: "/stay/accommodations",
       },
+      {
+        label: "Packages & Offers",
+        href: "/stay/offers",
+      },
     ],
   },
   {

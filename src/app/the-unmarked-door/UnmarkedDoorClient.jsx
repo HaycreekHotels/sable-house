@@ -200,11 +200,11 @@ function OpeningEditorial({ headingRef }) {
         data-door-intro
         id="unmarked-door-title"
         tabIndex={-1}
-        className="flex flex-wrap items-start justify-between gap-x-[0.24em] gap-y-1 font-benton-light text-[clamp(3.3rem,8.5vw,9rem)] leading-[0.98] tracking-[-0.065em] focus:outline-none"
+        className="flex flex-wrap items-start justify-between gap-x-[0.24em] gap-y-1 font-benton-regular  text-[clamp(3.3rem,8.5vw,9rem)] leading-[3] tracking-[-0.015em] focus:outline-none"
       >
-        <span>The</span>
-        <span>Unmarked</span>
-        <span>Door</span>
+        <span></span>
+        <span>The Unmarked Door</span>
+        <span></span>
       </h1>
 
       <div className="mt-14 grid grid-cols-1 gap-y-12 sm:mt-20 lg:mt-24 lg:grid-cols-12 lg:gap-x-12">
