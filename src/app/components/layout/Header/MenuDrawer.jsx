@@ -33,6 +33,10 @@ const menuSections = [
         label: "Accommodations",
         href: "/stay/accommodations",
       },
+      {
+        label: "Packages & Offers",
+        href: "/stay/offers",
+      },
     ],
   },
   {
@@ -41,6 +45,19 @@ const menuSections = [
       {
         label: "Oak Steakhouse",
         href: "/dine/oak-steakhouse",
+      },
+    ],
+  },
+  {
+    title: "Explore",
+    links: [
+      {
+        label: "Savannah in Season",
+        href: "/explore/savannah-in-season",
+      },
+      {
+        label: "Beyond The Square",
+        href: "/explore/beyond-the-square",
       },
     ],
   },

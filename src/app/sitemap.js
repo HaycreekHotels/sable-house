@@ -27,7 +27,10 @@ export default function sitemap() {
     },
 
     ...roomPages,
-
+    {
+      url: `${siteUrl}/stay/offers`,
+      lastModified,
+    },
     {
       url: `${siteUrl}/dine/oak-steakhouse`,
       lastModified,
@@ -45,6 +48,18 @@ export default function sitemap() {
     {
       url: `${siteUrl}/faq`,
       lastModified,
+    },
+    {
+      url: `${siteUrl}/explore/beyond-the-square`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${siteUrl}/explore/savannah-in-season`,
+      lastModified,
+      changeFrequency: "daily",
+      priority: 0.8,
     },
   ];
 }
