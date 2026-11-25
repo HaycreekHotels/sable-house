@@ -330,7 +330,7 @@ export default function EventsClient({ events, serverToday }) {
       </a>
       <section
         aria-label="Savannah streets"
-        className="relative h-[92vh] min-h-[330px] max-h-[650px] overflow-hidden bg-main"
+        className="relative h-[100vh] min-h-[330px] max-h-[650px] overflow-hidden bg-main"
       >
         <Image
           src="https://sabal-house.b-cdn.net/savannah-year-round/Savannah-in-season-header.png"
