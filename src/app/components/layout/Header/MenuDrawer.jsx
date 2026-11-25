@@ -52,8 +52,8 @@ const menuSections = [
     title: "Explore",
     links: [
       {
-        label: "Savannah on the Calendar",
-        href: "/explore/savannah-year-round",
+        label: "Savannah in Season",
+        href: "/explore/savannah-in-season",
       },
       {
         label: "Beyond The Square",

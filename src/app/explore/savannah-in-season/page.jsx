@@ -11,7 +11,7 @@ export const revalidate = 1800;
 const siteUrl = "https://www.sabalhouse.com";
 
 export const metadata = {
-  title: { absolute: "Savannah Events Calendar | Things to Do | Sabal House" },
+  title: { absolute: "Savannah in Season | Things to Do | Sabal House" },
   description:
     "Explore upcoming Savannah events, seasonal celebrations, local markets, arts, music, and traditions. Filter by date or category and plan your visit to Sabal House.",
   alternates: { canonical: "/events" },
@@ -21,7 +21,7 @@ export const metadata = {
     locale: "en_US",
     siteName: "Sabal House",
     url: "/events",
-    title: "Savannah on the Calendar | Events & Things to Do",
+    title: "Savannah in Season | Events & Things to Do",
     description:
       "Explore upcoming events around Savannah, Georgia and plan your next visit.",
     images: [

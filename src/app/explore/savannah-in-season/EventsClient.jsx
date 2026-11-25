@@ -333,7 +333,7 @@ export default function EventsClient({ events, serverToday }) {
         className="relative h-[92vh] min-h-[330px] max-h-[650px] overflow-hidden bg-main"
       >
         <Image
-          src="https://sabal-house.b-cdn.net/savannah-year-round/savannah-year-round-header.png"
+          src="https://sabal-house.b-cdn.net/savannah-year-round/Savannah-in-season-header.png"
           alt="Tree-lined Savannah avenue in the historic district"
           fill
           priority
@@ -351,29 +351,29 @@ export default function EventsClient({ events, serverToday }) {
           data-events-reveal
           className="font-central-regular text-[11px] uppercase tracking-[0.055em]"
         >
-          A city for every season
+          In the square
         </p>
         <h1
           data-events-reveal
           id="events-page-title"
           className="mt-5 font-benton-regular text-[clamp(2.5rem,5vw,4rem)] leading-[1.1] tracking-[-0.05em]"
         >
-          Savannah on the Calendar
+          Savannah in Season
         </h1>
         <p
           data-events-reveal
           className="mx-auto mt-7 max-w-[56ch] font-central-regular text-[15px] leading-[1.6] sm:text-[17px]"
         >
-          There’s always a reason to visit Savannah. From the gardens opening
-          their gates in spring to the festivals, markets, and celebrations that
-          bring the city together, there’s something to look forward to
-          throughout the year.
+          There&apos;s always a reason to visit Savannah. From the gardens
+          opening their gates in spring to the festivals, markets, and
+          celebrations that bring the city together, there&apos;s something to
+          look forward to throughout the year.
         </p>
         <p
           data-events-reveal
           className="mx-auto mt-6 font-central-regular text-[15px] leading-[1.6] sm:text-[17px]"
         >
-          Take a look at what’s coming up. We’d love to welcome you for it.
+          Take a look at what’s happening. We&apos;d love to welcome you for it.
         </p>
       </section>
 

@@ -1,6 +1,6 @@
 export const beyondTheSquareHero = {
   image:
-    "https://sabal-house.b-cdn.net/beyond%20the%20square/SabalHouse-65-2%201%20(1).png",
+    "https://sabal-house.b-cdn.net/beyond%20the%20square/beyond-the-square-header.jpg",
   imageAlt: "Coastal Savannah landscape beyond the historic district",
   introImage:
     "https://sabal-house.b-cdn.net/beyond%20the%20square/intro-fern.jpg",
